@@ -1,4 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zpet.ms-customer.mapper.CustomerMapper">
+<mapper namespace="com.zpet.ms_customer.mapper.CustomerMapper">
+
+    <!-- SELECT -->
+
+    <select id="lastId" parameterType="map" resultType="java.lang.Integer">
+        SELECT ${column} 
+        FROM ${table}
+        ORDER BY ${column} DESC
+        LIMIT 1
+    </select>
+
+    <select id="getAll" parameterType="map"  resultType="com.zpet.ms_customer.model.Customer">
+        SELECT 
+            CTM_ID as id
+            ,CTM_NAME as name
+            ,CTM_PHONE as phone
+            ,CTM_CREATEAT as dateCreated
+            ,CTM_ISACTIVE as isActive
+        FROM customer
+        WHERE 1
+        <if test="name != null">
+            AND CTM_NAME like #{name}
+        </if>
+        <if test="phone != null">
+            AND CTM_PHONE like #{phone}
+        </if>
+    </select>
+
+    <select id="getById" parameterType="map" resultType="com.zpet.ms_customer.model.Customer">
+        SELECT 
+            CTM_ID as id
+            ,CTM_NAME as name
+            ,CTM_PHONE as phone
+            ,CTM_CREATEAT as dateCreated
+            ,CTM_ISACTIVE as isActive
+        FROM customer
+        WHERE CTM_ID = #{id}
+    </select>
+
+    <select id="getById" parameterType="map" resultType="com.zpet.ms_customer.model.Customer">
+        SELECT 
+            CTM_ID as id
+            ,CTM_NAME as name
+            ,CTM_PHONE as phone
+            ,CTM_CREATEAT as dateCreated
+            ,CTM_ISACTIVE as isActive
+        FROM customer
+        WHERE CTM_PHONE = #{phone}
+    </select>
+
+    <select id="getAddresses" parameterType="map" resultType="com.zpet.ms_customer.model.Address">
+        SELECT 
+            ADR_ID as id
+            ,ADR_RECEIVERNAME as receiverName 
+            ,ADR_PROVINCE as province
+            ,ADR_DISTRICT as district
+            ,ADR_WARD as ward
+            ,ADR_NOTE as note
+            ,ADR_LAT as lat 
+            ,ADR_LNG as lng
+            ,ADR_DISTANCE as distance 
+        FROM address 
+        WHERE CTM_ID = #{id}
+    </select>
+
+    <select id="getPoints" parameterType="map" resultType="com.zpet.ms_customer.model.Point">
+        SELECT 
+            ATTIME as time
+            ,CTM_ID as customerId
+            ,P_CHANGE as change
+            ,P_ISEARN as isEarn
+            ,P_TOTAL as total
+        FROM point
+        WHERE CTM_ID = #{id}
+    </select>
+
+
+    <!-- INSERT -->
+
+    <insert id="addCustomer" parameterType="com.zpet.ms_customer.request.CustomerAddRequest">
+        INSERT INTO customer 
+        VALUES (#{id}, #{phone}, #{name}, null, NOW(), 1)
+    </insert>
+
+    <insert id="addAddress" parameterType="com.zpet.ms_customer.request.AddressAddRequest">
+        INSERT INTO address
+        VALUES (
+            #{addressId}
+            , #{customerId}
+            , #{receiverName}
+            , #{province}
+            , #{district}
+            , #{ward}
+            , #{note}
+            , #{lat}
+            , #{lng}
+            , #{distance}
+        )
+    </insert>
+
+
+    <!-- UPDATE -->
+    <update id="updateCustomer" parameterType="map">
+        UPDATE customer
+        SET CTM_ID = #{id}
+            <if test="name != null">
+                , CTM_NAME = #{name}
+            </if>
+            <if test="phone != null">
+                , CTM_PHONE = #{phone}
+            </if>
+            <if test="password != null">
+                , CTM_PASSWORD = #{password}
+            </if>
+        WHERE CTM_ID = #{id}
+    </update>
+
+
 </mapper>
