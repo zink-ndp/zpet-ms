@@ -14,6 +14,7 @@ import com.zpet.ms_customer.model.Point;
 import com.zpet.ms_customer.repository.CustomerRepository;
 import com.zpet.ms_customer.request.AddressAddRequest;
 import com.zpet.ms_customer.request.CustomerAddRequest;
+import com.zpet.ms_customer.util.FunctionUtils;
 
 @Service
 public class CustomerService {
@@ -21,16 +22,27 @@ public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    FunctionUtils functionUtils;
+
     public List<Customer> getAll(Map<String, Object> params) {
-        return customerRepository.getAll(params);
+        List<Customer> customers = customerRepository.getAll(params);
+        customers.forEach(c -> {
+            c.setDateCreated(functionUtils.formatDate(c.getDateCreated(), "dd/MM/yyyy"));
+        });
+        return customers;
     }
 
     public Customer getById(Map<String, Object> params) {
-        return customerRepository.getById(params);
+        Customer customer = customerRepository.getById(params);
+        customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
+        return customer;
     }
 
     public Customer getByPhone(Map<String, Object> params) {
-        return customerRepository.getByPhone(params);
+        Customer customer = customerRepository.getByPhone(params);
+        customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
+        return customer;
     }
 
     public List<Address> getAddresses(Map<String, Object> params) {
@@ -38,7 +50,11 @@ public class CustomerService {
     }
 
     public List<Point> getPoints(Map<String, Object> params) {
-        return customerRepository.getPoints(params);
+        List<Point> points = customerRepository.getPoints(params);
+        points.forEach(p -> {
+            p.setTime(functionUtils.formatDate(p.getTime(), "dd/MM/yyyy HH:mm:ss"));
+        });
+        return points;
     }
 
     // INSERT

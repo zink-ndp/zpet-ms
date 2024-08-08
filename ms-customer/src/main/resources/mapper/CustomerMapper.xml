@@ -39,7 +39,7 @@
         WHERE CTM_ID = #{id}
     </select>
 
-    <select id="getById" parameterType="map" resultType="com.zpet.ms_customer.model.Customer">
+    <select id="getByPhone" parameterType="map" resultType="com.zpet.ms_customer.model.Customer">
         SELECT 
             CTM_ID as id
             ,CTM_NAME as name
