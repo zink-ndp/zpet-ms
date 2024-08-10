@@ -1,4 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zpet.ms-service.mapper.ServiceMapper">
+<mapper namespace="com.zpet.ms_service.mapper.ServiceMapper">
+
+    <!-- SELECT -->
+
+    <select id="lastId" resultType="java.lang.Integer">
+        SELECT MAX(SRV_ID) FROM service
+    </select>
+
+    <select id="getAll" parameterType="map" resultType="com.zpet.ms_service.model.Service">
+        SELECT 
+            SRV_ID as id
+            , SRV_NAME as name
+            , sRV_DESCRIPTION as description
+            , SRV_PRICE as price
+            , SRV_ISAVAILABLE as isAvailable
+        FROM service
+        WHERE 1
+        <if test="name != null">
+            AND SRV_NAME LIKE #{name}
+        </if>
+        <if test="isAvailable != null">
+            AND SRV_ISAVAILABLE = #{isAvailable}
+        </if>
+         <if test="fromPrice != null">
+            AND SRV_PRICE BETWEEN #{fromPrice} AND #{toPrice}
+        </if>
+    </select>
+
+    <!-- INSERT -->
+
+    <insert id="create" parameterType="com.zpet.ms_service.model.Service">
+        INSERT INTO service 
+        VALUES (
+            #{id}
+            , #{name}
+            , #{description}
+            , #{price}
+            , #{isAvailable}
+        )
+    </insert>
+
+    <!-- UPDATE -->
+    <insert id="update" parameterType="com.zpet.ms_service.model.Service">
+        UPDATE service 
+        SET 
+            SRV_NAME = ${name}
+            , SRV_DESCRIPTION = ${description}
+            , SRV_PRICE = ${price}
+            , SRV_ISAVAILABLE = #{isAvailable}
+        WHERE SRV_ID = ${id}
+    </insert>
+
 </mapper>
