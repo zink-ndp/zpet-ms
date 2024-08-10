@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zpet.ms_appointment.model.Appointment;
+import com.zpet.ms_appointment.response.AppointmentResponse;
 import com.zpet.ms_appointment.service.AppointmentService;
 
 @RestController
@@ -19,7 +19,7 @@ public class AppointmentController {
     AppointmentService appointmentService;
 
     @GetMapping("/all")
-    public List<Appointment> getAll(
+    public List<AppointmentResponse> getAll(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) Integer id,
             @RequestParam(required = false) Integer customerId) {
