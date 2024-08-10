@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zpet.ms-appointment.mapper.AppointmentMapper">
+<mapper namespace="com.zpet.ms_appointment.mapper.AppointmentMapper">
+
+    <select id="lastId" resultType="java.lang.Integer">
+        SELECT MAX(APM_ID) FROM appointment
+    </select>
+
+    <select id="getAll" parameterType="map" resultType="com.zpet.ms_appointment.model.Appointment">
+        SELECT 
+            a.APM_ID as id
+            , a.APM_DATE as date
+            , a.APM_TIME as time
+            , a.APM_NOTE as note
+            , a.CTM_ID as customerId
+            , (SELECT 
+                s.STT_NAME 
+                FROM `status` s
+                JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
+                WHERE astt.APM_ID = a.APM_ID
+                <if test="status != null">
+                    AND astt.STT_ID IN <foreach collection="status" separator="," open="(" close=")" item="stt">#{stt}</foreach>
+                </if>
+                ORDER BY astt.ATTIME DESC
+                LIMIT 1
+            ) AS status
+        FROM appointment a
+        WHERE 1
+        <if test="customerId">
+            AND a.CTM_ID = #{customerId}
+        </if>
+        <if test="id">
+            AND a.APM_ID = #{id}
+        </if>
+    </select>
+
 </mapper>
