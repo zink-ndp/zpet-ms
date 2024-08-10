@@ -11,7 +11,7 @@ public class PetResponse {
     private String specie;
     private String gender;
     private String birthday;
-    private Integer customerId;
+    private String customerName;
     private String image;
 
 }

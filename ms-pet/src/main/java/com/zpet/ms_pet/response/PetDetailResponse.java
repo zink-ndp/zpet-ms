@@ -13,7 +13,7 @@ public class PetDetailResponse {
     private String specie;
     private String gender;
     private String birthday;
-    private Integer customerId;
+    private String customerName;
     private List<String> images;
 
 }
