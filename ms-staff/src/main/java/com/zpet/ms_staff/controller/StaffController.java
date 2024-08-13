@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zpet.ms_staff.model.Staff;
 import com.zpet.ms_staff.service.StaffService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
+@RequestMapping("/staff")
 public class StaffController {
     
     @Autowired StaffService staffService;
