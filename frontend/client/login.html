@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zpet Login</title>
+     <!-- Style -->
+     <link rel="stylesheet" href="../css/style.css" />
+     <!-- Tailwind -->
+     <script src="https://cdn.tailwindcss.com"></script>
+     <!-- JQuery -->
+     <script
+       src="https://code.jquery.com/jquery-3.7.1.js"
+       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+       crossorigin="anonymous"
+     ></script>
+</head>
+<body>
+    <div class="w-full h-screen">
+        <div class="w-full h-full relative">
+          <img
+            src="../images/hero.jpg"
+            class="object-cover w-full h-full"
+            alt=""
+          />
+          <div
+            class="absolute top-[calc(50%-100px)] md:left-20 h-fit w-full md:w-96 p-6 rounded-md flex flex-col space-y-4 justify-center bg-white/45 backdrop-blur-sm"
+          >
+          <div class="text-[30px] flex text-black font-bold">
+            <p class="text-green-600">Z</p>
+            <p class="">pet</p>
+          </div>
+              <div class="flex space-x-4">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  class="w-full px-4 py-2 rounded-md bg-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <div class="flex space-x-4">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  class="w-full px-4 py-2 rounded-md bg-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              </div>
+              <div class="flex justify-center">
+                <button class="bg-green-500 text-white text-lg w-full p-2"
+                  type="submit">Login</button>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
