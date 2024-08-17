@@ -28,7 +28,7 @@ public class AppointmentService {
             BeanUtils.copyProperties(a, response);
             Integer customerId = a.getCustomerId();
             RestTemplate restTemplate = new RestTemplate();
-            Customer customer = restTemplate.getForObject("http:localhost:8904/byid?id=" + customerId, Customer.class);
+            Customer customer = restTemplate.getForObject("http:localhost:8900/api/customer/byid?id=" + customerId, Customer.class);
             if (customer != null) {
                 response.setCustomerName(customer.getName());
             } 

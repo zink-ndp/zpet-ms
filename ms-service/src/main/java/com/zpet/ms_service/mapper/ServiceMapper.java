@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.zpet.ms_service.model.Rate;
 import com.zpet.ms_service.model.Service;
 
 @Mapper
@@ -14,6 +15,8 @@ public interface ServiceMapper {
 
     public List<Service> getAll(Map<String, Object> params);
 
+    public List<Rate> getRate(Integer id);
+    
     public void create(Service service);
 
     public void update(Service service);

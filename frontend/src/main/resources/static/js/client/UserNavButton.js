@@ -7,5 +7,6 @@ $(() => {
     $(`#service-added-button`).click(() =>{
         $(`body`).addClass(`overflow-hidden`)
         $(`#added-service`).show()
+        createAppointment()
     })
 })

@@ -102,17 +102,17 @@
         <div
           class="bg-white shadow-lg rounded-md w-full md:w-[700px] lg:w-[1200px] mx-auto p-6 space-y-6"
         >
-          <div class="flex space-x-6">
+          <div class="flex space-x-6 w-full">
             <img
               src="/images/hero.jpg"
               class="w-32 h-32 object-cover rounded-lg"
               alt=""
             />
-            <div class="flex flex-col">
+            <div class="flex flex-col w-full">
               <h1 id="name-text" class="text-2xl font-bold">Service name</h1>
               <div class="flex space-x-1">
                 Đánh giá: &nbsp;
-                <p>4.5</p>
+                <p id="rating-text">4.5</p>
                 <img src="/images/star_solid.svg" class="h-6 w-6" />
               </div>
               <h3 id="price-text" class="text-2xl font-bold text-green-600">
@@ -122,11 +122,11 @@
                 Discover the world of pets, where love and care truly make a
                 difference.
               </p>
-              <button
+              <!-- <button
                 class="bg-green-500 hover:opacity-75 w-40 p-2 rounded-lg text-white font-semibold ms-auto"
               >
                 Đặt lịch ngay
-              </button>
+              </button> -->
             </div>
           </div>
           <hr />
@@ -283,6 +283,12 @@
         </div>
       </div>
   </body>
-  <script src="/js/ShowAddedService.js"></script>
-  <script src="/js/UserNavButton.js"></script>
+  <script src="/js/apiUrl.js"></script>
+  <script src="/js/client/ShowAddedService.js"></script>
+  <script src="/js/client/AddAppointment.js"></script>
+  <script src="/js/client/UserNavButton.js"></script>
+  <script src="/js/client/Modal.js"></script>
+  <script src="/js/client/ServiceDetail/LoadServiceDetail.js"></script>
+  
+
 </html>

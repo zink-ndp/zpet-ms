@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zpet.ms_service.model.Service;
+import com.zpet.ms_service.response.RateResponse;
 import com.zpet.ms_service.service.ServiceService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +32,14 @@ public class ServiceController {
 
     @GetMapping("/all")
     public List<Service> getAll(
+    	@RequestParam(required = false) Integer id,
         @RequestParam(required = false) String name,
         @RequestParam(required = false) Double fromPrice,
         @RequestParam(required = false) Double toPrice,
         @RequestParam(required = false) Integer isAvailable
     ) {
         Map<String, Object> params = new HashMap<>();
+        if (id != null) params.put("id", id);
         if (name != null) params.put("name", "%"+name+"%");
         if (isAvailable != null) params.put("isAvailable", isAvailable);
         if (fromPrice != null && toPrice != null) {
@@ -45,6 +48,11 @@ public class ServiceController {
         } 
         return serviceService.getAll(params);
     } 
+    
+    @GetMapping("/rates")
+    public List<RateResponse> getRates(@RequestParam Integer id){
+    	return serviceService.getRate(id);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Object> createService(@RequestBody Service service) {

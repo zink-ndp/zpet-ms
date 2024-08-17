@@ -1,4 +1,4 @@
-package com.zpet.ms_customer.model;
+package com.zpet.ms_service.model;
 
 public class Customer {
     

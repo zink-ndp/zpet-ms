@@ -44,7 +44,7 @@ public class PetService {
             RestTemplate restTemplate = new RestTemplate();
             Customer customer = restTemplate
                                     .getForObject(
-                                        "http://localhost:8904/byid?id=" + customerId,
+                                        "http://localhost:8900/api/customer/byid?id=" + customerId,
                                         Customer.class);
             petResponse.setCustomerName(customer.getName());
             responses.add(petResponse);
@@ -66,7 +66,7 @@ public class PetService {
             RestTemplate restTemplate = new RestTemplate();
             Customer customer = restTemplate
                                     .getForObject(
-                                        "http://localhost:8904/byid?id=" + customerId,
+                                        "http://localhost:8900/api/customer/byid?id=" + customerId,
                                         Customer.class);
             petResponse.setCustomerName(customer.getName());
             Integer petId = Integer.parseInt(param.get("id").toString());
