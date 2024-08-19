@@ -10,11 +10,14 @@ import com.zpet.ms_customer.model.Customer;
 import com.zpet.ms_customer.model.Point;
 import com.zpet.ms_customer.request.AddressAddRequest;
 import com.zpet.ms_customer.request.CustomerAddRequest;
+import com.zpet.ms_customer.request.LoginRequest;
 
 @Mapper
 public interface CustomerMapper {
 
     public Integer lastId(Map<String, Object> params);
+    
+    public Customer getByLogin(LoginRequest request);
     
     public List<Customer> getAll(Map<String, Object> params);
 

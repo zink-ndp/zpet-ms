@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 
-
 @Controller
 public class ClientController {
 
@@ -16,6 +15,15 @@ public class ClientController {
         return "404";
     }
     
+    @GetMapping("/login")
+    public String loginView() {
+        return "client/login";
+    }
+
+    @GetMapping("/logout")
+    public String logoutView() {
+        return "client/logout";
+    }
     
     @GetMapping("/")
     public String homeView() {

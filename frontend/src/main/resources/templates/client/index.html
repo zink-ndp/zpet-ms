@@ -21,11 +21,11 @@
     <nav
       class="z-40 fixed top-0 left-0 px-12 py-4 w-full bg-transparent flex justify-between items-center transition-all duration-500 ease-in-out"
     >
-    <a href="/" class="logo cursor-pointer">
-      <div id="logo" class="flex text-3xl text-white font-bold opacity-0">
-        <p class="">ZPet</p>
-      </div>
-    </a>
+      <a href="/" class="logo cursor-pointer">
+        <div id="logo" class="flex text-3xl text-white font-bold opacity-0">
+          <p class="">ZPet</p>
+        </div>
+      </a>
       <div class="flex space-x-3 items-center">
         <button
           id="service-added-button"
@@ -53,56 +53,62 @@
             />
           </svg>
         </button>
-        <div class="relative">
-          <div
-            id="user-button"
-            class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
-          >
-            <p id="user-button-text" class="text-lg">Hi, Vinh</p>
-            <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
+        <div class="relative" id="login-status">
+          <div id="logged-out" class="hidden">
+            <a href="/login"
+              id="login-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
+            >
+              <p id="login-button-text" class="text-lg">Đăng nhập</p>
+            </a>
           </div>
-          <div
-            id="user-option"
-            class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
-          >
-            <p class="text-green-700 text-sm font-bold">Quản lý</p>
-            <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thú cưng</a
+          <div id="logged-in" class="hidden">
+            <div
+              id="user-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
             >
-            <a
-              href="/appointments"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Lịch hẹn</a
+              <p id="user-button-text" class="text-lg">Hi, Vinh</p>
+              <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
+            </div>
+            <div
+              id="user-option"
+              class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
             >
-            <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Hóa đơn</a
-            >
-            <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Voucher</a
-            >
-            <hr />
-            <p class="text-green-700 text-sm font-bold">Tài khoản</p>
-            <a
-              href="/change-password"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thay đổi mật khẩu</a
-            >
-            <a
-              href="/logout"
-              class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
-              >Đăng xuất</a
-            >
+              <p class="text-green-700 text-sm font-bold">Quản lý</p>
+              <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thú cưng</a
+              >
+              <a
+                href="/appointments"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Lịch hẹn</a
+              >
+              <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Hóa đơn</a
+              >
+              <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Voucher</a
+              >
+              <hr />
+              <p class="text-green-700 text-sm font-bold">Tài khoản</p>
+              <a
+                href="/change-password"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thay đổi mật khẩu</a
+              >
+              <a
+                href="/logout"
+                class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
+                >Đăng xuất</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </nav>
     <div class="w-full h-screen">
       <div class="w-full h-full relative">
-        <img
-          src="/images/hero.jpg"
-          class="object-cover w-full h-full"
-          alt=""
-        />
+        <img src="/images/hero.jpg" class="object-cover w-full h-full" alt="" />
         <div
           class="absolute top-[calc(50%-300px)] left-32 h-[600px] w-96 rounded-md flex flex-col space-y-4 justify-center"
         >
@@ -248,8 +254,8 @@
             </div>
           </div>
           <button
-          id="btn-create-appointment"
-          disabled
+            id="btn-create-appointment"
+            disabled
             class="w-full bg-green-500 rounded-md text-white mt-3 p-3 hover:opacity-75"
           >
             Ok
@@ -258,7 +264,7 @@
       </div>
     </div>
   </body>
-  
+
   <script src="/js/apiUrl.js"></script>
   <script src="/js/client/script.js"></script>
   <script src="/js/client/ShowServices.js"></script>

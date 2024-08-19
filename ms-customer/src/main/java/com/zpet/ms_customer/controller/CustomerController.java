@@ -13,6 +13,7 @@ import com.zpet.ms_customer.model.Customer;
 import com.zpet.ms_customer.model.Point;
 import com.zpet.ms_customer.request.AddressAddRequest;
 import com.zpet.ms_customer.request.CustomerAddRequest;
+import com.zpet.ms_customer.request.LoginRequest;
 import com.zpet.ms_customer.service.CustomerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,6 +47,12 @@ public class CustomerController {
         params.put("id", id);
         return customerService.getById(params);
     }
+    
+    @PostMapping("/login")
+    public Customer getUserLogin(@RequestBody LoginRequest request) {
+        return customerService.getByLogin(request);
+    }
+    
 
     @GetMapping("/byphone")
     public Customer getByPhone(@RequestParam String phone) {

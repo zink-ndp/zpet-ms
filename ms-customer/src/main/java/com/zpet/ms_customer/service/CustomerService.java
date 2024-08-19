@@ -14,6 +14,7 @@ import com.zpet.ms_customer.model.Point;
 import com.zpet.ms_customer.repository.CustomerRepository;
 import com.zpet.ms_customer.request.AddressAddRequest;
 import com.zpet.ms_customer.request.CustomerAddRequest;
+import com.zpet.ms_customer.request.LoginRequest;
 import com.zpet.ms_customer.util.FunctionUtils;
 
 @Service
@@ -31,6 +32,10 @@ public class CustomerService {
             c.setDateCreated(functionUtils.formatDate(c.getDateCreated(), "dd/MM/yyyy"));
         });
         return customers;
+    }
+    
+    public Customer getByLogin(LoginRequest request) {
+    	return customerRepository.getByLogin(request);
     }
 
     public Customer getById(Map<String, Object> params) {

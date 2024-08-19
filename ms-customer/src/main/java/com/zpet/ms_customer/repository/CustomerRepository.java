@@ -12,6 +12,7 @@ import com.zpet.ms_customer.model.Customer;
 import com.zpet.ms_customer.model.Point;
 import com.zpet.ms_customer.request.AddressAddRequest;
 import com.zpet.ms_customer.request.CustomerAddRequest;
+import com.zpet.ms_customer.request.LoginRequest;
 
 @Repository
 public class CustomerRepository {
@@ -22,6 +23,10 @@ public class CustomerRepository {
    // GET
    public Integer lastId(Map<String, Object> params){
       return customerMapper.lastId(params);
+   }
+   
+   public Customer getByLogin(LoginRequest request) {
+	   return customerMapper.getByLogin(request);
    }
 
    public List<Customer> getAll(Map<String, Object> params) {

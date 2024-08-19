@@ -10,6 +10,19 @@
         ORDER BY ${column} DESC
         LIMIT 1
     </select>
+    
+    <select id="getByLogin" parameterType="com.zpet.ms_customer.request.LoginRequest" resultType="com.zpet.ms_customer.model.Customer">
+    	 SELECT 
+            CTM_ID as id
+            ,CTM_NAME as name
+            ,CTM_PHONE as phone
+            ,CTM_CREATEAT as dateCreated
+            ,CTM_ISACTIVE as isActive
+        FROM customer 
+        WHERE CTM_ISACTIVE = 1
+        AND CTM_PHONE = #{phone}
+        AND CTM_PASSWORD = #{password}
+    </select>
 
     <select id="getAll" parameterType="map"  resultType="com.zpet.ms_customer.model.Customer">
         SELECT 
