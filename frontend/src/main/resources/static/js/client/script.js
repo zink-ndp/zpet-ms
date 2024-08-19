@@ -4,9 +4,7 @@ $(() => {
 
     console.log(customer);
     
-
     if (customer == null) {
-        window.location.reload();
         $(`#logged-out`).show()
     } else {
         $(`#logged-in`).show()

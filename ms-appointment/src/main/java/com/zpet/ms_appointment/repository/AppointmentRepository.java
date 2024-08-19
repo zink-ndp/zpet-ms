@@ -14,9 +14,30 @@ public class AppointmentRepository {
 
     @Autowired
     AppointmentMapper appointmentMapper;
+    
+    public Integer lastId() {
+    	if (appointmentMapper.lastId() == null) return 0;
+    	return appointmentMapper.lastId();
+    }
 
     public List<Appointment> getAll(Map<String, Object> params){
         return appointmentMapper.getAll(params);
+    }
+    
+    public void insertAtTime(String attime) {
+    	appointmentMapper.insertAtTime(attime);
+    }
+    
+    public void insertAppointment(Appointment request) {
+    	appointmentMapper.insertAppointment(request);
+    }
+    
+    public void insertServiceAppointment(Map<String, Object> params) {
+    	appointmentMapper.insertServiceAppointment(params);
+    }
+    
+    public void insertApmStatus(Map<String, Object> params) {
+    	appointmentMapper.insertApmStatus(params);
     }
 
 }

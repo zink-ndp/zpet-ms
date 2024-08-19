@@ -25,13 +25,42 @@
                 LIMIT 1
             ) AS status
         FROM appointment a
-        WHERE 1
-        <if test="customerId">
+        WHERE (SELECT 
+            s.STT_NAME 
+            FROM `status` s
+            JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
+            WHERE astt.APM_ID = a.APM_ID
+               <if test="status != null">
+                    AND astt.STT_ID IN <foreach collection="status" separator="," open="(" close=")" item="stt">#{stt}</foreach>
+                </if>
+            ORDER BY astt.ATTIME DESC
+            LIMIT 1
+        ) IS NOT NULL
+        <if test="customerId != null">
             AND a.CTM_ID = #{customerId}
         </if>
-        <if test="id">
+        <if test="id != null">
             AND a.APM_ID = #{id}
         </if>
+        <if test="dateFrom != null">
+            AND a.APM_DATE BETWEEN #{dateFrom} AND #{dateTo}
+        </if>
     </select>
+
+	<insert id="insertAtTime" parameterType="java.lang.String">
+		INSERT INTO timing VALUES (#{attime})
+	</insert>
+
+	<insert id="insertAppointment" parameterType="com.zpet.ms_appointment.model.Appointment">
+		INSERT INTO appointment VALUES (#{id}, #{date}, #{time}, #{note}, #{customerId})
+	</insert>
+	
+	<insert id="insertServiceAppointment" parameterType="map">
+		INSERT INTO srv_included VALUES (#{apmId}, #{srvId})
+	</insert>
+	
+	<insert id="insertApmStatus" parameterType="map">
+		INSERT INTO apm_stt VALUES (#{status}, #{atTime}, #{apmId}, #{description})
+	</insert>
 
 </mapper>

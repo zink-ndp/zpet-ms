@@ -14,4 +14,12 @@ public interface AppointmentMapper {
 
     public List<Appointment> getAll(Map<String, Object> params);
     
+    public void insertAtTime(String attime);
+    
+    public void insertAppointment(Appointment request);
+    
+    public void insertServiceAppointment(Map<String, Object> params);
+    
+    public void insertApmStatus(Map<String, Object> params);
+    
 }

@@ -51,10 +51,60 @@ function createAppointment() {
       serviceInApointmentElement(oldObject[obj])
     );
   }
+ 
+}
+
+function processAppointment() {
+  let customer = localStorage.getItem('customer')
+
+  let customerId = JSON.parse(customer).id;
+  let services = JSON.parse(localStorage.getItem("services"));
+  let date = $("#datepicker-modal").val();
+  let time = $("#timepicker-modal").val();
+  let note = $("#note-modal").val();
+  console.log(customerId, services, date, time);
+
+  if (!nonEmpty(customerId, services, date, time)) {
+    alert("Vui lòng nhập đầy đủ thông tin")
+    return
+  }
+
+  let requestData = JSON.stringify({
+    customerId: customerId,
+    services: services,
+    date: date,
+    time: time,
+    note: note,
+  })
+  console.log(requestData);
+  $.ajax({
+    url: apiUrl+"/api/appointment/create",
+    type: "POST",
+    data: requestData,
+    contentType: "application/json",
+    success: function (data) {
+      alert("Đặt lịch thành công!")
+      localStorage.removeItem("services");
+      window.location.href = "/appointments"
+    },
+    error: function (error) {
+      console.error("Error:", error);
+    },
+  })
+
 }
 
 $(() => {
 
   
-
+  
+  $(`#btn-create-appointment`).click(() => {
+    let customer = localStorage.getItem('customer')
+    if (customer == null) {
+      alert("Vui lòng đăng nhập !")
+      window.location.href = "/login"
+    } else {
+      processAppointment()
+    }
+  })
 })
