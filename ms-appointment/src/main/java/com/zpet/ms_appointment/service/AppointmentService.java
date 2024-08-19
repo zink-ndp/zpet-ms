@@ -15,6 +15,7 @@ import com.zpet.ms_appointment.model.Appointment;
 import com.zpet.ms_appointment.model.Customer;
 import com.zpet.ms_appointment.repository.AppointmentRepository;
 import com.zpet.ms_appointment.request.AddAppointmentRequest;
+import com.zpet.ms_appointment.response.AppointmentHistoryResponse;
 import com.zpet.ms_appointment.response.AppointmentResponse;
 import com.zpet.ms_appointment.utils.FunctionUtils;
 
@@ -44,6 +45,11 @@ public class AppointmentService {
         });
         return responseList;
     }
+    
+    public List<AppointmentHistoryResponse> getHistory(Integer id) {
+    	return appointmentRepository.getAppointmentHistory(id);
+    }
+    
     
     public void createAppointment(AddAppointmentRequest request){
     	Appointment apm = new Appointment();

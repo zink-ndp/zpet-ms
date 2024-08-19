@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zpet.ms_appointment.request.AddAppointmentRequest;
+import com.zpet.ms_appointment.response.AppointmentDetailResponse;
+import com.zpet.ms_appointment.response.AppointmentHistoryResponse;
 import com.zpet.ms_appointment.response.AppointmentResponse;
 import com.zpet.ms_appointment.service.AppointmentService;
 import com.zpet.ms_appointment.utils.FunctionUtils;
@@ -49,6 +51,20 @@ public class AppointmentController {
             params.put("customerId", customerId);
         return appointmentService.getAll(params);
     }
+    
+    @GetMapping("/detail")
+    public AppointmentDetailResponse getMethodName(@RequestParam Integer id) {
+    	Map<String, Object> params = new HashMap<String, Object>();
+    	params.put("id", id);
+    	AppointmentResponse info = appointmentService.getAll(params).get(0); 
+    	if (info == null) return null;
+    	List<AppointmentHistoryResponse> history = appointmentService.getHistory(id);
+    	AppointmentDetailResponse response = new AppointmentDetailResponse();
+    	response.setInfo(info);
+    	response.setHistory(history);
+        return response;
+    }
+    
     
     @PostMapping("/create")
     @Transactional

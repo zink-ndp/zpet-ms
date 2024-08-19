@@ -53,45 +53,56 @@
             />
           </svg>
         </button>
-        <div class="relative">
-          <div
-            id="user-button"
-            class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
-          >
-            <p id="user-button-text" class="text-lg">Hi, Vinh</p>
-            <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
+        <div class="relative" id="login-status">
+          <div id="logged-out" class="hidden">
+            <a
+              href="/login"
+              id="login-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
+            >
+              <p id="login-button-text" class="text-lg">Đăng nhập</p>
+            </a>
           </div>
-          <div
-            id="user-option"
-            class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
-          >
-            <p class="text-green-700 text-sm font-bold">Quản lý</p>
-            <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thú cưng</a
+          <div id="logged-in" class="hidden">
+            <div
+              id="user-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
             >
-            <a
-              href="/appointments"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Lịch hẹn</a
+              <p id="user-button-text" class="text-lg">Hi, Vinh</p>
+              <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
+            </div>
+            <div
+              id="user-option"
+              class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
             >
-            <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Hóa đơn</a
-            >
-            <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Voucher</a
-            >
-            <hr />
-            <p class="text-green-700 text-sm font-bold">Tài khoản</p>
-            <a
-              href="/change-password"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thay đổi mật khẩu</a
-            >
-            <a
-              href="/logout"
-              class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
-              >Đăng xuất</a
-            >
+              <p class="text-green-700 text-sm font-bold">Quản lý</p>
+              <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thú cưng</a
+              >
+              <a
+                href="/appointments"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Lịch hẹn</a
+              >
+              <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Hóa đơn</a
+              >
+              <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Voucher</a
+              >
+              <hr />
+              <p class="text-green-700 text-sm font-bold">Tài khoản</p>
+              <a
+                href="/change-password"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thay đổi mật khẩu</a
+              >
+              <a
+                href="/logout"
+                class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
+                >Đăng xuất</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -209,27 +220,30 @@
               id="modal-close"
             />
           </h1>
+          <div class="w-full text-center">
+            <p id="detail-status"></p>
+          </div>
           <div class="mt-3 flex flex-col space-y-3">
             <p class="font-semibold text-lg">Thông tin:</p>
             <div class="flex items-center space-x-3 w-full">
-              <p class="flex-shrink-0 w-20 text-gray-600">Thời gian:</p>
-              <p class="flex-grow">24/11/2022 - 7:00 AM</p>
+              <p class="flex-shrink-0 w-32 text-gray-600">Khách hàng:</p>
+              <p id="detail-customer-name" class="flex-grow">24/11/2022 - 7:00 AM</p>
             </div>
             <div class="flex items-center space-x-3 w-full">
-              <p class="flex-shrink-0 w-20 text-gray-600">Ghi chú:</p>
-              <p class="flex-grow">
+              <p class="flex-shrink-0 w-32 text-gray-600">Thời gian:</p>
+              <p id="detail-time" class="flex-grow">24/11/2022 - 7:00 AM</p>
+            </div>
+            <div class="flex items-center space-x-3 w-full">
+              <p class="flex-shrink-0 w-32 text-gray-600">Ghi chú:</p>
+              <p id="detail-note" class="flex-grow">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                 Tempore inventore ea sed corporis, velit, porro ipsa libero
                 veritatis recusandae at
               </p>
             </div>
             <div class="flex items-center space-x-3 w-full">
-              <p class="flex-shrink-0 w-20 text-gray-600">Lịch sử:</p>
-              <div class="flex flex-col flex-grow">
-                <p>24/11/2022 - 7:00 AM: Trang thai blah blah</p>
-                <p>24/11/2022 - 7:00 AM: Trang thai blah blah</p>
-                <p>24/11/2022 - 7:00 AM: Trang thai blah blah</p>
-                <p>24/11/2022 - 7:00 AM: Trang thai blah blah</p>
+              <p class="flex-shrink-0 w-32 text-gray-600">Lịch sử:</p>
+              <div id="detail-history" class="flex flex-col flex-grow">
               </div>
             </div>
           </div>
@@ -327,6 +341,7 @@
   </body>
   <script src="/js/apiUrl.js"></script>
   <script src="/js/utils.js"></script>
+  <script src="/js/client/CheckLogin.js"></script>
   <script src="/js/client/UserNavButton.js"></script>
   <script src="/js/client/ShowAddedService.js"></script>
   <script src="/js/client/AddAppointment.js"></script>

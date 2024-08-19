@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zpet.ms_appointment.mapper.AppointmentMapper;
 import com.zpet.ms_appointment.model.Appointment;
+import com.zpet.ms_appointment.response.AppointmentHistoryResponse;
 
 @Repository
 public class AppointmentRepository {
@@ -22,6 +23,10 @@ public class AppointmentRepository {
 
     public List<Appointment> getAll(Map<String, Object> params){
         return appointmentMapper.getAll(params);
+    }
+    
+    public List<AppointmentHistoryResponse> getAppointmentHistory(Integer id) {
+    	return appointmentMapper.getAppointmentHistory(id);
     }
     
     public void insertAtTime(String attime) {

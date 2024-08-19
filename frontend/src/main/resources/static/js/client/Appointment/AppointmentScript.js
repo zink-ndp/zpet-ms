@@ -41,6 +41,32 @@ const apmElement = (apm) => {
     `;
 };
 
+function viewDetail(id) {
+  $(`#appointment-detail`).show();
+  $.ajax({
+    url: apiUrl + "/api/appointment/detail?id=" + id,
+    method: "GET",
+    success: function (data) {
+      $(`#detail-time`).text(data.info.date+" - "+data.info.time);
+      $(`#detail-status`).text(data.info.status);
+      $(`#detail-note`).text(data.info.note != null ? data.info.note != null : "Không có ghi chú");
+      $(`#detail-customer-name`).text(data.info.customerName);
+      $(`#detail-history`).empty();
+      data.history.forEach(h => {
+        $(`#detail-history`).append(`
+            <div class="flex-wrap">
+                <p>${h.attime}: ${h.status}</p>
+                <p class="text-sm text-gray-500">${h.description}</p>
+            </div>
+        `)
+      })
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  })
+}
+
 function loadCurrentAppointments(customer) {
   $.ajax({
     url:
