@@ -35,13 +35,15 @@ public class PetController {
         @RequestParam(required = false) String name,
         @RequestParam(required = false) String specie,
         @RequestParam(required = false) Integer gender,
-        @RequestParam(required = false) Integer type
+        @RequestParam(required = false) Integer type,
+        @RequestParam(required = false) Integer customerId
     ) {
         Map<String, Object> params = new HashMap<String, Object>();
         if (name != null) params.put("name", "%"+name+"%");
         if (specie != null) params.put("specie", "%"+specie+"%");
         if (gender != null) params.put("gender", gender);
         if (type != null) params.put("type", type);
+        if (customerId != null) params.put("customerId", customerId);
         return petService.getAll(params);
     }
 

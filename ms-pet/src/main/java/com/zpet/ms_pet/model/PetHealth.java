@@ -6,6 +6,13 @@ public class PetHealth {
     private Integer id;
     private String health;
     private Double weight;
+    private String note;
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public String getTime() {
 		return time;
 	}
