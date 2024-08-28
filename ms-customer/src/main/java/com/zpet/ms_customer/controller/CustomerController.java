@@ -62,9 +62,12 @@ public class CustomerController {
     }
 
     @GetMapping("/addresses")
-    public List<Address> getAddresses(@RequestParam String id) {
+    public List<Address> getAddresses(
+    		@RequestParam String id,
+    		@RequestParam(required = false) String adrId) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
+        if (adrId != null) params.put("adrId", adrId);
         return customerService.getAddresses(params);
     }
 

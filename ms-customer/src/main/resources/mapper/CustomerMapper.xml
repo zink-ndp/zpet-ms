@@ -76,6 +76,9 @@
             ,ADR_DISTANCE as distance 
         FROM address 
         WHERE CTM_ID = #{id}
+        <if test="adrId != null">
+        	AND ADR_ID = #{adrId}
+        </if>
     </select>
 
     <select id="getPoints" parameterType="map" resultType="com.zpet.ms_customer.model.Point">
