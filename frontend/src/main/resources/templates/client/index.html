@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZPet</title>
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite DateTime picker -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <!-- JQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav
+      class="z-40 fixed top-0 left-0 px-12 py-4 w-full bg-transparent flex justify-between items-center transition-all duration-500 ease-in-out"
+    >
+      <a href="/" class="logo cursor-pointer">
+        <div id="logo" class="flex text-3xl text-white font-bold opacity-0">
+          <p class="">ZPet</p>
+        </div>
+      </a>
+      <div class="flex space-x-3 items-center">
+        <button
+          id="service-added-button"
+          class="relative w-10 h-10 rounded-md hover:bg-white/25 flex items-center justify-center"
+        >
+          <p
+            id="service-quantity"
+            class="w-4 h-4 bg-white rounded-full text-black text-xs absolute -top-1 -right-1"
+          >
+            1
+          </p>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="size-6 text-white"
+          >
+            <path
+              d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <div class="relative" id="login-status">
+          <div id="logged-out" class="hidden">
+            <a
+              href="/login"
+              id="login-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
+            >
+              <p id="login-button-text" class="text-lg">Đăng nhập</p>
+            </a>
+          </div>
+          <div id="logged-in" class="hidden">
+            <div
+              id="user-button"
+              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
+            >
+              <p id="user-button-text" class="text-lg">Hi, Vinh</p>
+              <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
+            </div>
+            <div
+              id="user-option"
+              class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
+            >
+              <p class="text-green-700 text-sm font-bold">Quản lý</p>
+              <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thú cưng</a
+              >
+              <a
+                href="/appointments"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Lịch hẹn</a
+              >
+              <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Hóa đơn</a
+              >
+              <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Voucher</a
+              >
+              <hr />
+              <p class="text-green-700 text-sm font-bold">Tài khoản</p>
+              <a
+                href="/change-password"
+                class="py-2 px-3 rounded-md hover:bg-black/5"
+                >Thay đổi mật khẩu</a
+              >
+              <a
+                href="/logout"
+                class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
+                >Đăng xuất</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="w-full h-screen">
+      <div class="w-full h-full relative">
+        <img src="/images/hero.jpg" class="object-cover w-full h-full" alt="" />
+        <div
+          class="absolute top-[calc(50%-300px)] left-32 h-[600px] w-96 rounded-md flex flex-col space-y-4 justify-center"
+        >
+          <div class="text-[80px] flex text-white font-bold">
+            <p class="text-green-500">Z</p>
+            <p class="">pet</p>
+          </div>
+          <p class="font-semibold text-2xl text-white">
+            Cửa hàng chăm sóc thú cưng
+          </p>
+          <button
+            class="text-white w-[150px] bg-green-500 p-3 rounded-md hover:opacity-75 hover:scale-105 transition-all duration-300 ease-in-out"
+          >
+            Đặt lịch ngay
+          </button>
+        </div>
+      </div>
+    </div>
+    <section id="content" class="mt-8">
+      <div class="w-full font-bold text-center text-green-600 text-3xl">
+        Dịch vụ của ZPet
+      </div>
+      <div
+        id="grid-service"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-8 lg:mx-48"
+      >
+        <!-- Render with JQuery -->
+      </div>
+    </section>
+    <div id="footer" class="mt-8 bg-white">
+      <div
+        class="flex flex-col md:flex-row p-12 items-center justify-center md:justify-between"
+      >
+        <div class="text-[50px] flex text-black font-bold">
+          <p class="text-green-500">Z</p>
+          <p class="">Pet</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 justify-end">
+          <a
+            href=""
+            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
+            >Thú cưng</a
+          >
+          <a
+            href=""
+            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
+            >Lịch hẹn</a
+          >
+          <a
+            href=""
+            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
+            >Hóa đơn</a
+          >
+          <a
+            href=""
+            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
+            >Voucher</a
+          >
+        </div>
+      </div>
+      <div class="w-full p-4 text-center text-gray-600">
+        <p>2024 ZPet. Nguyen Do Phuc Vinh B2003768.</p>
+      </div>
+    </div>
+
+    <div
+      id="added-service"
+      class="z-50 fixed top-0 left-0 modal w-full h-full hidden"
+    >
+      <div class="w-full h-full relative">
+        <div class="modal-overlay w-full h-full bg-black/45"></div>
+        <div
+          class="absolute top-[calc(50%-300px)] left-[calc(50%-400px)] w-full h-full md:w-[800px] md:h-fit bg-white rounded-lg p-8"
+        >
+          <h1 class="text-center font-bold text-3xl relative">
+            Thêm lịch hẹn
+            <img
+              src="/images/close.svg"
+              class="modal-close absolute top-0 right-0 h-8 w-8 hover:scale-105 rounded-full p-1 hover:bg-gray-200"
+              alt=""
+              id="modal-close"
+            />
+          </h1>
+          <div class="mt-3 flex flex-col space-y-3">
+            <p class="font-semibold text-lg">Danh sách dịch vụ đặt hẹn:</p>
+            <ol id="added-service-modal" class="space-y-2">
+              Chưa có dịch vụ nào được thêm!
+            </ol>
+          </div>
+          <div class="mt-3">
+            <p class="font-semibold text-lg">Ghi chú:</p>
+            <textarea
+              id="note-modal"
+              class="w-full h-24 p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
+              placeholder="Ghi chú"
+            ></textarea>
+          </div>
+          <div class="mt-3">
+            <p class="font-semibold text-lg">Thời gian đặt hẹn:</p>
+            <div class="flex space-x-4 px-12">
+              <div class="relative max-w-sm flex-1 w-full">
+                <div
+                  class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  datepicker
+                  id="datepicker-modal"
+                  type="text"
+                  class="block w-full ps-10 p-2.5 bg-slate-50 rounded-md"
+                  placeholder="Select date"
+                />
+              </div>
+              <div class="relative flex-1 w-full">
+                <input
+                  id="timepicker-modal"
+                  type="time"
+                  class="block w-full ps-10 p-2.5 bg-slate-50 rounded-md"
+                  value="00:00"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <button
+            id="btn-create-appointment"
+            class="w-full bg-green-500 rounded-md text-white mt-3 p-3 hover:opacity-75"
+          >
+            Ok
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="/js/apiUrl.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/client/script.js"></script>
+  <script src="/js/client/CheckLogin.js"></script>
+  <script src="/js/client/ShowServices.js"></script>
+  <script src="/js/client/ShowAddedService.js"></script>
+  <script src="/js/client/Modal.js"></script>
+  <script src="/js/client/UserNavButton.js"></script>
+  <script src="/js/client/AddAppointment.js"></script>
+</html>

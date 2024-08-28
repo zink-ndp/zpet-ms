@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpet.ms_staff.mapper.StaffMapper">
+
+    <select id="getAll" resultType="com.zpet.ms_staff.model.Staff">
+        SELECT 
+            STF_ID as id
+            ,STF_NAME as name
+            ,STF_PHONE as phone
+            ,STF_EMAIL as email
+            ,STF_PASSWORD as password
+            ,STF_ISMANAGER as isManager
+            ,STF_JOINEDAT as joinedDate
+            ,STF_ISWORKING as isWorking
+        FROM staff
+        WHERE 1
+        <if test="name != null">
+            AND STF_NAME like #{name}
+        </if>
+        <if test="phone != null">
+            AND STF_PHONE like #{phone}
+        </if>
+        <if test="email != null">
+            AND STF_EMAIL like #{email}
+        </if>
+        <if test="isManager != null">
+            AND STF_ISMANAGER = #{isManager}
+        </if>
+        <if test="isWorking != null">
+            AND STF_ISWORKING = #{isWorking}
+        </if>
+    </select>
+
+    <select id="getById" resultType="com.zpet.ms_staff.model.Staff">
+        SELECT 
+            STF_ID as id
+            ,STF_NAME as name
+            ,STF_PHONE as phone
+            ,STF_EMAIL as email
+            ,STF_PASSWORD as password
+            ,STF_ISMANAGER as isManager
+            ,STF_JOINEDAT as joinedDate
+            ,STF_ISWORKING as isWorking
+        FROM staff
+        WHERE STF_ID = #{id}
+    </select>
+
+     <select id="getByPhone" resultType="com.zpet.ms_staff.model.Staff">
+        SELECT 
+            STF_ID as id
+            ,STF_NAME as name
+            ,STF_PHONE as phone
+            ,STF_EMAIL as email
+            ,STF_PASSWORD as password
+            ,STF_ISMANAGER as isManager
+            ,STF_JOINEDAT as joinedDate
+            ,STF_ISWORKING as isWorking
+        FROM staff
+        WHERE STF_PHONE = #{phone}
+    </select>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpet.ms_pet.mapper.PetMapper">
+
+    <!-- SELECT -->
+
+    <select id="lastId" resultType="java.lang.Integer">
+        SELECT MAX(P_ID) as lastId
+        FROM pet
+    </select>
+
+    <select id="getAll" parameterType="map" resultType="com.zpet.ms_pet.model.Pet">
+         SELECT 
+            p.P_ID as id
+            , p.P_NAME as name
+            , p.P_SPECIE as specie
+            , p.P_GENDER as gender
+            , p.P_BIRTHDAY as birthday
+            , pt.PT_ID as typeId
+            , pt.PT_NAME as type
+            , pi.PIMG_LINK as image
+            , p.CTM_ID as customerId
+        FROM pet p 
+        JOIN pet_type pt on pt.PT_ID = p.PT_ID 
+        JOIN pet_image pi on pi.P_ID = p.P_ID 
+        WHERE pi.PIMG_ISMAINIMG=true
+        <if test="id != null">
+            AND p.P_ID like #{id}
+        </if>
+        <if test="customerId != null">
+            AND p.CTM_ID = #{customerId}
+        </if>
+        <if test="name != null">
+            AND p.P_NAME like #{name}
+        </if>
+        <if test="specie != null">
+            AND p.P_SPECIE like #{specie}
+        </if>
+        <if test="gender != null">
+            AND p.P_GENDER = #{gender}
+        </if>
+        <if test="type != null">
+            AND p.PT_ID = #{type}
+        </if>
+        <if test="customerId != null">
+            AND p.CTM_ID = #{customerId}
+        </if>
+    </select>
+
+    <select id="getImages" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT PIMG_LINK as image
+        FROM pet_image pi 
+        JOIN pet p ON p.P_ID = pi.P_ID
+        WHERE p.P_ID = #{id}
+    </select>
+
+    <select id="getHealths" parameterType="java.lang.Integer" resultType="com.zpet.ms_pet.model.PetHealth">
+        SELECT 
+            ATTIME as time
+            , P_ID as id
+            , PH_HEALTH as health
+            , PH_WEIGHT as weight
+            , NOTE as note
+        FROM pet_health
+        WHERE P_ID = #{id}
+    </select>
+
+    <!-- INSERT -->
+
+    <insert id="create" parameterType="com.zpet.ms_pet.model.Pet">
+        INSERT INTO pet 
+        VALUES (
+            ${id}
+            , #{typeId}
+            , #{name}
+            , #{specie}
+            , #{gender}
+            , #{birthday}
+            , #{customerId}
+        )
+    </insert>
+
+    <insert id="createImage" parameterType="map">
+        INSERT INTO pet_image (P_ID, PIMG_LINK, PIMG_ISMAINIMG)
+        VALUES (
+            #{petId}
+            , #{imageName}
+            , #{isMain}
+        )
+    </insert>
+
+    <!-- UPDATE -->
+
+    <update id="update" parameterType="com.zpet.ms_pet.model.Pet">
+        UPDATE pet 
+        SET 
+            P_ID = #{id}
+            , PT_ID = #{typeId}
+            , P_NAME = #{name}
+            , P_SPECIE = #{specie}
+            , P_GENDER = #{gender}
+            , P_BIRTHDAY = #{birthday}  
+            , CTM_ID = #{customerId}
+        WHERE P_ID = #{id}
+    </update>
+
+</mapper>

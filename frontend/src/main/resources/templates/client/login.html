@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zpet Login</title>
+     <!-- Style -->
+     <link rel="stylesheet" href="../css/style.css" />
+     <!-- Tailwind -->
+     <script src="https://cdn.tailwindcss.com"></script>
+     <!-- JQuery -->
+     <script
+       src="https://code.jquery.com/jquery-3.7.1.js"
+       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+       crossorigin="anonymous"
+     ></script>
+</head>
+<body>
+    <div class="w-full h-screen">
+        <div class="w-full h-full relative">
+          <img
+            src="../images/hero.jpg"
+            class="object-cover w-full h-full"
+            alt=""
+          />
+          <div
+            class="absolute top-[calc(50%-100px)] md:left-32 h-fit w-full md:w-[30rem] p-12 rounded-md flex flex-col space-y-6 justify-center bg-white"
+          >
+          <div class="text-[30px] flex text-black font-bold">
+            <p class="text-green-600">Z</p>
+            <p class="">pet</p>
+          </div>
+              <div class="flex space-x-4">
+                <input
+                  type="phone"
+                  id="phone"
+                  name="phone"
+                  placeholder="Số điện thoại"
+                  class="w-full h-12 px-4 py-2 rounded-md bg-white backdrop-blur-sm ring-1 ring-gray-300 focus:ring-green-500 outline-none"
+                />
+              </div>
+              <div class="flex space-x-4">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Mật khẩu"
+                  class="w-full h-12 px-4 py-2 rounded-md bg-white backdrop-blur-sm ring-1 ring-gray-300 focus:ring-green-500 outline-none"
+                />
+              </div>
+              <div class="flex justify-center">
+                <button id="btnLogin" class="bg-green-500 text-white text-lg w-full h-12 p-2 rounded-md"
+                  >Đăng nhập</button>
+          </div>
+        </div>
+      </div>
+</body>
+<script src="/js/apiUrl.js"></script>
+<script src="/js/client/Login/Login.js"></script>
+
+</html>
