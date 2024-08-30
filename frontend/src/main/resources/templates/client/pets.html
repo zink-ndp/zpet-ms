@@ -126,15 +126,13 @@
           <div class="flex space-x-6" id="pet-detail-modal_detail">
             <!-- RENDER WITH JQUERY -->
           </div>
-          <div
-            class="mt-5 flex flex-col space-y-3"
-          >
+          <div class="mt-5 flex flex-col space-y-3">
             <p class="font-semibold text-lg">Lịch sử khám sức khỏe:</p>
             <div
               id="pet-detail-modal_health"
               class="p-6 bg-gray-100 rounded-md h-52 overflow-y-scroll space-y-3"
             >
-            <!-- RENDER WITH JQUERY -->
+              <!-- RENDER WITH JQUERY -->
             </div>
           </div>
           <p class="mt-4 w-full text-sm text-gray-500 italic text-center">
@@ -185,6 +183,14 @@
             </ol>
           </div>
           <div class="mt-3">
+            <p class="font-semibold text-lg">Ghi chú:</p>
+            <textarea
+              id="note-modal"
+              class="w-full h-24 p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
+              placeholder="Ghi chú"
+            ></textarea>
+          </div>
+          <div class="mt-3">
             <p class="font-semibold text-lg">Thời gian đặt hẹn:</p>
             <div class="flex space-x-4 px-12">
               <div class="relative max-w-sm flex-1 w-full">
@@ -223,6 +229,7 @@
             </div>
           </div>
           <button
+            id="btn-create-appointment"
             class="w-full bg-green-500 rounded-md text-white mt-3 p-3 hover:opacity-75"
           >
             Ok
@@ -241,5 +248,6 @@
   <script src="/js/client/UserNavButton.js"></script>
   <script src="/js/client/ShowAddedService.js"></script>
   <script src="/js/client/Appointment/AppointmentScript.js"></script>
+  <script src="/js/client/AddAppointment.js"></script>
   <script src="/js/client/Modal.js"></script>
 </html>

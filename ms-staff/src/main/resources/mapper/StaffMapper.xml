@@ -45,7 +45,7 @@
         WHERE STF_ID = #{id}
     </select>
 
-     <select id="getByPhone" resultType="com.zpet.ms_staff.model.Staff">
+     <select id="getLogin" resultType="com.zpet.ms_staff.model.Staff">
         SELECT 
             STF_ID as id
             ,STF_NAME as name
@@ -57,6 +57,8 @@
             ,STF_ISWORKING as isWorking
         FROM staff
         WHERE STF_PHONE = #{phone}
+        AND STF_ISMANAGER = #{role}
+        AND STF_PASSWORD = #{password}
     </select>
 
 </mapper>

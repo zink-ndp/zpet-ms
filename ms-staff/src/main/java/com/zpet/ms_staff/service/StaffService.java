@@ -32,7 +32,8 @@ public class StaffService {
     }
 
     public Staff getByPhone(Map<String, Object> params){
-        Staff s = staffRepository.getByPhone(params);
+        Staff s = staffRepository.getLogin(params);
+        if (s == null) return null;
         s.setJoinedDate(functionUtils.formatDate(s.getJoinedDate(), "dd/MM/yyyy"));
         return s;
     }

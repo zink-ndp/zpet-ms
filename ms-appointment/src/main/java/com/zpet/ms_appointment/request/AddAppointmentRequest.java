@@ -8,6 +8,13 @@ public class AddAppointmentRequest {
 	private Integer customerId;
 	private String date;
 	private String time;
+	private String note;
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	private List<String> services;
 	
 	

@@ -29,6 +29,10 @@ public class AppointmentRepository {
     	return appointmentMapper.getAppointmentHistory(id);
     }
     
+    public List<String> getAppointmentServices(Integer id){
+    	return appointmentMapper.getAppointmentServices(id);
+    }
+    
     public void insertAtTime(String attime) {
     	appointmentMapper.insertAtTime(attime);
     }

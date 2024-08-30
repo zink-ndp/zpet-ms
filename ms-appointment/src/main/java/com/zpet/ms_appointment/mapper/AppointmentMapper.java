@@ -17,6 +17,8 @@ public interface AppointmentMapper {
     
     public List<AppointmentHistoryResponse> getAppointmentHistory(Integer id);
     
+    public List<String> getAppointmentServices(Integer id);
+    
     public void insertAtTime(String attime);
     
     public void insertAppointment(Appointment request);

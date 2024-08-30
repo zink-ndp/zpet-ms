@@ -39,6 +39,7 @@ public class AppointmentService {
             Customer customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + customerId, Customer.class);
             if (customer != null) {
                 response.setCustomerName(customer.getName());
+                response.setCustomerPhone(customer.getPhone());
             } 
             response.setDate(funcUtils.formatDateTime(response.getDate(), "dd/MM/yyyy"));
             responseList.add(response);
@@ -48,6 +49,10 @@ public class AppointmentService {
     
     public List<AppointmentHistoryResponse> getHistory(Integer id) {
     	return appointmentRepository.getAppointmentHistory(id);
+    }
+    
+    public List<String> getAppointmentServices(Integer id){
+    	return appointmentRepository.getAppointmentServices(id);
     }
     
     

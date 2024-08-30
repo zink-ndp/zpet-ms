@@ -10,7 +10,14 @@ public class AppointmentResponse {
     private String time;
     private String note;
     private String customerName;
-    private String status;
+    private String customerPhone;
+    public String getCustomerPhone() {
+		return customerPhone;
+	}
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
+	}
+	private String status;
     
 	public Integer getId() {
 		return id;

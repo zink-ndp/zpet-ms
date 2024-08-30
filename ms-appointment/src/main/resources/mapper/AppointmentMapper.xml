@@ -45,6 +45,7 @@
         <if test="dateFrom != null">
             AND a.APM_DATE BETWEEN #{dateFrom} AND #{dateTo}
         </if>
+        ORDER BY a.APM_DATE DESC
     </select>
     
     <select id="getAppointmentHistory" parameterType="java.lang.Integer" resultType="com.zpet.ms_appointment.response.AppointmentHistoryResponse">
@@ -56,6 +57,12 @@
 		FROM apm_stt ast JOIN status s ON s.STT_ID = ast.STT_ID
 		WHERE ast.APM_ID = #{id}
 		ORDER BY ast.ATTIME DESC
+    </select>
+    
+    <select id="getAppointmentServices" parameterType="java.lang.Integer" resultType="java.lang.String">
+    	SELECT SRV_ID as serviceId
+    	FROM srv_included
+    	WHERE APM_ID = #{id}
     </select>
 
 	<insert id="insertAtTime" parameterType="java.lang.String">

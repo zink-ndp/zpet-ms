@@ -14,6 +14,6 @@ public interface StaffMapper {
 
     public Staff getById(Map<String, Object> params);
 
-    public Staff getByPhone(Map<String, Object> params);
+    public Staff getLogin(Map<String, Object> params);
 
 }

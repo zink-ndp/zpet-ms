@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zpet.ms_staff.model.Staff;
+import com.zpet.ms_staff.request.LoginRequest;
 import com.zpet.ms_staff.service.StaffService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/staff")
+@RequestMapping("api/staff")
 public class StaffController {
     
     @Autowired StaffService staffService;
@@ -44,10 +47,12 @@ public class StaffController {
         return staffService.getById(params);
     }
     
-    @GetMapping("/byphone")
-    public Staff getByPhone(@RequestParam String phone) {
+    @PostMapping("/login")
+    public Staff getByPhone(@RequestBody LoginRequest request) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("phone", phone);
+        params.put("phone", request.getPhone());
+        params.put("password", request.getPassword());
+        params.put("role", request.getRole());
         return staffService.getByPhone(params);
     }
 
