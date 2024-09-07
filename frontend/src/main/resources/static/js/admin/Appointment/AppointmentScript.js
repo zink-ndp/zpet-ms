@@ -30,7 +30,7 @@ function fetchUpcomingAppointment() {
   };
 
   $.ajax({
-    url: `${apiUrl}/api/appointment/all?status=0_1`,
+    url: `${apiUrl}/api/appointment/all?status=0_1&upcomingAppointment=1`,
     method: "GET",
     success: (data) => {
       if (!data || data.length == 0) {
