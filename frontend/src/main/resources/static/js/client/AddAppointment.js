@@ -61,7 +61,7 @@ function processAppointment() {
   let services = JSON.parse(localStorage.getItem("services"));
   let date = $("#datepicker-modal").val();
   let time = $("#timepicker-modal").val();
-  let note = $("#note-modal")=val();
+  let note = $("#note-modal").val();
   console.log(customerId, services, date, time, note);
 
   if (!nonEmpty(customerId, services, date, time)) {

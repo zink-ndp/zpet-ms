@@ -18,8 +18,8 @@
                 FROM `status` s
                 JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
                 WHERE astt.APM_ID = a.APM_ID
-                <if test="status != null">
-                    AND astt.STT_ID IN <foreach collection="status" separator="," open="(" close=")" item="stt">#{stt}</foreach>
+                <if test="filterStatus != null">
+                    AND astt.STT_ID IN <foreach collection="filterStatus" separator="," open="(" close=")" item="stt">#{stt}</foreach>
                 </if>
                 ORDER BY astt.ATTIME DESC
                 LIMIT 1
@@ -30,8 +30,8 @@
             FROM `status` s
             JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
             WHERE astt.APM_ID = a.APM_ID
-                <if test="status != null">
-                    AND astt.STT_ID IN <foreach collection="status" separator="," open="(" close=")" item="stt">#{stt}</foreach>
+                <if test="filterStatus != null">
+                    AND astt.STT_ID IN <foreach collection="filterStatus" separator="," open="(" close=")" item="stt">#{stt}</foreach>
                 </if>
             ORDER BY astt.ATTIME DESC
             LIMIT 1
@@ -45,18 +45,18 @@
         <if test="dateFrom != null">
             AND a.APM_DATE BETWEEN #{dateFrom} AND #{dateTo}
         </if>
-        <if test="upcomingAppointment != null">
+        <if test="filterStatus != null">
 	       AND a.APM_ID NOT IN (
-				    SELECT astt.APM_ID
-				    FROM `status` s
-				    JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
-				    JOIN appointment a ON a.APM_ID = astt.APM_ID
-				    WHERE astt.APM_ID = a.APM_ID
-				    AND astt.STT_ID IN (2,3,4)
-				    GROUP BY astt.APM_ID
-				) 
-	        ORDER BY a.APM_DATE ASC        
+			    SELECT astt.APM_ID
+			    FROM `status` s
+			    JOIN apm_stt astt ON s.STT_ID = astt.STT_ID
+			    JOIN appointment a ON a.APM_ID = astt.APM_ID
+			    WHERE astt.APM_ID = a.APM_ID
+			    AND astt.STT_ID IN <foreach collection="otherStatus" separator="," open="(" close=")" item="stt">#{stt}</foreach>
+			    GROUP BY astt.APM_ID
+			) 
         </if>
+        ORDER BY a.APM_DATE ASC       
     </select>
     
     <select id="getAppointmentHistory" parameterType="java.lang.Integer" resultType="com.zpet.ms_appointment.response.AppointmentHistoryResponse">

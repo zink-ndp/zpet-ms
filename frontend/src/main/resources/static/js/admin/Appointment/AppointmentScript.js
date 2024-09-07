@@ -1,3 +1,58 @@
+function fetchAllAppointment(statusFilter) {
+  let _appointmentElement = (a) => {
+    let textStatusStyle = "";
+    switch (a.status) {
+      case "Đợi xác nhận":
+        textStatusStyle = "text-yellow-600";
+        break;
+        case "Đã xác nhận":
+        textStatusStyle = "text-blue-600";
+        break;
+        case "Đã hoàn thành":
+        textStatusStyle = "text-green-600";
+        break;
+      default:
+        textStatusStyle = "text-red-600";
+        break;
+    }
+    return `
+               <div onclick="openAppointmentDetail(${
+                 a.id
+               })" class="bg-green-50 rounded-md flex items-center w-full p-4 hover:bg-green-100 cursor-pointer snap-start">
+                  <div class="flex flex-col space-y-1 w-full">
+                      <p class="font-semibold text-right ${textStatusStyle}">${
+      a.status
+    }</p>
+                      <p class="font-semibold text-green-700">${a.time} ${
+      a.date
+    }</p>
+                      <p class="">${a.customerName}</p>
+                      <p class="line-clamp-2">${
+                        a.note != null ? a.note : "Không có ghi chú"
+                      }</p>
+                  </div>
+              </div>
+          `;
+  };
+  $.ajax({
+    url: `${apiUrl}/api/appointment/all?status=${statusFilter}`,
+    method: "GET",
+    success: (data) => {
+      if (!data || data.length == 0) {
+        $("#appointments-grid").html(
+          `<p class="text-center content-center w-full h-full">Không có lịch hẹn nào!</p>`
+        );
+      } else {
+        $("#appointments-grid").empty();
+        for (let index = 0; index < data.length; index++) {
+          const appointment = data[index];
+          $("#appointments-grid").append(_appointmentElement(appointment));
+        }
+      }
+    },
+  });
+}
+
 function fetchUpcomingAppointment() {
   let _appointmentElement = (a) => {
     let textStatusStyle = "";
@@ -49,26 +104,27 @@ function fetchUpcomingAppointment() {
 }
 
 function updateStatus(id, status) {
-    let _appointmentStatus = [
-        "Đợi xác nhận",
-        "Đã xác nhận",
-        "Đã hoàn thành",
-        "Đã hủy",
-      ];
+  let _appointmentStatus = [
+    "Đợi xác nhận",
+    "Đã xác nhận",
+    "Đã hoàn thành",
+    "Đã hủy",
+  ];
   let staff = JSON.parse(localStorage.getItem(`staff`));
   $.ajax({
     url: `${apiUrl}/api/appointment/updateStatus`,
     method: "POST",
     contentType: "application/json",
     data: JSON.stringify({
-        status: status,
-        apmId: id,
-        description: `Nhân viên ${staff.name} đã cập nhật trạng thái thành ${_appointmentStatus[status]}`
+      status: status,
+      apmId: id,
+      description: `Nhân viên ${staff.name} đã cập nhật trạng thái thành ${_appointmentStatus[status]}`,
     }),
     success: (data) => {
-        alert("Cập nhật thành công")
-        $("#apm-detail").hide()
-        fetchUpcomingAppointment()
+      alert("Cập nhật thành công");
+      $("#apm-detail").hide();
+      fetchUpcomingAppointment();
+      fetchAllAppointment('0_1_2_3');
     },
   });
 }

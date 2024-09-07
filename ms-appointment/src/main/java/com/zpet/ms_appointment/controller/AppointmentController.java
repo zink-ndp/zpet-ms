@@ -43,8 +43,15 @@ public class AppointmentController {
 			@RequestParam(required = false) Integer customerId,
 			@RequestParam(required = false) Integer upcomingAppointment) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (status != null)
-			params.put("status", funcUtils.seperateString(status));
+		if (status != null) {			
+			List<String> filterStatus = funcUtils.seperateString(status);
+			List<String> otherStatus = new ArrayList<>();
+			for (int i = Integer.valueOf(filterStatus.get(filterStatus.size()-1)); i < 5; i++) {
+				if (!filterStatus.contains(String.valueOf(i))) otherStatus.add(String.valueOf(i));
+			}
+			params.put("filterStatus", filterStatus);
+			params.put("otherStatus", otherStatus);
+		}
 		if (id != null)
 			params.put("id", id);
 
