@@ -15,6 +15,7 @@ import com.zpet.ms_appointment.model.Appointment;
 import com.zpet.ms_appointment.model.Customer;
 import com.zpet.ms_appointment.repository.AppointmentRepository;
 import com.zpet.ms_appointment.request.AddAppointmentRequest;
+import com.zpet.ms_appointment.request.AppointmentStatusUpdateRequest;
 import com.zpet.ms_appointment.response.AppointmentHistoryResponse;
 import com.zpet.ms_appointment.response.AppointmentResponse;
 import com.zpet.ms_appointment.utils.FunctionUtils;
@@ -76,6 +77,17 @@ public class AppointmentService {
     	paramsApmStt.put("atTime", now);
     	paramsApmStt.put("apmId", nextId);
     	paramsApmStt.put("description", "Khởi tạo lịch hẹn");
+    	appointmentRepository.insertApmStatus(paramsApmStt);
+    }
+    
+    public void updateStatusAppointment(AppointmentStatusUpdateRequest request) {
+    	LocalDateTime now = LocalDateTime.now();
+    	appointmentRepository.insertAtTime(now.toString());
+    	Map<String, Object> paramsApmStt = new HashMap<>();
+    	paramsApmStt.put("status", request.getStatus());
+    	paramsApmStt.put("atTime", now);
+    	paramsApmStt.put("apmId", request.getApmId());
+    	paramsApmStt.put("description", request.getDescription());
     	appointmentRepository.insertApmStatus(paramsApmStt);
     }
 

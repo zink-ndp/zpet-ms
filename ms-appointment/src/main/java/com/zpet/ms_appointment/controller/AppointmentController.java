@@ -20,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.zpet.ms_appointment.model.Service;
 import com.zpet.ms_appointment.request.AddAppointmentRequest;
+import com.zpet.ms_appointment.request.AppointmentStatusUpdateRequest;
 import com.zpet.ms_appointment.response.AppointmentDetailResponse;
 import com.zpet.ms_appointment.response.AppointmentHistoryResponse;
 import com.zpet.ms_appointment.response.AppointmentResponse;
@@ -90,6 +91,13 @@ public class AppointmentController {
     @Transactional
     public ResponseEntity<Object> create(@RequestBody AddAppointmentRequest request){
     	appointmentService.createAppointment(request);
+    	return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/updateStatus")
+    @Transactional
+    public ResponseEntity<Object> updateStatus(@RequestBody AppointmentStatusUpdateRequest request){
+    	appointmentService.updateStatusAppointment(request);
     	return ResponseEntity.ok().build();
     }
 

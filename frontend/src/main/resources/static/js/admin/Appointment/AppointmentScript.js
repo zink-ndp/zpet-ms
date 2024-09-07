@@ -1,4 +1,3 @@
-
 function fetchUpcomingAppointment() {
   let _appointmentElement = (a) => {
     let textStatusStyle = "";
@@ -49,6 +48,31 @@ function fetchUpcomingAppointment() {
   });
 }
 
+function updateStatus(id, status) {
+    let _appointmentStatus = [
+        "Đợi xác nhận",
+        "Đã xác nhận",
+        "Đã hoàn thành",
+        "Đã hủy",
+      ];
+  let staff = JSON.parse(localStorage.getItem(`staff`));
+  $.ajax({
+    url: `${apiUrl}/api/appointment/updateStatus`,
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify({
+        status: status,
+        apmId: id,
+        description: `Nhân viên ${staff.name} đã cập nhật trạng thái thành ${_appointmentStatus[status]}`
+    }),
+    success: (data) => {
+        alert("Cập nhật thành công")
+        $("#apm-detail").hide()
+        fetchUpcomingAppointment()
+    },
+  });
+}
+
 function openAppointmentDetail(id) {
   $.ajax({
     url: `${apiUrl}/api/appointment/detail?id=${id}`,
@@ -85,23 +109,26 @@ function openAppointmentDetail(id) {
                 `);
       });
 
-      let appointmentStatus = [
+      let _appointmentStatus = [
         "Đợi xác nhận",
         "Đã xác nhận",
         "Đã hoàn thành",
         "Đã hủy",
       ];
 
-      $("#apm-detail_select_status").html(`<option class="" value="" selected disabled cursor cursor-not-allowed>Cập nhật</option>`)
-      appointmentStatus.forEach((stt, index)  => {
-        if (stt === info.status){
-            for (let i=index+1; i < appointmentStatus.length; i++) {
-                $("#apm-detail_select_status").append(`<option class="" value="${i}">${appointmentStatus[i]}</option>`)
-            }
-            return;
+      $("#apm-detail_select_status").html(
+        `<option class="" value="" selected disabled cursor cursor-not-allowed>Cập nhật</option>`
+      );
+      _appointmentStatus.forEach((stt, index) => {
+        if (stt === info.status) {
+          for (let i = index + 1; i < _appointmentStatus.length; i++) {
+            $("#apm-detail_select_status").append(
+              `<option onclick="updateStatus(${id}, ${i})" class="" value="${i}">${_appointmentStatus[i]}</option>`
+            );
+          }
+          return;
         }
-      })
-
+      });
       $("#apm-detail").show();
     },
   });
