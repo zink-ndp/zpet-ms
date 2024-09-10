@@ -31,6 +31,10 @@ public class AdminController {
         return "admin/appointment";
     }
     
+    @GetMapping("/staff")
+    public String staffView() {
+        return "admin/staff";
+    }
     
     
     

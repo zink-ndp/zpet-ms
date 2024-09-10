@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zpet.ms_staff.mapper.StaffMapper">
 
+	<select id="maxId" resultType="java.lang.Integer">
+		SELECT MAX(STF_ID) FROM staff
+	</select>
+
     <select id="getAll" resultType="com.zpet.ms_staff.model.Staff">
         SELECT 
             STF_ID as id
@@ -14,20 +18,16 @@
             ,STF_ISWORKING as isWorking
         FROM staff
         WHERE 1
-        <if test="name != null">
-            AND STF_NAME like #{name}
-        </if>
-        <if test="phone != null">
-            AND STF_PHONE like #{phone}
-        </if>
-        <if test="email != null">
-            AND STF_EMAIL like #{email}
+        <if test="keyword != null">
+            OR STF_NAME like #{keyword}
+            OR STF_PHONE like #{keyword}
+            OR STF_EMAIL like #{keyword}
         </if>
         <if test="isManager != null">
-            AND STF_ISMANAGER = #{isManager}
+            OR STF_ISMANAGER = #{isManager}
         </if>
         <if test="isWorking != null">
-            AND STF_ISWORKING = #{isWorking}
+            OR STF_ISWORKING = #{isWorking}
         </if>
     </select>
 
@@ -60,5 +60,19 @@
         AND STF_ISMANAGER = #{role}
         AND STF_PASSWORD = #{password}
     </select>
+    
+    <insert id="addStaff" parameterType="com.zpet.ms_staff.request.StaffAddRequest">
+    	INSERT INTO staff VALUES (#{id}, #{name}, #{phone}, #{email}, #{password}, #{isManager}, NOW(), #{isWorking})
+    </insert>
+    
+    <update id="updateStaff" parameterType="com.zpet.ms_staff.request.StaffAddRequest">
+    	UPDATE staff SET 
+    		STF_NAME=#{name}
+    		, STF_PHONE=#{phone}
+    		, STF_EMAIL=#{email}
+    		, STF_ISWORKING=#{isWorking}
+    		, STF_ISMANAGER=#{isManager}
+    	WHERE STF_ID=#{id}
+    </update>
 
 </mapper>

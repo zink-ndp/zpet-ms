@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zpet.ms_staff.model.Staff;
 import com.zpet.ms_staff.repository.StaffRepository;
+import com.zpet.ms_staff.request.StaffAddRequest;
 import com.zpet.ms_staff.util.FunctionUtils;
 
 @Service
@@ -36,6 +37,16 @@ public class StaffService {
         if (s == null) return null;
         s.setJoinedDate(functionUtils.formatDate(s.getJoinedDate(), "dd/MM/yyyy"));
         return s;
+    }
+    
+    public void addStaff(StaffAddRequest request) {
+    	Integer nextId = staffRepository.maxId()+1;
+    	request.setId(nextId);
+    	staffRepository.addStaff(request);
+    }
+    
+    public void updateStaff(StaffAddRequest request) {
+    	staffRepository.updateStaff(request);
     }
 
 }

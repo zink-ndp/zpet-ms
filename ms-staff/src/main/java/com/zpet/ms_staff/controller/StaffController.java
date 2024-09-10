@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zpet.ms_staff.model.Staff;
 import com.zpet.ms_staff.request.LoginRequest;
+import com.zpet.ms_staff.request.StaffAddRequest;
 import com.zpet.ms_staff.service.StaffService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +28,12 @@ public class StaffController {
 
     @GetMapping("/all")
     public List<Staff> getAll(
-        @RequestParam(required = false) String name,
-        @RequestParam(required = false) String phone,
-        @RequestParam(required = false) String email,
+        @RequestParam(required = false) String keyword,
         @RequestParam(required = false) Integer isManager,
         @RequestParam(required = false) Integer isWorking
     ) {
         Map<String, Object> params = new HashMap<String, Object>();
-        if (name != null) params.put("name", "%"+name+"%");
-        if (phone != null)params.put("phone", "%"+phone+"%");
-        if (email != null)params.put("email", "%"+email+"%");
+        if (keyword != null) params.put("keyword", "%"+keyword+"%");
         if (isManager != null)params.put("isManager", isManager);
         if (isWorking != null)params.put("isWorking", isWorking);
         return staffService.getAll(params);
@@ -55,5 +54,20 @@ public class StaffController {
         params.put("role", request.getRole());
         return staffService.getByPhone(params);
     }
+    
+    @PostMapping("/add")
+    @Transactional
+    public ResponseEntity<Object> addStaff(@RequestBody StaffAddRequest request) {
+        staffService.addStaff(request);
+        return ResponseEntity.ok().build();
+    }
+    
+    @PostMapping("/update")
+    public ResponseEntity<Object> updateStaff(@RequestBody StaffAddRequest request) {
+        staffService.updateStaff(request);
+        return ResponseEntity.ok().build();
+    }
+    
+    
 
 }
