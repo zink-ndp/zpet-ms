@@ -36,6 +36,10 @@ public class AdminController {
         return "admin/staff";
     }
     
+    @GetMapping("/customer")
+    public String customerView() {
+        return "admin/customer";
+    }
     
     
 }

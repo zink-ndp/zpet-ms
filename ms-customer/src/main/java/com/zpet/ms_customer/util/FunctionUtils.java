@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 public class FunctionUtils {
     
     public String formatDate(String input, String pattern) {
+    	if (input==null) return null;
 		String[] splitDate = input.split(" ")[0].split("-");
 		Integer d = Integer.valueOf(splitDate[2]);
 		Integer M = Integer.valueOf(splitDate[1]);

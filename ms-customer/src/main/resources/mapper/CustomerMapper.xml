@@ -50,6 +50,11 @@
             ,CTM_ISACTIVE as isActive
         FROM customer
         WHERE CTM_ID = #{id}
+        <if test="keyword!=null">
+        	AND (CTM_PHONE LIKE #{keyword}
+        	OR CTM_NAME LIKE #{keyword}
+        	OR CTM_ID LIKE #{keyword}) 
+        </if>
     </select>
 
     <select id="getByPhone" parameterType="map" resultType="com.zpet.ms_customer.model.Customer">
@@ -85,7 +90,7 @@
         SELECT 
             ATTIME as time
             ,CTM_ID as customerId
-            ,P_CHANGE as change
+            ,P_CHANGE as `change`
             ,P_ISEARN as isEarn
             ,P_TOTAL as total
         FROM point

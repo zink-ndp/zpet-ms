@@ -39,7 +39,7 @@ public class CustomerService {
     }
 
     public Customer getById(Map<String, Object> params) {
-        Customer customer = customerRepository.getById(params);
+    	Customer customer = customerRepository.getById(params);
         customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
         return customer;
     }
@@ -56,6 +56,7 @@ public class CustomerService {
 
     public List<Point> getPoints(Map<String, Object> params) {
         List<Point> points = customerRepository.getPoints(params);
+        if (points.isEmpty()) return null;
         points.forEach(p -> {
             p.setTime(functionUtils.formatDate(p.getTime(), "dd/MM/yyyy HH:mm:ss"));
         });
