@@ -38,8 +38,10 @@ public class AppointmentController {
 	FunctionUtils funcUtils;
 
 	@GetMapping("/all")
-	public List<AppointmentResponse> getAll(@RequestParam(required = false) String status,
-			@RequestParam(required = false) Integer id, @RequestParam(required = false) String dateFilter,
+	public List<AppointmentResponse> getAll(
+			@RequestParam(required = false) String status,
+			@RequestParam(required = false) Integer id,
+			@RequestParam(required = false) String dateFilter,
 			@RequestParam(required = false) Integer customerId,
 			@RequestParam(required = false) Integer upcomingAppointment) {
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -56,8 +58,8 @@ public class AppointmentController {
 			params.put("id", id);
 
 		if (dateFilter != null && !dateFilter.isEmpty()) {
-			params.put("dateFrom", funcUtils.convertStringToDate(dateFilter.split("_")[0]));
-			params.put("dateTo", funcUtils.convertStringToDate(dateFilter.split("_")[1]));
+			params.put("dateFrom", dateFilter.split("_")[0]);
+			params.put("dateTo", dateFilter.split("_")[1]);
 		}
 		if (customerId != null)
 			params.put("customerId", customerId);

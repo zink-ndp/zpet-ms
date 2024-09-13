@@ -1,4 +1,4 @@
-function fetchAllAppointment(statusFilter) {
+function fetchAllAppointment(statusFilter, dateFilter) {
   let _appointmentElement = (a) => {
     let textStatusStyle = "";
     switch (a.status) {
@@ -35,22 +35,40 @@ function fetchAllAppointment(statusFilter) {
           `;
   };
   $.ajax({
-    url: `${apiUrl}/api/appointment/all?status=${statusFilter}`,
+    url: `${apiUrl}/api/appointment/all?status=${statusFilter}&dateFilter=${dateFilter}`,
     method: "GET",
     success: (data) => {
-      if (!data || data.length == 0) {
-        $("#appointments-grid").html(
-          `<p class="text-center content-center w-full h-full">Không có lịch hẹn nào!</p>`
-        );
+      $("#appointment-list").empty();
+      if (data.length > 0) {
+        data.forEach((a) => {
+          $("#appointment-list").append(_appointmentElement(a));
+        });
       } else {
-        $("#appointments-grid").empty();
-        for (let index = 0; index < data.length; index++) {
-          const appointment = data[index];
-          $("#appointments-grid").append(_appointmentElement(appointment));
-        }
+        $("#appointment-list").append(
+          `<p class="w-full h-full text-center justify-center self-center">
+            Ngày này không có lịch hẹn nào
+          </p>`
+        );
       }
     },
   });
+}
+
+function showDefaultAppointment(statusFilter){
+  const date = new Date();
+  let currentMonth = date.getMonth();
+  let currentYear = date.getFullYear();
+  const firstDay = new Date(currentYear, currentMonth, 1).getDate();
+  const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
+  let dateFilter = `${currentYear}-${
+    currentMonth + 1
+  }-${firstDay}_${currentYear}-${currentMonth + 1}-${lastDay}`;
+  console.log(dateFilter);
+  
+  fetchAllAppointment(statusFilter, dateFilter);
+  $("#text-apm-title-date").text(
+    "Lịch hẹn tháng " + (currentMonth+1)
+  );
 }
 
 function fetchUpcomingAppointment() {

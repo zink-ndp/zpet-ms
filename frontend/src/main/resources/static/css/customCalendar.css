@@ -1,0 +1,131 @@
+
+:root {
+  --primary-color: #00b41e;
+  --text-color: #1d1d1d;
+  --bg-color: #f7fff6;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #ffffff;
+}
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.calendar {
+  width: 100%;
+  background: var(--bg-color);
+  padding: 30px 20px;
+  border-radius: 10px;
+}
+.calendar .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+}
+.calendar .header .month {
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+.calendar .header .btns {
+  display: flex;
+  gap: 10px;
+}
+.calendar .header .btns .btn {
+  width: 50px;
+  height: 40px;
+  background: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.calendar .header .btns .btn:hover {
+  background: #41ff6a;
+  transform: scale(1.05);
+}
+.calendar .weekdays {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.calendar .weekdays .day {
+  width: calc(100% / 7 - 10px);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+.calendar .days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.calendar .days .day {
+  width: calc(100% / 7 - 10px);
+  height: 70px; 
+  padding: 7px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-color);
+  transition: all 0.3s;
+}
+
+.calendar .days .chosenDay {
+    width: calc(100% / 7 - 10px);
+    height: 70px; 
+    padding: 7px;
+    background: #9cffba;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #008316;
+    transition: all 0.3s;
+  }
+
+.calendar .days .day:not(.next):not(.prev):hover {
+  color: #fff;
+  background: var(--primary-color);
+  transform: scale(1.05);
+}
+.calendar .days .day.next,
+.calendar .days .day.prev {
+  color: #ccc;
+}
+.calendar .days .day.today {
+  color: #fff;
+  background: var(--primary-color);
+}
+.credits a {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: #aaa;
+}
+.credits span {
+  color: var(--primary-color);
+}
