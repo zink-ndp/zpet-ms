@@ -46,7 +46,7 @@ public class AppointmentController {
 		if (status != null) {			
 			List<String> filterStatus = funcUtils.seperateString(status);
 			List<String> otherStatus = new ArrayList<>();
-			for (int i = Integer.valueOf(filterStatus.get(filterStatus.size()-1)); i < 5; i++) {
+			for (int i = Integer.parseInt(filterStatus.get(filterStatus.size()-1)); i < 5; i++) {
 				if (!filterStatus.contains(String.valueOf(i))) otherStatus.add(String.valueOf(i));
 			}
 			params.put("filterStatus", filterStatus);
@@ -55,7 +55,7 @@ public class AppointmentController {
 		if (id != null)
 			params.put("id", id);
 
-		if (dateFilter != null && dateFilter != "") {
+		if (dateFilter != null && !dateFilter.isEmpty()) {
 			params.put("dateFrom", funcUtils.convertStringToDate(dateFilter.split("_")[0]));
 			params.put("dateTo", funcUtils.convertStringToDate(dateFilter.split("_")[1]));
 		}

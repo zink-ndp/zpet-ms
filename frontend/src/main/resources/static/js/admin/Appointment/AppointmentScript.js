@@ -5,10 +5,10 @@ function fetchAllAppointment(statusFilter) {
       case "Đợi xác nhận":
         textStatusStyle = "text-yellow-600";
         break;
-        case "Đã xác nhận":
+      case "Đã xác nhận":
         textStatusStyle = "text-blue-600";
         break;
-        case "Đã hoàn thành":
+      case "Đã hoàn thành":
         textStatusStyle = "text-green-600";
         break;
       default:
@@ -124,7 +124,7 @@ function updateStatus(id, status) {
       alert("Cập nhật thành công");
       $("#apm-detail").hide();
       fetchUpcomingAppointment();
-      fetchAllAppointment('0_1_2_3');
+      fetchAllAppointment("0_1_2_3");
     },
   });
 }
@@ -188,4 +188,38 @@ function openAppointmentDetail(id) {
       $("#apm-detail").show();
     },
   });
+}
+function appointmentCreate() {
+  function _processCreate() {
+    console.log(localStorage.getItem("services"));
+  }
+
+  new MultiSelectTag("customer-select-list", {
+    placeholder: "Select customer",
+    tagColor: {
+      textColor: "#00c400",
+      borderColor: "#00c400",
+      bgColor: "#d4ffd4",
+    },
+    onChange: function (values) {
+      values = values.map(v => v.value)
+      localStorage.setItem("customer",JSON.stringify(values));
+    },
+  }); 
+
+  new MultiSelectTag("services", {
+    placeholder: "Select service",
+    tagColor: {
+      textColor: "#00c400",
+      borderColor: "#00c400",
+      bgColor: "#d4ffd4",
+    },
+    onChange: function (values) {
+      values = values.map(v => v.value)
+      localStorage.setItem("services",JSON.stringify(values));
+    },
+  }); 
+
+  $("#modal-apm-create").removeClass("hidden");
+  $("#btn-create-appointment").click(() => _processCreate());
 }
