@@ -48,7 +48,7 @@ public class AppointmentService {
                 response.setCustomerName("Khách vãng lai");
                 response.setCustomerPhone(funcUtils.extractPhoneNumber(a.getNote()));
             }
-            response.setDate(funcUtils.formatDateTime(response.getDate(), "dd/MM/yyyy"));
+            response.setDate(funcUtils.formatDateTimeFromQuery(response.getDate(), "dd/MM/yyyy"));
             responseList.add(response);
         });
         return responseList;

@@ -67,7 +67,7 @@ function appointmentCreate() {
       success: (data) => {
         alert("Đặt lịch thành công!");
         renderCalendar();
-        showDefaultAppointment();
+        showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
         $("#modal-apm-create").hide();
       },
       error: (xhr, status, error) => {

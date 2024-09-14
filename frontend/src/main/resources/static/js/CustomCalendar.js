@@ -120,7 +120,7 @@ nextBtn.addEventListener("click", () => {
     currentYear++;
   }
   renderCalendar();
-  showDefaultAppointment("0_1_2_3", currentMonth + 1);
+  showDefaultAppointment("0_1_2_3", currentMonth + 1, currentYear);
 });
 
 prevBtn.addEventListener("click", () => {
@@ -130,14 +130,14 @@ prevBtn.addEventListener("click", () => {
     currentYear--;
   }
   renderCalendar();
-  showDefaultAppointment("0_1_2_3", currentMonth + 1);
+  showDefaultAppointment("0_1_2_3", currentMonth + 1, currentYear);
 });
 
 todayBtn.addEventListener("click", () => {
   currentMonth = date.getMonth();
   currentYear = date.getFullYear();
   renderCalendar();
-  showDefaultAppointment("0_1_2_3", currentMonth + 1);
+  showDefaultAppointment("0_1_2_3", currentMonth + 1, currentYear);
 });
 
 renderCalendar();

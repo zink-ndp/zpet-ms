@@ -55,10 +55,9 @@ function fetchAllAppointment(statusFilter, dateFilter) {
   });
 }
 
-function showDefaultAppointment(statusFilter, month) {
-  const date = new Date();
+function showDefaultAppointment(statusFilter, month, year) {
   let currentMonth = month - 1;
-  let currentYear = date.getFullYear();
+  let currentYear = year
   const firstDay = new Date(currentYear, currentMonth, 1).getDate();
   const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
   let dateFilter = `${currentYear}-${
@@ -110,7 +109,7 @@ function updateStatus(id, status) {
       $("#apm-detail").hide();
       fetchUpcomingAppointment();
       fetchAllAppointment("0_1_2_3");
-      showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1))
+      showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
     },
   });
 }

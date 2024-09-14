@@ -20,7 +20,7 @@ public class FunctionUtils {
         return date;
     }
 
-    public String formatDateTime(String dateTime, String pattern) {
+    public String formatDateTimeFromQuery(String dateTime, String pattern) {
         String date = dateTime.split(" ")[0];
         Integer d = Integer.valueOf(date.split("-")[2]);
         Integer M = Integer.valueOf(date.split("-")[1]);
