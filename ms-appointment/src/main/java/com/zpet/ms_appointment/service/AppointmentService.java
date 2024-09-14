@@ -38,11 +38,16 @@ public class AppointmentService {
             BeanUtils.copyProperties(a, response);
             Integer customerId = a.getCustomerId();
             RestTemplate restTemplate = new RestTemplate();
-            Customer customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + customerId, Customer.class);
-            if (customer != null) {
-                response.setCustomerName(customer.getName());
-                response.setCustomerPhone(customer.getPhone());
-            } 
+            if (customerId != null) {
+                Customer customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + customerId, Customer.class);
+                if (customer != null) {
+                    response.setCustomerName(customer.getName());
+                    response.setCustomerPhone(customer.getPhone());
+                }
+            } else {
+                response.setCustomerName("Khách vãng lai");
+                response.setCustomerPhone(funcUtils.extractPhoneNumber(a.getNote()));
+            }
             response.setDate(funcUtils.formatDateTime(response.getDate(), "dd/MM/yyyy"));
             responseList.add(response);
         });

@@ -64,8 +64,6 @@ function showDefaultAppointment(statusFilter, month) {
   let dateFilter = `${currentYear}-${
     currentMonth + 1
   }-${firstDay}_${currentYear}-${currentMonth + 1}-${lastDay}`;
-  console.log(dateFilter);
-
   fetchAllAppointment(statusFilter, dateFilter);
   $("#text-apm-title-date").text("Lịch hẹn tháng " + (currentMonth + 1));
 }
@@ -112,6 +110,7 @@ function updateStatus(id, status) {
       $("#apm-detail").hide();
       fetchUpcomingAppointment();
       fetchAllAppointment("0_1_2_3");
+      showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1))
     },
   });
 }
@@ -162,51 +161,19 @@ function openAppointmentDetail(id) {
       $("#apm-detail_select_status").html(
         `<option class="" value="" selected disabled cursor cursor-not-allowed>Cập nhật</option>`
       );
-      _appointmentStatus.forEach((stt, index) => {
-        if (stt === info.status) {
-          for (let i = index + 1; i < _appointmentStatus.length; i++) {
-            $("#apm-detail_select_status").append(
-              `<option onclick="updateStatus(${id}, ${i})" class="" value="${i}">${_appointmentStatus[i]}</option>`
-            );
+      if (info.status != "Đã hoàn thành"){
+        _appointmentStatus.forEach((stt, index) => {
+          if (stt === info.status) {
+            for (let i = index + 1; i < _appointmentStatus.length; i++) {
+              $("#apm-detail_select_status").append(
+                `<option onclick="updateStatus(${id}, ${i})" class="" value="${i}">${_appointmentStatus[i]}</option>`
+              );
+            }
           }
-          return;
-        }
-      });
+        });
+      }
       $("#apm-detail").show();
     },
   });
 }
-function appointmentCreate() {
-  function _processCreate() {
-    console.log(localStorage.getItem("services"));
-  }
 
-  new MultiSelectTag("customer-select-list", {
-    placeholder: "Select customer",
-    tagColor: {
-      textColor: "#00c400",
-      borderColor: "#00c400",
-      bgColor: "#d4ffd4",
-    },
-    onChange: function (values) {
-      values = values.map((v) => v.value);
-      localStorage.setItem("customer", JSON.stringify(values));
-    },
-  });
-
-  new MultiSelectTag("services", {
-    placeholder: "Select service",
-    tagColor: {
-      textColor: "#00c400",
-      borderColor: "#00c400",
-      bgColor: "#d4ffd4",
-    },
-    onChange: function (values) {
-      values = values.map((v) => v.value);
-      localStorage.setItem("services", JSON.stringify(values));
-    },
-  });
-
-  $("#modal-apm-create").removeClass("hidden");
-  $("#btn-create-appointment").click(() => _processCreate());
-}
