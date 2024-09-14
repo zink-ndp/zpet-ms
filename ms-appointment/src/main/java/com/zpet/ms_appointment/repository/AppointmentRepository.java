@@ -3,6 +3,7 @@ package com.zpet.ms_appointment.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.response.DayCountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,10 @@ public class AppointmentRepository {
 
     public List<Appointment> getAll(Map<String, Object> params){
         return appointmentMapper.getAll(params);
+    }
+
+    public List<DayCountResponse> getCountByDay(Map<String, Object> params){
+        return appointmentMapper.getCountByDay(params);
     }
     
     public List<AppointmentHistoryResponse> getAppointmentHistory(Integer id) {

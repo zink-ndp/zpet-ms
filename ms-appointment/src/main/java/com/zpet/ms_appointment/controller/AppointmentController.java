@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.response.DayCountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -66,6 +67,14 @@ public class AppointmentController {
 		if (upcomingAppointment != null)
 			params.put("upcomingAppointment", upcomingAppointment);
 		return appointmentService.getAll(params);
+	}
+
+	@GetMapping("/dayCount")
+	public List<DayCountResponse> getDayCount(@RequestParam Integer month, @RequestParam Integer year) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("month", month);
+		params.put("year", year);
+		return appointmentService.getCountByDay(params);
 	}
 
 	@GetMapping("/detail")

@@ -3,6 +3,7 @@ package com.zpet.ms_appointment.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.response.DayCountResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zpet.ms_appointment.model.Appointment;
@@ -14,6 +15,8 @@ public interface AppointmentMapper {
     public Integer lastId();
 
     public List<Appointment> getAll(Map<String, Object> params);
+
+    public List<DayCountResponse> getCountByDay(Map<String, Object> params);
     
     public List<AppointmentHistoryResponse> getAppointmentHistory(Integer id);
     

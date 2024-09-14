@@ -79,7 +79,7 @@ body {
 }
 .calendar .days .day {
   width: calc(100% / 7 - 10px);
-  height: 70px; 
+  height: 80px; 
   padding: 7px;
   background: #fff;
   display: flex;
@@ -93,7 +93,7 @@ body {
 
 .calendar .days .chosenDay {
     width: calc(100% / 7 - 10px);
-    height: 70px; 
+    height: 80px; 
     padding: 7px;
     background: #9cffba;
     display: flex;

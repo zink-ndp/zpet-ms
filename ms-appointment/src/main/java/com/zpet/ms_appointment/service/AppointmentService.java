@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.response.DayCountResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,10 @@ public class AppointmentService {
             responseList.add(response);
         });
         return responseList;
+    }
+
+    public List<DayCountResponse> getCountByDay(Map<String, Object> params){
+        return appointmentRepository.getCountByDay(params);
     }
     
     public List<AppointmentHistoryResponse> getHistory(Integer id) {

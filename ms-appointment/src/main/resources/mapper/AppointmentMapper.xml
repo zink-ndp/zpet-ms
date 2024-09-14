@@ -58,6 +58,21 @@
         </if>
         ORDER BY a.APM_DATE ASC       
     </select>
+
+    <select id="getCountByDay" parameterType="map">
+        SELECT
+            DAY(a.APM_DATE) AS day,
+            COUNT(a.APM_ID) AS count
+        FROM
+            appointment a
+        WHERE
+            MONTH(a.APM_DATE) = #{month}
+          AND YEAR(a.APM_DATE) = #{year}
+        GROUP BY
+            DAY(a.APM_DATE)
+        ORDER BY
+            DAY(a.APM_DATE);
+    </select>
     
     <select id="getAppointmentHistory" parameterType="java.lang.Integer" resultType="com.zpet.ms_appointment.response.AppointmentHistoryResponse">
     	SELECT 

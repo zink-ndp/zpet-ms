@@ -43,6 +43,29 @@ const renderCalendar = () => {
     days += `<div class="day prev">${prevLastDayDate - x + 1}</div>`;
   }
 
+  function _checkDayCount(day, month, year) {
+    let dayCount = 0
+    $.ajax({
+        url: `${apiUrl}/api/appointment/dayCount?month=${month}&year=${year}`,
+        method: "GET",
+        async: false,
+        success: (data) => {
+          dayCount = data;
+        },
+        error: (xhr, status, error) => {
+          console.log(xhr);
+          console.log(status);
+          console.log(error);
+        },
+      });
+    for (let i = 0; i < dayCount.length; i++) {
+        if (dayCount[i].day === day) {
+          return dayCount[i].count;
+        }
+    }
+    return 0;
+  }
+
   let chosenDays = 0;
   for (let i = 1; i <= lastDayDate; i++) {
     chosenDays = currentYear + "-" + (currentMonth + 1) + "-" + i;
@@ -51,10 +74,15 @@ const renderCalendar = () => {
       currentMonth === new Date().getMonth() &&
       currentYear === new Date().getFullYear()
     ) {
-      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="day today">${i}</div>`;
+      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="calendar-day flex flex-col items-center justify-between day today"><span>${i}</span>`;
     } else {
-      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="day">${i}</div>`;
+      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="calendar-day flex flex-col items-center justify-between day"><span>${i}</span>`;
     }
+
+    if (_checkDayCount(i, currentMonth+1, currentYear) != 0) {
+      days += `<p class="text-xs bg-yellow-400 text-white rounded-full h-6 w-6 pt-1 text-center cursor-pointer">${_checkDayCount(i, currentMonth+1, currentYear)}</p>`
+    }
+    days += `</div>`;
   }
 
   for (let j = 1; j <= nextDays; j++) {
@@ -72,15 +100,17 @@ function showApmListOfDay(day) {
       "-" +
       day.split("-")[0]
   );
-  $(".chosenDay").removeClass("chosenDay").addClass("day");
-  var element = $(".day").filter(function () {
-    if (!$(this).hasClass("next") && !$(this).hasClass("prev")) {
-      return $(this).text().trim() === day.split("-")[2];
+  $(".calendar-day").removeClass("chosenDay").addClass("day");
+  var element = $(".calendar-day").filter(function () {
+    if (!$(this).hasClass("next") && !$(this).hasClass("prev") && $(this).find("span").text().trim() === day.split("-")[2]) {
+      return true;
     }
     return false;
   });
-  element.addClass("chosenDay").removeClass("day");
-  fetchAllAppointment("0_1_2_3", day+"_"+day);
+  console.log(element);
+  
+  element.removeClass("day").addClass("chosenDay");
+  fetchAllAppointment("0_1_2_3", day + "_" + day);
 }
 
 nextBtn.addEventListener("click", () => {
@@ -90,6 +120,7 @@ nextBtn.addEventListener("click", () => {
     currentYear++;
   }
   renderCalendar();
+  showDefaultAppointment("0_1_2_3", currentMonth + 1);
 });
 
 prevBtn.addEventListener("click", () => {
@@ -99,13 +130,14 @@ prevBtn.addEventListener("click", () => {
     currentYear--;
   }
   renderCalendar();
+  showDefaultAppointment("0_1_2_3", currentMonth + 1);
 });
 
 todayBtn.addEventListener("click", () => {
   currentMonth = date.getMonth();
   currentYear = date.getFullYear();
   renderCalendar();
-  showDefaultAppointment("0_1_2_3");
+  showDefaultAppointment("0_1_2_3", currentMonth + 1);
 });
 
 renderCalendar();

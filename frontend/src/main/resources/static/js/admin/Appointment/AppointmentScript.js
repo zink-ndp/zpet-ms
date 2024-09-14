@@ -1,39 +1,40 @@
+let _appointmentElement = (a) => {
+  let textStatusStyle = "";
+  switch (a.status) {
+    case "Đợi xác nhận":
+      textStatusStyle = "text-yellow-600";
+      break;
+    case "Đã xác nhận":
+      textStatusStyle = "text-blue-600";
+      break;
+    case "Đã hoàn thành":
+      textStatusStyle = "text-green-600";
+      break;
+    default:
+      textStatusStyle = "text-red-600";
+      break;
+  }
+  return `
+             <div onclick="openAppointmentDetail(${
+               a.id
+             })" class="bg-green-50 rounded-md flex items-center w-full p-4 hover:bg-green-100 cursor-pointer snap-start transition-all ease duration-300">
+                <div class="flex flex-col space-y-1 w-full">
+                    <p class="font-semibold text-right ${textStatusStyle}">${
+    a.status
+  }</p>
+                    <p class="font-semibold text-green-700">${a.time} ${
+    a.date
+  }</p>
+                    <p class="">${a.customerName}</p>
+                    <p class="line-clamp-2">${
+                      a.note != null ? a.note : "Không có ghi chú"
+                    }</p>
+                </div>
+            </div>
+        `;
+};
+
 function fetchAllAppointment(statusFilter, dateFilter) {
-  let _appointmentElement = (a) => {
-    let textStatusStyle = "";
-    switch (a.status) {
-      case "Đợi xác nhận":
-        textStatusStyle = "text-yellow-600";
-        break;
-      case "Đã xác nhận":
-        textStatusStyle = "text-blue-600";
-        break;
-      case "Đã hoàn thành":
-        textStatusStyle = "text-green-600";
-        break;
-      default:
-        textStatusStyle = "text-red-600";
-        break;
-    }
-    return `
-               <div onclick="openAppointmentDetail(${
-                 a.id
-               })" class="bg-green-50 rounded-md flex items-center w-full p-4 hover:bg-green-100 cursor-pointer snap-start">
-                  <div class="flex flex-col space-y-1 w-full">
-                      <p class="font-semibold text-right ${textStatusStyle}">${
-      a.status
-    }</p>
-                      <p class="font-semibold text-green-700">${a.time} ${
-      a.date
-    }</p>
-                      <p class="">${a.customerName}</p>
-                      <p class="line-clamp-2">${
-                        a.note != null ? a.note : "Không có ghi chú"
-                      }</p>
-                  </div>
-              </div>
-          `;
-  };
   $.ajax({
     url: `${apiUrl}/api/appointment/all?status=${statusFilter}&dateFilter=${dateFilter}`,
     method: "GET",
@@ -54,9 +55,9 @@ function fetchAllAppointment(statusFilter, dateFilter) {
   });
 }
 
-function showDefaultAppointment(statusFilter){
+function showDefaultAppointment(statusFilter, month) {
   const date = new Date();
-  let currentMonth = date.getMonth();
+  let currentMonth = month - 1;
   let currentYear = date.getFullYear();
   const firstDay = new Date(currentYear, currentMonth, 1).getDate();
   const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -64,44 +65,12 @@ function showDefaultAppointment(statusFilter){
     currentMonth + 1
   }-${firstDay}_${currentYear}-${currentMonth + 1}-${lastDay}`;
   console.log(dateFilter);
-  
+
   fetchAllAppointment(statusFilter, dateFilter);
-  $("#text-apm-title-date").text(
-    "Lịch hẹn tháng " + (currentMonth+1)
-  );
+  $("#text-apm-title-date").text("Lịch hẹn tháng " + (currentMonth + 1));
 }
 
 function fetchUpcomingAppointment() {
-  let _appointmentElement = (a) => {
-    let textStatusStyle = "";
-    switch (a.status) {
-      case "Đợi xác nhận":
-        textStatusStyle = "text-yellow-600";
-        break;
-      default:
-        textStatusStyle = "text-blue-600";
-        break;
-    }
-    return `
-               <div onclick="openAppointmentDetail(${
-                 a.id
-               })" class="bg-green-50 rounded-md flex items-center w-[400px] p-4 hover:bg-green-100 cursor-pointer snap-start">
-                  <div class="flex flex-col space-y-1 w-[400px]">
-                      <p class="font-semibold text-right ${textStatusStyle}">${
-      a.status
-    }</p>
-                      <p class="font-semibold text-green-700">${a.time} ${
-      a.date
-    }</p>
-                      <p class="">${a.customerName}</p>
-                      <p class="line-clamp-2">${
-                        a.note != null ? a.note : "Không có ghi chú"
-                      }</p>
-                  </div>
-              </div>
-          `;
-  };
-
   $.ajax({
     url: `${apiUrl}/api/appointment/all?status=0_1&upcomingAppointment=1`,
     method: "GET",
@@ -220,10 +189,10 @@ function appointmentCreate() {
       bgColor: "#d4ffd4",
     },
     onChange: function (values) {
-      values = values.map(v => v.value)
-      localStorage.setItem("customer",JSON.stringify(values));
+      values = values.map((v) => v.value);
+      localStorage.setItem("customer", JSON.stringify(values));
     },
-  }); 
+  });
 
   new MultiSelectTag("services", {
     placeholder: "Select service",
@@ -233,10 +202,10 @@ function appointmentCreate() {
       bgColor: "#d4ffd4",
     },
     onChange: function (values) {
-      values = values.map(v => v.value)
-      localStorage.setItem("services",JSON.stringify(values));
+      values = values.map((v) => v.value);
+      localStorage.setItem("services", JSON.stringify(values));
     },
-  }); 
+  });
 
   $("#modal-apm-create").removeClass("hidden");
   $("#btn-create-appointment").click(() => _processCreate());
