@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_invoice.request.InvoiceCreateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -32,5 +33,17 @@ public class InvoiceService {
     	response.put("address", address);
     	return response;
     }
+
+	public void create (InvoiceCreateRequest request) {
+		Integer nextId = invoiceRepository.maxId() + 1;
+		request.setId(nextId);
+		invoiceRepository.create(request);
+		request.getServices().forEach(s -> {
+			Map<String, Object> param = new HashMap<>();
+			param.put("invId", nextId);
+			param.put("srvId", s);
+			invoiceRepository.addServiceIncluded(param);
+		});
+	}
 
 }

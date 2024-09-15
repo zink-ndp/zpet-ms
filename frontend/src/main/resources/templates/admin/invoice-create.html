@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="/css/style.css" />
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Stacking Select -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/js/multi-select-tag.js"></script>
     <!-- Flowbite DateTime picker -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <!-- JQuery -->
@@ -76,36 +82,64 @@
       </div>
     </div>
 
-    <div class="ms-[18.5%] h-screen flex">
+    <div class="ms-[18.5%] h-fit flex">
       <div class="flex flex-col w-full bg-white shadow-lg rounded-lg p-4 my-4">
-        <div class="flex items-center w-full space-x-4">
-          <p class="font-bold text-2xl text-black">Thú cưng</p>
-          <button
-            id="btn-add-pet"
-            class="border-[1px] border-green-500 rounded-md py-0 px-2 text-green-500"
-          >
-            Add +
-          </button>
-        </div>
-        <div class="overflow-y-auto">
-          <table
-            id="pet-table"
-            class="table-auto w-full text-left whitespace-nowrap"
-          >
-            <thead class="text-green-500">
-              <tr>
-                <th class="text-center">ID</th>
-                <th class="w-20"></th>
-                <th class="text-left">Tên</th>
-                <th class="text-center">Giống</th>
-                <th class="text-center">Giới tính</th>
-                <th class="text-left">Khách hàng</th>
-              </tr>
-            </thead>
-            <tbody id="pet-table-body">
-              <!-- Dynamically generated rows -->
-            </tbody>
-          </table>
+        <p class="font-bold text-2xl text-black">Tạo hóa đơn</p>
+        <div
+          class="w-full h-screen overflow-y-auto flex flex-col space-y-4 mt-5"
+        >
+          <div>
+            <p class="font-semibold">Ngày lập hóa đơn</p>
+            <p id="text-invoice_createDate">19/09/2024</p>
+          </div>
+          <div>
+            <p class="font-semibold">Nhân viên lập hóa đơn</p>
+            <p id="text-invoice_staff">Nguyen Do Phuc Vinh</p>
+          </div>
+          <div>
+            <p class="font-semibold">Số điện thoại</p>
+            <input
+              id="text-invoice_phone"
+              class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
+              type="text"
+              list="phone-select-list"
+              placeholder="Số điện thoại khách hàng"
+            />
+
+            <datalist id="phone-select-list"> </datalist>
+            <p
+              id="text-customer-null-alert"
+              class="text-xs text-red-500 hidden"
+            >
+              Số điện thoại đã nhập không có trong CSDL, nếu tiếp tục, hãy nhập
+              tên khách hàng để tạo mới khách hàng
+            </p>
+          </div>
+          <div>
+            <p class="font-semibold">Tên khách hàng</p>
+            <input
+              id="text-invoice_customer"
+              class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
+              type="tel"
+              placeholder="Tên khách hàng"
+            />
+          </div>
+          <div class="flex flex-col space-y-3">
+            <p class="font-semibold">Danh sách dịch vụ đặt hẹn:</p>
+            <select
+              class="w-full p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
+              name="service-select-list"
+              id="service-select-list"
+              multiple
+            >
+              <!-- Render with JQuery -->
+            </select>
+          </div>
+          <div class="flex space-x-5">
+            <p class="font-semibold">Tổng tiền tạm tính</p>
+            <p class="text-lg font-semibold" id="text-temp-total">0</p>
+          </div>
+          <button id="btn-invoice_prrocess" class="w-full rounded-md bg-green-500 text-white font-bold p-2">Tạo hóa đơn</button>
         </div>
       </div>
     </div>
@@ -170,8 +204,8 @@
   </body>
 
   <!-- PRIVATE JS -->
-  <script src="/js/admin/Pet/PetScript.js"></script>
-  <script src="/js/admin/Page/PetScript.js"></script>
+  <script src="/js/admin/Invoice/InvoiceScript.js"></script>
+  <script src="/js/admin/Page/InvoiceScript.js"></script>
   <!-- GENERAL JS -->
   <script src="/js/admin/Login/CheckLogin.js"></script>
   <script src="/js/apiUrl.js"></script>

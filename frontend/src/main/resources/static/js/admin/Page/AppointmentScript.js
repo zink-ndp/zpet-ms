@@ -1,5 +1,5 @@
 $(() => {
-  showDefaultAppointment("0_1_2_3", new Date().getMonth() + 1);
+  showDefaultAppointment("0_1_2_3", new Date().getMonth() + 1, new Date().getFullYear());
 
   $("#modal-apm-create").hide().removeClass("hidden");
   $("#btn-create-apm").click(() => {
@@ -9,6 +9,6 @@ $(() => {
 
   $("input[name=apmStatusFilter]").change(() => {
     let statusFilter = $("input[name=apmStatusFilter]:checked").val();
-    showDefaultAppointment(statusFilter, new Date().getMonth() + 1);
+    showDefaultAppointment(statusFilter, new Date().getMonth() + 1, new Date().getFullYear());
   });
 });

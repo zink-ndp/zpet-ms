@@ -6,3 +6,13 @@ function nonEmpty() {
   }
   return true;
 }
+
+function validateEmail(email) {
+  var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+function formatMoney(string) {
+  let money = string.replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "đ";
+  return money;
+}

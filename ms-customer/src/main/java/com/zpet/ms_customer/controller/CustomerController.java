@@ -63,8 +63,8 @@ public class CustomerController {
 	public Customer getByPhone(@RequestParam String phone) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("phone", phone);
-		return customerService.getByPhone(params);
-	}
+        return customerService.getByPhone(params);
+    }
 
 	@GetMapping("/addresses")
 	public List<Address> getAddresses(@RequestParam String id, @RequestParam(required = false) String adrId) {

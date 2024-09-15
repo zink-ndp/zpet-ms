@@ -3,6 +3,8 @@ package com.zpet.frontend.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -43,6 +45,17 @@ public class AdminController {
     public String petView() {
         return "admin/pet";
     }
+
+    @GetMapping("/invoice")
+    public String invoiceView() {
+        return "admin/invoice";
+    }
+
+    @GetMapping("/invoice-create")
+    public String invoiceCreateView() {
+        return "admin/invoice-create";
+    }
+    
     
     
 }
