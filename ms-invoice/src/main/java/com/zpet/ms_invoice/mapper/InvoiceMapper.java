@@ -12,8 +12,12 @@ import com.zpet.ms_invoice.model.Invoice;
 public interface InvoiceMapper {
 
 	public Integer maxId ();
+
+	public List<Invoice> getAll (Map<String, Object> param);
     
-	public List<Invoice> getInvoices (Map<String, Object> param);
+	public Invoice getInvoiceById (Map<String, Object> param);
+
+	public List<String> getServiceIncluded(String invoiceId);
 
 	public void create (InvoiceCreateRequest request);
 

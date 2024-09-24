@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.zpet.ms_invoice.request.InvoiceCreateRequest;
+import com.zpet.ms_invoice.util.FunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,20 +18,32 @@ import com.zpet.ms_invoice.repository.InvoiceRepository;
 public class InvoiceService {
     
     @Autowired InvoiceRepository invoiceRepository;
-    
-    public Map<String, Object> getInvoices(Map<String, Object> param){
-    	List<Invoice> invoices =  invoiceRepository.getInvoices(param);
+	@Autowired FunctionUtils funcUtils;
+
+	public List<Invoice> getAll (Map<String, Object> param){
+		List<Invoice> invoices = invoiceRepository.getAll(param);
+		invoices.forEach(i -> {
+			i.setCreateTime(funcUtils.formatDate(i.getCreateTime(),"dd/MM/yyyy"));
+		});
+		return invoices;
+	}
+
+    public Map<String, Object> getInvoiceById(Map<String, Object> param){
+    	Invoice invoice =  invoiceRepository.getInvoiceById(param);
+		invoice.setCreateTime(funcUtils.formatDate(invoice.getCreateTime(),"dd/MM/yyyy hh:mm"));
     	RestTemplate restTemplate = new RestTemplate();
-    	Map<String, Object> customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + param.get("id"), Map.class);
+    	Map<String, Object> customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + invoice.getCustomerId(), Map.class);
+		List<String> serviceIds = invoiceRepository.getServiceIncluded(invoice.getId().toString());
+		List<Object> services = new ArrayList<>();
+		serviceIds.forEach(srvId -> {
+			List<Object> service = restTemplate.getForObject("http://localhost:8900/api/service/all?id=" + srvId, List.class);
+            assert service != null;
+            services.add(service.get(0));
+		});
     	Map<String, Object> response = new HashMap<>();
-    	List<Map<String, Object>> address = new ArrayList<>();
-    	invoices.forEach(i -> {    		
-    		Map<String, Object> adr = restTemplate.getForObject("http://localhost:8900/api/customer/addresses?id="+param.get("id")+"&adrId="+i.getAddressId(), Map.class);
-    		address.add(adr);
-    	});
+    	response.put("invoice", invoice);
     	response.put("customer", customer);
-    	response.put("invoices", invoices);
-    	response.put("address", address);
+		response.put("services", services);
     	return response;
     }
 

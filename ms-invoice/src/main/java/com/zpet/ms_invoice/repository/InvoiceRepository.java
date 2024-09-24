@@ -12,20 +12,33 @@ import com.zpet.ms_invoice.model.Invoice;
 
 @Repository
 public class InvoiceRepository {
-    
-    @Autowired InvoiceMapper invoiceMapper;
+
+    @Autowired
+    InvoiceMapper invoiceMapper;
 
     public Integer maxId() {
         Integer maxId = invoiceMapper.maxId();
         return maxId == null ? 0 : maxId;
     }
-    
-    public List<Invoice> getInvoices (Map<String, Object> param){
-    	return invoiceMapper.getInvoices(param);
+
+    public List<Invoice> getAll(Map<String, Object> param) {
+        return invoiceMapper.getAll(param);
     }
 
-    public void create (InvoiceCreateRequest request) { invoiceMapper.create(request); }
+    public Invoice getInvoiceById(Map<String, Object> param) {
+        return invoiceMapper.getInvoiceById(param);
+    }
 
-    public void addServiceIncluded(Map<String, Object> param){ invoiceMapper.addServiceIncluded(param); }
+    public List<String> getServiceIncluded(String invoiceId){
+        return invoiceMapper.getServiceIncluded(invoiceId);
+    }
+
+    public void create(InvoiceCreateRequest request) {
+        invoiceMapper.create(request);
+    }
+
+    public void addServiceIncluded(Map<String, Object> param) {
+        invoiceMapper.addServiceIncluded(param);
+    }
 
 }

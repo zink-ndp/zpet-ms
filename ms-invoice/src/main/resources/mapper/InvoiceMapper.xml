@@ -6,11 +6,27 @@
         SELECT MAX(INV_ID) FROM invoice
     </select>
 
-    <select id="getInvoices" parameterType="map" resultType="com.zpet.ms_invoice.model.Invoice">
+    <select id="getAll" parameterType="map" resultType="com.zpet.ms_invoice.model.Invoice">
+        SELECT
+            INV_ID as id
+             , SF_ID as shippingId
+             , STF_ID as staffId
+             , CTM_ID as customerId
+             , ADR_ID as adressId
+             , VOU_ID as voucherId
+             , INV_TOTAL as total
+             , INV_CREATEDAT as createTime
+        FROM invoice
+        WHERE 1
+        <if test="dateFrom != null">
+            AND INV_CREATEDAT BETWEEN #{dateFrom} AND #{dateTo}
+        </if>
+    </select>
+
+    <select id="getInvoiceById" parameterType="map" resultType="com.zpet.ms_invoice.model.Invoice">
         SELECT 
             INV_ID as id
             , SF_ID as shippingId
-            , P_ID as petId
             , STF_ID as staffId
             , CTM_ID as customerId
             , ADR_ID as adressId
@@ -18,7 +34,12 @@
             , INV_TOTAL as total
             , INV_CREATEDAT as createTime
         FROM invoice
-        WHERE CTM_ID = #{customerId}
+        WHERE INV_ID = #{id}
+    </select>
+
+    <select id="getServiceIncluded" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT SRV_ID as serviceId FROM srv_included
+        WHERE INV_ID = #{invoiceId}
     </select>
 
     <insert id="create" parameterType="com.zpet.ms_invoice.request.InvoiceCreateRequest">

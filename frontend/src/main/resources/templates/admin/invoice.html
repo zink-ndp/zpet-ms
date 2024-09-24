@@ -1,1 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZPet Admin</title>
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Stacking Select -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.1.0/dist/css/multi-select-tag.css"
+    />
+    <!-- Flowbite DateTime picker -->
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <!-- JQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="overflow-hidden">
+    <div
+      id="sidebar"
+      class="fixed flex flex-col justify-between left-0 top-0 h-full w-1/6 px-4 py-8 m-4 rounded-lg bg-white shadow-lg"
+    >
+      <div class="flex flex-col space-y-6">
+        <a
+          href="/admin/"
+          class="logo cursor-pointer font-bold text-black text-center text-4xl w-full"
+        >
+          <span class="text-green-500">Z</span>Pet
+        </a>
+        <a
+          id="aside-item-home"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-gray-600 mt-10"
+          href="/admin/"
+          >Trang chủ</a
+        >
+        <a
+          id="aside-item-appointment"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-gray-600"
+          href="/admin/appointment"
+          >Lịch hẹn</a
+        >
+        <a
+          id="aside-item-invoice"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold bg-green-100 text-green-500"
+          href="/admin/invoice"
+          >Hóa đơn</a
+        >
+        <a
+          id="aside-item-staff"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-gray-600"
+          href="/admin/staff"
+          >Nhân viên</a
+        >
+        <a
+          id="aside-item-customer"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-gray-600"
+          href="/admin/customer"
+          >Khách hàng</a
+        >
+        <a
+          id="aside-item-pet"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-gray-600"
+          href="/admin/pet"
+          >Thú cưng</a
+        >
+      </div>
+      <div class="flex flex-col space-y-6">
+        <p id="staff-name-text" class="w-full text-center">Hi, Staff</p>
+        <a
+          id="aside-item-logout"
+          class="hover:bg-red-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold text-red-500"
+          href="/admin/logout"
+          >Đăng xuất</a
+        >
+      </div>
+    </div>
 
+    <div class="ms-[18.5%] h-screen flex space-x-4">
+      <div class="flex flex-col w-1/2 bg-white shadow-lg rounded-lg p-4 my-4">
+        <div class="flex items-center w-full space-x-4">
+          <p class="font-bold text-2xl text-black">Hóa đơn</p>
+          <a
+            href="/admin/invoice-create"
+            id="btn-add-invoice"
+            class="border-[1px] border-green-500 rounded-sm py-0 px-2 text-green-500"
+          >
+            Add +
+          </a>
+        </div>
+        <div class="flex w-full mt-3 space-x-2">
+          <input
+            type="text"
+            placeholder="Tìm kiếm..."
+            id="input-search-invoice"
+            class="flex-grow w-full px-4 py-2 rounded-sm bg-slate-100 text-gray-800"
+          />
+          <button
+            id="btn-search-invoice"
+            class="flex-shrink w-16 border-[1px] bg-green-500 rounded-sm py-0 px-2 text-white font-semibold"
+          >
+            Tìm
+          </button>
+        </div>
+        <div class="overflow-y-auto flex">
+          <div class="flex flex-col w-full" id="invoices-list">
+            <!-- JQUERY -->
+          </div>
+        </div>
+      </div>
+
+      <div class="flex w-1/2 bg-white shadow-lg rounded-lg p-4 my-4">
+        <div
+          id="default-invoice-detail"
+          class="w-full h-full flex justify-center items-center"
+        >
+          <p class="text-gray-400">Chọn một hóa đơn bên cạnh để xem chi tiết</p>
+        </div>
+        <div id="showing-invoice-detail" class="w-full h-full hidden">
+          <button id="btn-print" class="flex items-center justify-center space-x-3 p-2 rounded-md bg-green-500 text-white float-end">
+            <img src="images/ic_print.svg" class="w-6 h-6" alt="">
+            In
+          </button>
+          <div id="printarea" class="flex flex-col space-y-6">
+            <div class="flex items-center justify-between w-full">
+              <p
+                class="logo cursor-pointer font-bold text-black text-center text-4xl w-full"
+              >
+                <span class="text-green-500">Z</span>Pet
+              </p>
+              <div class="flex flex-col w-full items-center justify-center">
+                <p class="text-3xl uppercase font-bold text-green-500">
+                  hóa đơn
+                </p>
+                <p id="invoice-detail_date" class="font-bold text-md">
+                  2024-12-11
+                </p>
+              </div>
+            </div>
+            <div class="flex w-full">
+              <div class="flex flex-col w-full space-y-3">
+                <div class="flex items-start w-full">
+                  <p class="font-semibold text-gray-600">Mã hóa đơn:</p>
+                  <p
+                    id="invoice-detail_invoice-id"
+                    class="font-semibold text-black"
+                  >
+                    #123456
+                  </p>
+                </div>
+                <div class="flex items-start w-full">
+                  <p class="font-semibold text-gray-600">Mã nhân viên:</p>
+                  <p
+                    id="invoice-detail_staff-id"
+                    class="font-semibold text-black"
+                  >
+                    #23
+                  </p>
+                </div>
+                <div class="flex items-start w-full">
+                  <p class="font-semibold text-gray-600">Khách hàng:</p>
+                  <p
+                    id="invoice-detail_customer-name"
+                    class="font-semibold text-black"
+                  >
+                    Nguyen Tran Anh Thu
+                  </p>
+                </div>
+                <table class="table-auto mt-3">
+                  <thead class="bg-green-500 text-white font-semibold">
+                    <th class="p-3 text-left">Dịch vụ</th>
+                    <th class="p-3 text-right">Giá</th>
+                  </thead>
+                  <tbody id="invoice-detail_table">
+                    <tr class="border-b-2 border-gray-700">
+                      <td class="p-3 font-semibold text-lg">Combo tron goi</td>
+                      <td class="p-3 text-right">$234.000</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="flex w-full justify-between mt-3">
+                  <div class="w-1/3 content-end">
+                    <p class="uppercase text-sm text-green-500 font-semibold">
+                      Lưu ý:
+                    </p>
+                    <p class="text-xs text-gray-800">
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                      Officiis at cumque saepe, rem eum inventore, fugiat maxime
+                      fuga consequuntur deserunt expedita molestiae earum
+                      accusantium magni officia. Provident nobis officia sit?
+                    </p>
+                  </div>
+                  <div class="w-1/2 flex flex-col space-y-3">
+                    <div class="flex justify-between w-full">
+                      <p class="uppercase">Tổng tiền dịch vụ</p>
+                      <p class="font-bold">100.000 đ</p>
+                    </div>
+                    <div class="flex justify-between w-full">
+                      <p class="uppercase">Phí ship</p>
+                      <p class="font-bold">0 đ</p>
+                    </div>
+                    <div class="flex justify-between w-full">
+                      <p class="uppercase">Giảm giá</p>
+                      <p class="font-bold">0 đ</p>
+                    </div>
+                    <div
+                      class="flex justify-between w-full p-3 text-white bg-green-500 font-bold text-lg"
+                    >
+                      <p class="uppercase">Tổng tiền</p>
+                      <p class="">100.000 đ</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex justify-between w-full mt-5">
+                  <p class="font-bold text-lg text-green-500">
+                    Cảm ơn bạn đã sử dụng dịch vụ của ZPet
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <!-- PRIVATE JS -->
+  <script src="/js/admin/Invoice/InvoiceScript.js"></script>
+  <script src="/js/admin/Page/InvoiceScript.js"></script>
+  <!-- GENERAL JS -->
+  <script src="/js/admin/Login/CheckLogin.js"></script>
+  <script src="/js/apiUrl.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/js/client/Modal.js"></script>
+</html>
