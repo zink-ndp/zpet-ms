@@ -42,7 +42,7 @@ const apmElement = (apm) => {
 };
 
 function viewDetail(id) {
-  $(`#appointment-detail`).show();
+  $(`#appointment-detail`).removeClass("hidden");
   $.ajax({
     url: apiUrl + "/api/appointment/detail?id=" + id,
     method: "GET",

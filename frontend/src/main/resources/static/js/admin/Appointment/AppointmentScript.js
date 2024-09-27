@@ -171,7 +171,7 @@ function openAppointmentDetail(id) {
           }
         });
       }
-      $("#apm-detail").show();
+      $("#apm-detail").removeClass("hidden");
     },
   });
 }

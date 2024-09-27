@@ -1,9 +1,8 @@
 $(() => {
   showDefaultAppointment("0_1_2_3", new Date().getMonth() + 1, new Date().getFullYear());
 
-  $("#modal-apm-create").hide().removeClass("hidden");
   $("#btn-create-apm").click(() => {
-    $("#modal-apm-create").show();
+    $("#modal-apm-create").removeClass("hidden");
     appointmentCreate();
   });
 

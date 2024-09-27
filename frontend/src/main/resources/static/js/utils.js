@@ -1,6 +1,6 @@
 function nonEmpty() {
   for (var i = 0; i < arguments.length; i++) {
-    if (arguments[i] == "" || arguments[i] == null){
+    if (arguments[i] == "" || arguments[i] == null || arguments[i].length == 0){
         return false;
     }
   }

@@ -31,7 +31,7 @@ let _customerElement = (s) => {
         } else {
           $("#et-customer_state option[value=0]").prop("selected", true);
         }
-        $("#customer-detail").show();
+        $("#customer-detail").removeClass("hidden");
       },
     });
   }
@@ -81,13 +81,13 @@ function showAddress(addresses){
         contentType: "application/json",
         success: (data) => {
           alert("Thêm khách hàng thành công!");
-          $("#customer-add").hide();
+          $("#customer-add").addClass("hidden");
           fetchAllCustomer("");
         },
       });
     }
   
-    $("#customer-add").show();
+    $("#customer-add").removeClass("hidden");
   
     $("#btn-customer_add").click(() => {
       _processAdd();
@@ -121,7 +121,7 @@ function showAddress(addresses){
       contentType: "application/json",
       success: (data) => {
         alert("Cập nhật khách hàng thành công!");
-        $("#customer-detail").hide();
+        $("#customer-detail").addClass("hidden");
         fetchAllCustomer("");
       },
     })

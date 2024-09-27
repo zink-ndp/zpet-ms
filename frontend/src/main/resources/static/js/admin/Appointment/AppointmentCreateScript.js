@@ -68,7 +68,7 @@ function appointmentCreate() {
         alert("Đặt lịch thành công!");
         renderCalendar();
         showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
-        $("#modal-apm-create").hide();
+        $("#modal-apm-create").addClass("hidden");
       },
       error: (xhr, status, error) => {
         console.log(error);
@@ -77,6 +77,7 @@ function appointmentCreate() {
     })
     
   }
+  $("#service-select-list").empty();
   new MultiSelectTag("service-select-list", {
     placeholder: "Select service",
     tagColor: {

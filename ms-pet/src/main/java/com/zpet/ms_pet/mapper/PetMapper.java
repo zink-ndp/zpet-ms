@@ -12,7 +12,9 @@ import com.zpet.ms_pet.model.PetHealth;
 public interface PetMapper {
 
     public Integer lastId();
-    
+
+    public Integer lastImageId();
+
     public List<Pet> getAll(Map<String, Object> param);
 
     public List<String> getImages (Integer id);

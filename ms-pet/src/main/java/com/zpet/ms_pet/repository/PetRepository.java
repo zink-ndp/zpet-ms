@@ -32,15 +32,17 @@ public class PetRepository {
         return petMapper.getHealths(id);
     }
 
-    public void create(Pet pet){
+    public void create(Pet pet) {
         petMapper.create(pet);
     }
 
-    public void createImage(Map<String, Object> param){
+    public void createImage(Map<String, Object> param) {
+        Integer nextImageId = petMapper.lastImageId()+1;
+        param.put("nextImageId", nextImageId);
         petMapper.createImage(param);
     }
 
-    public void update(Pet pet){
+    public void update(Pet pet) {
         petMapper.update(pet);
     }
 

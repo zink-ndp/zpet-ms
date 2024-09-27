@@ -1,5 +1,6 @@
 let imageLink = (name) => {
-  return `https://firebasestorage.googleapis.com/v0/b/zpet-images.appspot.com/o/pets%2F${name}?alt=media&token=1033c20d-d9db-4e24-ac5c-3824bf5345ea`;
+  // return `https://firebasestorage.googleapis.com/v0/b/zpet-images.appspot.com/o/pets%2F${name}?alt=media&token=1033c20d-d9db-4e24-ac5c-3824bf5345ea`;
+  return `https://imgur.com/${name}`;
 };
 
 let petElement = (p) => {
@@ -113,7 +114,7 @@ function openDetail(id) {
     },
   });
   
-  $(`#pet-detail-modal`).show();
+  $(`#pet-detail-modal`).removeClass("hidden");
 }
 
 $(() => {

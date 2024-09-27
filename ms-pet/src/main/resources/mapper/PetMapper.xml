@@ -9,6 +9,11 @@
         FROM pet
     </select>
 
+    <select id="lastImageId" resultType="java.lang.Integer">
+        SELECT MAX(PIMG_ID) as lastId
+        FROM pet_image
+    </select>
+
     <select id="getAll" parameterType="map" resultType="com.zpet.ms_pet.model.Pet">
          SELECT 
             p.P_ID as id
@@ -22,7 +27,7 @@
             , p.CTM_ID as customerId
         FROM pet p 
         JOIN pet_type pt on pt.PT_ID = p.PT_ID 
-        JOIN pet_image pi on pi.P_ID = p.P_ID 
+        LEFT OUTER JOIN pet_image pi on pi.P_ID = p.P_ID
         WHERE pi.PIMG_ISMAINIMG=true
         <if test="id != null">
             AND p.P_ID like #{id}
@@ -45,6 +50,7 @@
         <if test="customerId != null">
             AND p.CTM_ID = #{customerId}
         </if>
+         ORDER BY p.P_ID
     </select>
 
     <select id="getImages" parameterType="java.lang.Integer" resultType="java.lang.String">
@@ -81,9 +87,10 @@
     </insert>
 
     <insert id="createImage" parameterType="map">
-        INSERT INTO pet_image (P_ID, PIMG_LINK, PIMG_ISMAINIMG)
+        INSERT INTO pet_image (PIMG_ID, P_ID, PIMG_LINK, PIMG_ISMAINIMG)
         VALUES (
-            #{petId}
+            #{nextImageId}
+            ,#{petId}
             , #{imageName}
             , #{isMain}
         )

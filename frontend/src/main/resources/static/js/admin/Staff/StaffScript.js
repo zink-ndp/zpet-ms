@@ -42,7 +42,7 @@ function openStaffDetail(id) {
       } else {
         $("#et-staff_state option[value=0]").prop("selected", true);
       }
-      $("#staff-detail").show();
+      $("#staff-detail").removeClass("hidden");
     },
   });
 }
@@ -106,7 +106,7 @@ function staffAdd() {
     });
   }
 
-  $("#staff-add").show();
+  $("#staff-add").removeClass("hidden");
 
   $("#btn-staff_add").click(() => {
     _processAdd();

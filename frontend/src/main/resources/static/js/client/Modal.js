@@ -1,5 +1,5 @@
 function closeModal() {
-  $(".modal").hide();
+  $(".modal").addClass("hidden");
   $(`body`).removeClass(`overflow-hidden`);
 }
 
