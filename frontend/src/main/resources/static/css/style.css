@@ -3,3 +3,16 @@ html {
     scroll-behavior: smooth;
     background-color: aliceblue;
 }
+
+input[type="checkbox"]:checked {
+    accent-color: rgb(0, 236, 20);
+    background-color: rgb(0, 236, 20);
+    color: white;
+}
+
+
+input[type="radio"]:checked {
+    accent-color: rgb(0, 236, 20);
+    background-color: rgb(0, 236, 20);
+    color: white;
+}

@@ -16,7 +16,7 @@ const apmElement = (apm) => {
     default:
       break;
   }
-  return `
+  let returnElement = `
         <div
           class="flex items-center space-x-3 p-3 h-20 rounded-md bg-gray-50 hover:bg-gray-100 transition-all duration-300 ease-in-out"
         >
@@ -26,19 +26,36 @@ const apmElement = (apm) => {
               Ghi chú: ${apm.note ? apm.note : "Không có ghi chú"}
             </p>
           </div>
-          <p
-            class="flex-shrink-0 text-sm bg-${color}-100 text-${color}-700 p-2 rounded-md"
-          >
-            ${apm.status}
-          </p>
-          <button
-            onclick="viewDetail(${apm.id})"
-            class="flex-shrink-0 p-1 rounded-full text-blue-500 text-sm hover:opacity-50"
-          >
-            Chi tiết
-          </button>
-        </div>
+  `;
+  if (apm.status == "Đợi xác nhận") {
+    returnElement += `
+      <button
+        onclick="cancelAppointment(${apm.id})"
+        class="border-[1px] border-red-500 flex-shrink-0 p-1 rounded-md font-bold text-red-500 text-sm hover:opacity-50"
+      >
+        Hủy hẹn
+      </button>
     `;
+  } else if (apm.status == "Đã xác nhận"){
+    returnElement += `<p class="text-red-500 italic text-xs">Để hủy lịch hẹn đã xác nhận<br>Hãy gọi đến số 037 789 9959</p>`
+  }
+
+  returnElement += `
+      <p
+        class="flex-shrink-0 text-sm bg-${color}-100 text-${color}-700 p-2 rounded-md"
+      >
+        ${apm.status}
+      </p>
+      <button
+        onclick="viewDetail(${apm.id})"
+        class="flex-shrink-0 p-1 rounded-full text-blue-500 text-sm hover:opacity-50"
+      >
+        Chi tiết
+      </button>
+    </div>
+    `;
+
+  return returnElement;
 };
 
 function viewDetail(id) {
@@ -47,24 +64,26 @@ function viewDetail(id) {
     url: apiUrl + "/api/appointment/detail?id=" + id,
     method: "GET",
     success: function (data) {
-      $(`#detail-time`).text(data.info.date+" - "+data.info.time);
+      $(`#detail-time`).text(data.info.date + " - " + data.info.time);
       $(`#detail-status`).text(data.info.status);
-      $(`#detail-note`).text(data.info.note != null ? data.info.note != null : "Không có ghi chú");
+      $(`#detail-note`).text(
+        data.info.note != null ? data.info.note : "Không có ghi chú"
+      );
       $(`#detail-customer-name`).text(data.info.customerName);
       $(`#detail-history`).empty();
-      data.history.forEach(h => {
+      data.history.forEach((h) => {
         $(`#detail-history`).append(`
             <div class="flex-wrap">
                 <p>${h.attime}: ${h.status}</p>
                 <p class="text-sm text-gray-500">${h.description}</p>
             </div>
-        `)
-      })
+        `);
+      });
     },
     error: function (error) {
       console.error(error);
     },
-  })
+  });
 }
 
 function loadCurrentAppointments(customer) {
@@ -105,7 +124,6 @@ function loadAppointment(customer) {
   if (nonEmpty(dateFrom, dateTo)) {
     dateFilter = dateFrom + "_" + dateTo;
     console.log(dateFilter);
-    
   }
   $.ajax({
     url:
@@ -136,6 +154,53 @@ function loadAppointment(customer) {
   });
 }
 
+function cancelAppointment(id) {
+  $("#cance-reason").attr("checked", "false");
+  $("#creason-other_content").val("")
+  $("#cancel-appointment").removeClass("hidden");
+  $("#cancel-form").submit((e) => {
+    e.preventDefault();
+
+    let reason = '';
+    
+    $("input[name='cancel-reason']:checked").each((index, rs) => {
+      reason += rs.value + "; "
+    })
+
+    // TO-DO
+    // if ($(`#creason-other`).prop("checked")) {
+    //   console.log();
+      
+    //   reason += $("#creason-other_content").val();
+    // } 
+
+    const dataRequest = JSON.stringify({
+      apmId: id,
+      status: 3,
+      description: reason,
+    })
+
+    $.ajax({
+      url: apiUrl + "/api/appointment/updateStatus",
+      method: "POST",
+      contentType: "application/json",
+      data: dataRequest,
+      success: function (data) {
+        alert("Hủy lịch hẹn thành công!");
+        $("#cancel-appointment").addClass("hidden");
+        let customer = localStorage.getItem("customer");
+        loadCurrentAppointments(customer);
+        loadAppointment(customer)
+      },
+      error: function (error) {
+        console.error(error);
+        alert("Hủy lịch hẹn thất bại!");
+      },
+    });
+
+  })
+}
+
 $(() => {
   let customer = localStorage.getItem("customer");
   if (customer == null) {
@@ -158,4 +223,15 @@ $(() => {
   $(`#dateTo`).focusout(() => {
     loadAppointment(customer);
   });
+
+  if ($(`#creason-other`).prop("checked")) {
+    $("#creason-other_content").removeClass("hidden");
+  } else {
+    $("#creason-other_content").addClass("hidden");
+  }
+
+  $("#creason-other").change(() => {
+    $("#creason-other_content").toggleClass("hidden");
+  })
+
 });
