@@ -1,14 +1,14 @@
-function closeModal() {
+export const $CloseModal = () => {
   $(".modal").hide();
   $(`body`).removeClass(`overflow-hidden`);
 }
 
 $(() => {
   $(".modal-close").click(() => {
-    closeModal();
+    $CloseModal();
   });
 
   $(".modal-overlay").click(() => {
-    closeModal();
+    $CloseModal();
   });
 });

@@ -1,3 +1,4 @@
+import {apiUrl} from "../apiUrl.js"
 const serviceElement = (s) => {
   let adddedToAppointment = false;
   if (localStorage.getItem("services") != null) {
@@ -17,38 +18,38 @@ const serviceElement = (s) => {
         >
           <div class="flex w-full space-x-4">
             <img
-              src="/images/hero.jpg"
+              src="/images/illustration/hero.jpg"
               class="h-20 w-20 object-cover rounded-md"
               alt=""
             />
             <div class="flex flex-col space-y-2 justify-center">
               <a href="/service-detail/${
-                s.id
-              }" class="font-semibold text-green-500 text-xl">${s.name}</a>
+      s.id
+  }" class="font-semibold text-green-500 text-xl">${s.name}</a>
               <p class="text-black font-semibold text-lg">${s.price}</p>
             </div>
           </div>
           <div class="flex items-center justify-between mt-2">
             <div class="flex space-x-1">
                 ${
-                  s.rating != null
-                    ? `Đánh giá: &nbsp;
+      s.rating != null
+          ? `Đánh giá: &nbsp;
               <p>${s.rating}</p>
-              <img src="/images/star_solid.svg" class="h-6 w-6" />`
-                    : ``
-                }
+              <img src="/images/icons/star-solid.svg" class="h-6 w-6" />`
+          : ``
+  }
               
             </div>
             <button
               id="add-service-${s.id}"
               onclick="${
-                adddedToAppointment
-                  ? `removeFromAppointment(${s.id})`
-                  : `addToAppointment(${s.id})`
-              }"
+      adddedToAppointment
+          ? `removeFromAppointment(${s.id})`
+          : `addToAppointment(${s.id})`
+  }"
               class="px-8 py-2 rounded-md ${
-                adddedToAppointment ? `bg-red-500` : `bg-green-500`
-              } text-white hover:opacity-75 transition-all duration-300 ease-in-out"
+      adddedToAppointment ? `bg-red-500` : `bg-green-500`
+  } text-white hover:opacity-75 transition-all duration-300 ease-in-out"
             >
               ${adddedToAppointment ? `Hủy lịch hẹn` : `Đặt lịch hẹn`}
             </button>
@@ -113,6 +114,8 @@ function removeFromAppointment(id) {
   showServices();
 }
 
-$(() => {
-  showServices();
-});
+export const $ShowService = () => {
+  $(() => {
+    showServices();
+  });
+}
