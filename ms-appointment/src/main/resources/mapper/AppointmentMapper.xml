@@ -91,6 +91,16 @@
     	WHERE APM_ID = #{id}
     </select>
 
+    <select id="getCancelCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(ast.APM_ID)
+        FROM apm_stt ast
+                 JOIN appointment a ON a.APM_ID = ast.APM_ID
+        WHERE a.CTM_ID=#{customerId}
+          AND ast.STT_ID=3
+          AND ast.APMS_STATUSDESCRIPTION NOT LIKE '%Nhân viên%'
+          AND ast.APMS_STATUSDESCRIPTION NOT LIKE '%đã cập nhật trạng thái%'
+    </select>
+
 	<insert id="insertAtTime" parameterType="java.lang.String">
 		INSERT INTO timing VALUES (#{attime})
 	</insert>

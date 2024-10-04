@@ -3,6 +3,7 @@ package com.zpet.ms_appointment.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.response.CancelCountResponse;
 import com.zpet.ms_appointment.response.DayCountResponse;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,6 +22,8 @@ public interface AppointmentMapper {
     public List<AppointmentHistoryResponse> getAppointmentHistory(Integer id);
     
     public List<String> getAppointmentServices(Integer id);
+
+    public Integer getCancelCount(Integer customerId);
     
     public void insertAtTime(String attime);
     

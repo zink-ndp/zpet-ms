@@ -49,6 +49,7 @@ public class AppointmentService {
                 response.setCustomerPhone(funcUtils.extractPhoneNumber(a.getNote()));
             }
             response.setDate(funcUtils.formatDateTimeFromQuery(response.getDate(), "dd/MM/yyyy"));
+            response.setCount(appointmentRepository.getCancelCount(customerId));
             responseList.add(response);
         });
         return responseList;

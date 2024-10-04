@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_service.request.ServiceUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping("/api/service")
 public class ServiceController {
-
-    @GetMapping("/hi")
-    public String getMethodName() {
-        return "Hello";
-    }
     
     @Autowired ServiceService serviceService;
 
@@ -65,9 +61,19 @@ public class ServiceController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Object> updateService(@RequestBody Service service) {
+    public ResponseEntity<Object> updateService(@RequestBody ServiceUpdateRequest service) {
         try {
             serviceService.update(service);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/updateAvailable")
+    public ResponseEntity<Object> updateServiceAvailability(@RequestParam Integer id) {
+        try {
+            serviceService.updateAvailable(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

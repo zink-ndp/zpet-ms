@@ -56,6 +56,14 @@ public class AdminController {
         return "admin/invoice-create";
     }
     
-    
+    @GetMapping("/service")
+    public String serviceView() {
+        return "admin/service";
+    }
+
+    @GetMapping("/voucher")
+    public String voucherView() {
+        return "admin/voucher";
+    }
     
 }

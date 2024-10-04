@@ -3,6 +3,7 @@ package com.zpet.ms_service.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_service.request.ServiceUpdateRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zpet.ms_service.model.Rate;
@@ -19,6 +20,8 @@ public interface ServiceMapper {
     
     public void create(Service service);
 
-    public void update(Service service);
+    public void update(ServiceUpdateRequest service);
+
+    public void updateAvailable(Integer id);
 
 }

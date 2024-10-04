@@ -19,12 +19,17 @@ let _appointmentElement = (a) => {
                a.id
              })" class="bg-green-50 rounded-md flex items-center w-full p-4 hover:bg-green-100 cursor-pointer snap-start transition-all ease duration-300">
                 <div class="flex flex-col space-y-1 w-full">
-                    <p class="font-semibold text-right ${textStatusStyle}">${
-    a.status
-  }</p>
+                    <div class="flex w-full justify-between">
+                      <p class="text-sm text-left text-red-500">
+                         ${a.count > 1 ? `Khách hàng này đã hủy hẹn ${a.count} lần!` : ``}
+                      </p>
+                      <p class="font-semibold text-right ${textStatusStyle}">${
+                        a.status
+                      }</p>
+                    </div>
                     <p class="font-semibold text-green-700">${a.time} ${
-    a.date
-  }</p>
+                      a.date
+                    }</p>
                     <p class="">${a.customerName}</p>
                     <p class="line-clamp-2">${
                       a.note != null ? a.note : "Không có ghi chú"

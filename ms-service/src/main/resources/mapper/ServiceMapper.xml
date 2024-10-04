@@ -18,12 +18,12 @@
             , AVG(r.R_STAR) as rating
         FROM service s
         LEFT JOIN rate r ON r.SRV_ID = s.SRV_ID
-        WHERE s.SRV_ISAVAILABLE = 1
-        <if test="name != null">
-            AND s.SRV_NAME LIKE #{name}
-        </if>
+        WHERE 1
         <if test="id != null">
             AND s.SRV_ID = #{id}
+        </if>
+        <if test="name != null">
+            AND s.SRV_NAME LIKE #{name}
         </if>
         <if test="isAvailable != null">
             AND s.SRV_ISAVAILABLE = #{isAvailable}
@@ -47,6 +47,7 @@
 
     </select>
 
+
     <!-- INSERT -->
 
     <insert id="create" parameterType="com.zpet.ms_service.model.Service">
@@ -61,14 +62,20 @@
     </insert>
 
     <!-- UPDATE -->
-    <insert id="update" parameterType="com.zpet.ms_service.model.Service">
+    <update id="update" parameterType="com.zpet.ms_service.request.ServiceUpdateRequest">
         UPDATE service 
         SET 
-            SRV_NAME = ${name}
-            , SRV_DESCRIPTION = ${description}
-            , SRV_PRICE = ${price}
+            SRV_NAME = #{name}
+            , SRV_DESCRIPTION = #{description}
+            , SRV_PRICE = #{price}
             , SRV_ISAVAILABLE = #{isAvailable}
+        WHERE SRV_ID = #{id}
+    </update>
+
+    <update id="updateAvailable" parameterType="java.lang.String">
+        UPDATE service
+        SET SRV_ISAVAILABLE = ABS(SRV_ISAVAILABLE-1)
         WHERE SRV_ID = ${id}
-    </insert>
+    </update>
 
 </mapper>

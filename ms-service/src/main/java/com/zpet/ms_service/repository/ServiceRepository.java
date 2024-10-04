@@ -3,6 +3,7 @@ package com.zpet.ms_service.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_service.request.ServiceUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,9 +33,12 @@ public class ServiceRepository {
         serviceMapper.create(service);
     }
 
-    public void update(Service service){
+    public void update(ServiceUpdateRequest service){
         serviceMapper.update(service);
     }
 
+    public void updateAvailable(Integer id){
+        serviceMapper.updateAvailable(id);
+    }
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_service.request.ServiceUpdateRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,36 +25,40 @@ public class ServiceService {
     public List<Service> getAll(Map<String, Object> params) {
         return serviceRepository.getAll(params);
     }
-    
-    public List<RateResponse> getRate(Integer serviceId){
-    	List<Rate> rates = serviceRepository.getRate(serviceId);
-    	List<RateResponse> rateResponses = new ArrayList<>();
-    	
-    	for (int i = 0; i < rates.size(); i++) {
-			RateResponse rRes = new RateResponse();
-			BeanUtils.copyProperties(rates.get(i), rRes);
-			RestTemplate restTemplate = new RestTemplate();
-			
-			Customer c = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id="+rates.get(i).getComment(), Customer.class);
-			if (c != null) {
+
+    public List<RateResponse> getRate(Integer serviceId) {
+        List<Rate> rates = serviceRepository.getRate(serviceId);
+        List<RateResponse> rateResponses = new ArrayList<>();
+
+        for (Rate rate : rates) {
+            RateResponse rRes = new RateResponse();
+            BeanUtils.copyProperties(rate, rRes);
+            RestTemplate restTemplate = new RestTemplate();
+
+            Customer c = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + rate.getCustomerId(), Customer.class);
+            if (c != null) {
                 rRes.setCustomerName(c.getName());
-            } 
-			rateResponses.add(rRes);
-		}
-    	
-    	return rateResponses;
+            }
+            rateResponses.add(rRes);
+        }
+
+        return rateResponses;
     }
 
     @Transactional
-    public void create(Service service){
+    public void create(Service service) {
         Integer nextId = serviceRepository.lastId() + 1;
         service.setId(nextId);
         serviceRepository.create(service);
     }
 
     @Transactional
-    public void update(Service service){
-        serviceRepository.create(service);
+    public void update(ServiceUpdateRequest service) {
+        serviceRepository.update(service);
+    }
+
+    public void updateAvailable(Integer id) {
+        serviceRepository.updateAvailable(id);
     }
 
 }
