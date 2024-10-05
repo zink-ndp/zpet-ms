@@ -1,1 +1,1 @@
-const apiUrl = "http://localhost:8900"
+export const apiUrl = "http://localhost:8900"

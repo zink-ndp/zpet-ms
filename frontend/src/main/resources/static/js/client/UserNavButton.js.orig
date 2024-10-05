@@ -1,0 +1,21 @@
+export const $UserNavButton = () => {
+    $(() => {
+        $(`#user-button`).click(() =>{
+            $(`#user-option`).toggleClass('-right-0 -right-96')
+            $(`#user-button img`).toggleClass('rotate-180')
+        })
+
+<<<<<<< HEAD
+    $(`#service-added-button`).click(() =>{
+        $(`body`).addClass(`overflow-hidden`)
+        $(`#added-service`).removeClass(`hidden`)
+        createAppointment()
+=======
+        $(`#service-added-button`).click(() =>{
+            $(`body`).addClass(`overflow-hidden`)
+            $(`#added-service`).show()
+            createAppointment()
+        })
+>>>>>>> Dev/Landingpage
+    })
+}

@@ -96,7 +96,7 @@ const rateElement = (r) => {
             <div class="text-sm text-gray-400 ms-3 mt-1 flex items-center">
                 Đã đánh giá: &nbsp;
                 <span>${r.star}</span>
-                <img src="/images/star_solid.svg" class="h-6 w-6 ms-1" />
+                <img src="/images/icons/star-solid.svg" class="h-6 w-6 ms-1" />
             </div>
             <p class="text-sm text-gray-400 font-semibold">${r.dateTime}</p>
         </div>

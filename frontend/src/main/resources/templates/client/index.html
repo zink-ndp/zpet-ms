@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ZPet</title>
+    <!--    favicon-->
+    <link rel="icon" type="image/x-icon" href="/images/icons/favicon.png">
     <!-- Style -->
     <link rel="stylesheet" href="/css/style.css" />
     <!-- Tailwind -->
@@ -12,257 +14,459 @@
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     <!-- JQuery -->
     <script
-      src="https://code.jquery.com/jquery-3.7.1.js"
-      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-      crossorigin="anonymous"
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"
     ></script>
-  </head>
-  <body>
-    <nav
-      class="z-40 fixed top-0 left-0 px-12 py-4 w-full bg-transparent flex justify-between items-center transition-all duration-500 ease-in-out"
-    >
-      <a href="/" class="logo cursor-pointer">
-        <div id="logo" class="flex text-3xl text-white font-bold opacity-0">
-          <p class="">ZPet</p>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bright-yellow': '#FBB030',
+                        'bright-green': '#00944e',
+                        'bright-red': '#cb472e',
+                        'bright-blue': '#60a1c3',
+                        'grey-white': '#f9f9f9',
+                        'soft-peach': '#eddbcc',
+                        'soft-blue': '#F0F8FF',
+
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        #nav-btn-group-container {
+            @apply hidden justify-center items-center sm:hidden md:hidden lg:flex xl:flex 2xl:flex;
+        }
+        #nav-btn-group-mobile {
+            @apply gap-6 justify-center items-center;
+        }
+        #nav-btn-group-large {
+            @apply flex flex-row gap-6 justify-center items-center;
+        }
+        .test {
+            @apply text-red-500;
+        }
+        .nav-btn {
+            @apply text-bright-green font-[600] hover:text-bright-yellow transition-all duration-500 delay-200 ease-out;
+        }
+        .nav-btn-signin {
+            @apply flex w-28 h-10 rounded-full bg-bright-green justify-center items-center text-grey-white hover:bg-gradient-to-r hover:from-bright-green hover:to-bright-yellow;
+        }
+        #nav-hamburger-btn {
+            @apply flex lg:hidden xl:hidden 2xl:hidden;
+        }
+        .main-btn-register {
+            @apply relative text-center transition-transform hover:-rotate-6;
+        }
+        .title-bar{
+            @apply w-full flex flex-col justify-center items-start lg:items-center xl:items-center 2xl:items-center gap-2;
+        }
+        .swipe-area-card-container {
+            @apply relative w-screen gap-8 overflow-x-auto;
+            scrollbar-width: none;
+        }
+        .swipe-area-doctor-card-container {
+            @apply relative w-screen sm:w-screen md:w-screen lg:w-fit xl:w-fit 2xl:w-fit overflow-x-auto mt-0 sm:mt-0 md:mt-0 lg:mt-10 xl:mt-10 2xl:mt-10;
+            scrollbar-width: none;
+        }
+        .card-container {
+            @apply flex w-fit gap-5 snap-x snap-proximity px-[35vw] my-10 py-5;
+        }
+        .doctor-card-container {
+            @apply w-max lg:w-auto xl:w-auto 2xl:w-auto gap-5 snap-x snap-proximity px-[35vw] sm:px-[35vw] md:px-[35vw] lg:px-0 xl:px-0 2xl:px-0 my-10 sm:my-10 md:my-10 lg:my-0 xl:my-0 2xl:my-0 py-5 sm:py-5 md:py-5 lg:py-0 xl:py-0 2xl:py-0 flex sm:flex md:flex lg:grid xl:grid 2xl:grid grid-cols-3;
+        }
+        .card {
+            @apply flex flex-col w-72 justify-between items-center h-fit rounded-lg;
+        }
+        .btn-card-section {
+            @apply flex w-fit h-10 rounded-full bg-bright-green text-grey-white hover:bg-gradient-to-r hover:from-bright-green hover:to-bright-yellow justify-center items-center text-grey-white px-5;
+        }
+        .doctor-card {
+            @apply flex flex-col justify-center items-center;
+        }
+        #ticket-container {
+           @apply relative text-center transition-transform hover:-rotate-6;
+        }
+        .social-btn {
+            @apply w-8 h-8 bg-bright-yellow rounded-full flex justify-center items-center;
+        }
+        .responsive-column {
+            @apply grid grid-flow-row-dense lg:grid-flow-row xl:grid-flow-row 2xl:grid-flow-row grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2;
+        }
+        .hidden-on-mobile {
+            @apply hidden lg:block xl:block 2xl:block;
+        }
+        .show-on-mobile {
+            @apply flex lg:hidden xl:hidden 2xl:hidden;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="flex w-screen h-fit px-2 lg:px-24 xl:px-24 2xl:px-24 py-6 fixed z-10 backdrop-blur-lg bg-soft-blue/70 overflow-hidden">
+    <div class="flex flex-col sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row justify-center sm:justify-center md:justify-center lg:justify-between xl:justify-between 2xl:justify-between item-center w-full h-fit gap-5">
+        <div class="flex flex-row w-full lg:w-fit xl:w-fit 2xl:w-fit">
+            <img id="nav-brand-logo" class="nav-brand-logo mx-auto" draggable="false" alt="logo">
+            <button id="nav-hamburger-btn"><img src="/images/icons/hamburger-menu.svg"></button>
         </div>
-      </a>
-      <div class="flex space-x-3 items-center">
-        <button
-          id="service-added-button"
-          class="relative w-10 h-10 rounded-md hover:bg-white/25 flex items-center justify-center"
-        >
-          <p
-            id="service-quantity"
-            class="w-4 h-4 bg-white rounded-full text-black text-xs absolute -top-1 -right-1"
-          >
-            1
-          </p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="size-6 text-white"
-          >
-            <path
-              d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
-        <div class="relative" id="login-status">
-          <div id="logged-out" class="hidden">
-            <a
-              href="/login"
-              id="login-button"
-              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
-            >
-              <p id="login-button-text" class="text-lg">Đăng nhập</p>
-            </a>
-          </div>
-          <div id="logged-in" class="hidden">
-            <div
-              id="user-button"
-              class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
-            >
-              <p id="user-button-text" class="text-lg">Hi, Vinh</p>
-              <img src="/images/chevron.svg" class="w-5 h-5" alt="" />
-            </div>
-            <div
-              id="user-option"
-              class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
-            >
-              <p class="text-green-700 text-sm font-bold">Quản lý</p>
-              <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
-                >Thú cưng</a
-              >
-              <a
-                href="/appointments"
-                class="py-2 px-3 rounded-md hover:bg-black/5"
-                >Lịch hẹn</a
-              >
-              <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
-                >Hóa đơn</a
-              >
-              <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
-                >Voucher</a
-              >
-              <hr />
-              <p class="text-green-700 text-sm font-bold">Tài khoản</p>
-              <a
-                href="/change-password"
-                class="py-2 px-3 rounded-md hover:bg-black/5"
-                >Thay đổi mật khẩu</a
-              >
-              <a
-                href="/logout"
-                class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
-                >Đăng xuất</a
-              >
-            </div>
-          </div>
+        <ul id="nav-btn-group-mobile" class="hidden flex flex-col lg:hidden xl:hidden 2xl:hidden">
+            <li>
+                <a class="nav-btn" href="/">Thú cưng</a>
+            </li>
+            <li>
+                <a class="nav-btn" href="/">Lịch hẹn</a>
+            </li>
+            <li>
+                <a class="nav-btn" href="/">Hoá đơn</a>
+            </li>
+            <li>
+                <a class="nav-btn" href="/">Voucher</a>
+            </li>
+            <li class="flex w-fit">
+                <a class="nav-btn-signin" href="/login">Đăng nhập</a>
+            </li>
+        </ul>
+        <div id="nav-btn-group-container" class="w-fit h-fit">
+            <ul id="nav-btn-group-large">
+                <li>
+                    <a class="nav-btn" href="/">Thú cưng</a>
+                </li>
+                <li>
+                    <a class="nav-btn" href="/">Lịch hẹn</a>
+                </li>
+                <li>
+                    <a class="nav-btn" href="/">Hoá đơn</a>
+                </li>
+                <li>
+                    <a class="nav-btn" href="/">Voucher</a>
+                </li>
+                <li class="flex w-fit">
+                    <a class="nav-btn-signin" href="/login">Đăng nhập</a>
+                </li>
+            </ul>
         </div>
-      </div>
-    </nav>
-    <div class="w-full h-screen">
-      <div class="w-full h-full relative">
-        <img src="/images/hero.jpg" class="object-cover w-full h-full" alt="" />
-        <div
-          class="absolute top-[calc(50%-300px)] left-32 h-[600px] w-96 rounded-md flex flex-col space-y-4 justify-center"
-        >
-          <div class="text-[80px] flex text-white font-bold">
-            <p class="text-green-500">Z</p>
-            <p class="">pet</p>
-          </div>
-          <p class="font-semibold text-2xl text-white">
-            Cửa hàng chăm sóc thú cưng
-          </p>
-          <button
-            class="text-white w-[150px] bg-green-500 p-3 rounded-md hover:opacity-75 hover:scale-105 transition-all duration-300 ease-in-out"
-          >
-            Đặt lịch ngay
-          </button>
-        </div>
-      </div>
     </div>
-    <section id="content" class="mt-8">
-      <div class="w-full font-bold text-center text-green-600 text-3xl">
-        Dịch vụ của ZPet
-      </div>
-      <div
-        id="grid-service"
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-8 lg:mx-48"
-      >
-        <!-- Render with JQuery -->
-      </div>
+
+</nav>
+<!-- main-->
+<main class="w-full h-fit flex flex-col justify-center items-center overflow-hidden">
+    <section class="relative h-screen min-h-[900px] mt-20 lg:mt-0 xl:mt-0 2xl:mt-0 responsive-column w-full" >
+        <div class="flex flex-col w-full justify-center items-start px-10">
+            <span class="text-bright-green text-5xl font-[700]">
+                Hãy đến cửa hàng <br/>chăm sóc thú cưng <span class="text-bright-yellow">ZPet</span>
+            </span>
+            <span class="text-[1.4rem] py-5">Chăm sóc ân cần, đảm bảo thú cưng của bạn khỏe mạnh.</span>
+            <button class="main-btn-register">
+                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                <img src="/images/icons/bone.svg" draggable="false" class="w-44" alt="register button"/>
+            </button>
+        </div>
+        <div class="row-start-1 lg:row-start-auto xl:row-start-auto 2xl:row-start-auto bg-soft-blue flex justify-center items-center">
+            <img src="/images/illustration/smile-cat.png" draggable="false" alt="illustration"/>
+        </div>
     </section>
-    <div id="footer" class="mt-8 bg-white">
-      <div
-        class="flex flex-col md:flex-row p-12 items-center justify-center md:justify-between"
-      >
-        <div class="text-[50px] flex text-black font-bold">
-          <p class="text-green-500">Z</p>
-          <p class="">Pet</p>
+    <section class="relative h-fit min-h-[900px] w-full flex flex-col justify-center items-center">
+        <div class="hidden-on-mobile flex flex-row w-full">
+            <img src="/images/icons/vector1.png" class="w-full h-fit" draggable="false">
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 justify-end">
-          <a
-            href=""
-            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
-            >Thú cưng</a
-          >
-          <a
-            href=""
-            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
-            >Lịch hẹn</a
-          >
-          <a
-            href=""
-            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
-            >Hóa đơn</a
-          >
-          <a
-            href=""
-            class="hover:text-green-500 hover:bg-gray-100/75 p-2 rounded-md"
-            >Voucher</a
-          >
-        </div>
-      </div>
-      <div class="w-full p-4 text-center text-gray-600">
-        <p>2024 ZPet. Nguyen Do Phuc Vinh B2003768.</p>
-      </div>
-    </div>
-
-    <div
-      id="added-service"
-      class="z-50 fixed top-0 left-0 modal w-full h-full hidden"
-    >
-      <div class="w-full h-full relative">
-        <div class="modal-overlay w-full h-full bg-black/45"></div>
-        <div
-          class="absolute top-[calc(50%-300px)] left-[calc(50%-400px)] w-full h-full md:w-[800px] md:h-fit bg-white rounded-lg p-8"
-        >
-          <h1 class="text-center font-bold text-3xl relative">
-            Thêm lịch hẹn
-            <img
-              src="/images/close.svg"
-              class="modal-close absolute top-0 right-0 h-8 w-8 hover:scale-105 rounded-full p-1 hover:bg-gray-200"
-              alt=""
-              id="modal-close"
-            />
-          </h1>
-          <div class="mt-3 flex flex-col space-y-3">
-            <p class="font-semibold text-lg">Danh sách dịch vụ đặt hẹn:</p>
-            <ol id="added-service-modal" class="space-y-2">
-              Chưa có dịch vụ nào được thêm!
-            </ol>
-          </div>
-          <div class="mt-3">
-            <p class="font-semibold text-lg">Ghi chú:</p>
-            <textarea
-              id="note-modal"
-              class="w-full h-24 p-3 rounded-md border border-gray-300 focus:outline-none focus:border-green-500"
-              placeholder="Ghi chú"
-            ></textarea>
-          </div>
-          <div class="mt-3">
-            <p class="font-semibold text-lg">Thời gian đặt hẹn:</p>
-            <div class="flex space-x-4 px-12">
-              <div class="relative max-w-sm flex-1 w-full">
-                <div
-                  class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
-                >
-                  <svg
-                    class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-                    />
-                  </svg>
-                </div>
-                <input
-                  datepicker
-                  id="datepicker-modal"
-                  type="text"
-                  class="block w-full ps-10 p-2.5 bg-slate-50 rounded-md"
-                  placeholder="Select date"
-                />
-              </div>
-              <div class="relative flex-1 w-full">
-                <input
-                  id="timepicker-modal"
-                  type="time"
-                  class="block w-full ps-10 p-2.5 bg-slate-50 rounded-md"
-                  value="00:00"
-                  required
-                />
-              </div>
+        <div class="flex flex-row w-full h-fit responsive-column bg-bright-green">
+            <div class="flex justify-center items-center w-full h-full">
+                <img src="/images/illustration/doctor-dog.png" class="h-[600px] w-full lg:w-auto xl:w-auto 2xl:w-auto object-cover lg:h-96 xl:h-96 2xl:h-96 lg:rounded-lg xl:rounded-lg 2xl:rounded-lg"/>
             </div>
-          </div>
-          <button
-            id="btn-create-appointment"
-            class="w-full bg-green-500 rounded-md text-white mt-3 p-3 hover:opacity-75"
-          >
-            Ok
-          </button>
+            <div class="w-full flex flex-col justify-center items-start">
+                    <span class="text-white text-4xl font-[700] my-5 mx-10">
+                        Sứ mệnh của chúng tôi
+                    </span>
+                <span class="text-white text-xl mx-10 mb-5 leading-[1.56]">
+                        Tại ZPet Care Center, hành trình của chúng tôi bắt đầu với một mục tiêu đơn giản: cung cấp dịch vụ chăm sóc tốt nhất có thể cho thú cưng.<br/>
+                        <span class="hidden-on-mobile">Được thành lập bởi một nhóm bác sĩ thú y đầy nhiệt huyết và tận tâm, phòng khám của chúng tôi nổi bật nhờ cung cấp các dịch vụ chất lượng cao và dịch vụ chăm sóc nhân bản, luôn tập trung vào sức khỏe của thú cưng và sự yên tĩnh của chủ nhân.<br/></span>
+                        <span class="hidden-on-mobile">Sứ mệnh của chúng tôi là tăng cường sức khỏe và hạnh phúc cho những người bạn bốn chân của bạn, củng cố mối liên kết giữa bạn và thú cưng của mình.<br/></span>
+                        <span class="hidden-on-mobile">Hãy đến gặp chúng tôi và khám phá lý do tại sao ZPet là lựa chọn phù hợp để chăm sóc thú cưng của bạn.</span>
+                    </span>
+                <button class="show-on-mobile mx-10 mb-5 text-grey-white font-[700] border-b-[3px] hover:text-bright-yellow hover:border-bright-yellow transition-all duration-700 delay-300 ease-out">READ MORE</button>
+            </div>
         </div>
-      </div>
-    </div>
-  </body>
+        <div class="hidden-on-mobile flex flex-row w-full">
+            <img src="/images/icons/vector2.png" class="w-full" draggable="false">
+        </div>
 
-  <script src="/js/apiUrl.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/client/script.js"></script>
-  <script src="/js/client/CheckLogin.js"></script>
-  <script src="/js/client/ShowServices.js"></script>
-  <script src="/js/client/ShowAddedService.js"></script>
-  <script src="/js/client/Modal.js"></script>
-  <script src="/js/client/UserNavButton.js"></script>
-  <script src="/js/client/AddAppointment.js"></script>
+    </section>
+    <section class="relative h-fit w-full px-2 lg:px-24 xl:px-24 2xl:px-24">
+        <div class="w-full h-[20rem] grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3">
+            <div class="flex flex-col justify-center items-start w-full h-full mx-10">
+                    <span class="text-bright-green text-4xl font-[700] my-5">
+                        Tại sao chọn ZPet?
+                    </span>
+                <span class="text-2xl hidden-on-mobile">
+                        Tại phòng khám thú y ZPet, chúng tôi tự hào mang đến sự chăm sóc và tình cảm tốt nhất cho những người bạn bốn chân của bạn.
+                    </span>
+            </div>
+            <div class="w-full flex flex-col col-span-2 justify-center items-center">
+                <div class="grid grid-cols-2 grid-rows-2 gap-2">
+                    <div class="flex flex-row bg-soft-peach flex justify-between items-center rounded-lg w-42">
+                        <div class="m-3 bg-white rounded-lg w-12 h-12 flex justify-center items-center">
+                            <img class="w-9" src="/images/icons/dog.png" draggable="false" alt="illustration"/>
+                        </div>
+                        <span class="mx-3 ">
+                                    Dịch vụ cá nhân hóa
+                                </span>
+                    </div>
+                    <div class="flex flex-row bg-bright-green flex justify-between items-center rounded-lg w-42">
+                        <div class="m-3 bg-white rounded-lg w-12 h-12 flex justify-center items-center">
+                            <img class="w-9" src="/images/icons/veterinarian.png" draggable="false" alt="illustration"/>
+                        </div>
+                        <span class="mx-3 text-white">
+                                    Đội ngũ đủ điều kiện
+                                </span>
+                    </div>
+                    <div class="flex flex-row bg-bright-green flex justify-between items-center rounded-lg w-42">
+                        <div class="m-3 bg-white rounded-lg w-12 h-12 flex justify-center items-center">
+                            <img class="w-9" src="/images/icons/veterinary.png" draggable="false" alt="illustration"/>
+                        </div>
+                        <span class="mx-3 text-white">
+                                    Tình yêu với thú cưng
+                                </span>
+                    </div>
+                    <div class="flex flex-row bg-soft-peach flex justify-between items-center rounded-lg w-42">
+                        <div class="m-3 bg-white rounded-lg w-12 h-12 flex justify-center items-center">
+                            <img class="w-9" src="/images/icons/house.png" draggable="false" alt="illustration"/>
+                        </div>
+                        <span class="mx-3">
+                                    Trang thiết bị hiện đại
+                                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="relative h-fit w-full flex flex-col justify-center items-center">
+        <div class="title-bar">
+            <span class="my-12 lg:my-0 xl:my-0 2xl:my-0 mx-12 lg:mx-0 xl:mx-0 2xl:mx-0 text-bright-green text-4xl font-[700]">Dịch vụ của chúng tôi</span>
+            <span class="hidden-on-mobile text-2xl">Chăm sóc từng chi tiết cho sức khỏe thú cưng của bạn</span>
+        </div>
+        <div class="swipe-area-card-container">
+            <div class="card-container">
+                <div class="card bg-bright-green">
+                    <img src="/images/illustration/doctor-cat.png" class="w-64 rounded-lg mt-4 object-cover" draggable="false" alt="illustration"/>
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-white text-3xl font-[600] my-4">
+                            Tư vấn thú y
+                        </span>
+                        <span class="text-white text-center mx-5 mb-4">
+                        Chăm sóc toàn diện cho sức khỏe thú cưng của bạn.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-bright-green w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-soft-peach">
+                    <img src="/images/illustration/doctor-cat1.png" class="w-64 h-44 rounded-lg mt-4 object-cover" draggable="false" alt="illustration"/>
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                            Kiểm tra sức khoẻ
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                            Chẩn đoán nhanh chóng và chính xác để điều trị.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-soft-peach w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-bright-green">
+                    <img src="/images/illustration/doctor-cat2.png" class="w-64 h-44 rounded-lg mt-4 object-cover"/>
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-white text-3xl font-[600] my-4">
+                            Tiêm chủng
+                        </span>
+                        <span class="text-white text-center mx-5 mb-4">
+                        Bảo vệ thú cưng với chương trình tiêm chủng của chúng tôi.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-bright-green w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-soft-peach">
+                    <img src="/images/illustration/petshop.jpg" class="w-64 h-44 rounded-lg mt-4 object-cover" draggable="false" alt="illustration"/>
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                            Cửa hàng thú cưng
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                            Sản phẩm mang lại sức khỏe và hạnh phúc cho thú cưng của bạn.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-soft-peach w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-bright-green">
+                    <img src="/images/illustration/doctor-dog1.png" class="w-64 h-44 rounded-lg mt-4 object-cover"/>
+
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-white text-3xl font-[600] my-4">
+                            Phẫu thuật
+                        </span>
+                        <span class="text-white text-center mx-5 mb-4">
+                        Thủ tục an toàn với sự chăm sóc đặc biệt của đội ngũ chúng tôi.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-bright-green w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-soft-peach">
+                    <img src="/images/illustration/doctor-dog2.png" class="w-64 h-44 rounded-lg mt-4 object-cover" draggable="false" alt="illustration"/>
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                            Dịch vụ khẩn cấp
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                             Dịch vụ khẩn cấp bất cứ lúc nào 24/7 kể cả ngày nghỉ.
+                        </span>
+                        <div class="hidden group-hover:flex justify-center items-center rounded-lg transition-opacity absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-soft-peach w-full h-full">
+                            <button class="main-btn-register">
+                                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                                <img src="/images/icons/bone.svg" class="w-44" draggable="false" alt="illustration"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button class="btn-card-section">Xem tất cả dịch vụ</button>
+        </div>
+    </section>
+    <section class="relative h-screen min-h-[900px] w-full flex flex-col justify-center items-center">
+        <div class="title-bar">
+            <span class="my-12 lg:my-0 xl:my-0 2xl:my-0 mx-12 lg:mx-0 xl:mx-0 2xl:mx-0 text-bright-green text-4xl font-[700]">Đội ngũ của chúng tôi</span>
+            <span class="hidden-on-mobile text-2xl">Gặp gỡ các chuyên gia chăm sóc thú cưng của bạn</span>
+        </div>
+        <div class="swipe-area-doctor-card-container">
+            <div class="doctor-card-container">
+                <div class="doctor-card">
+                    <img src="/images/illustration/PhanVanTai.jpg" class="w-60 h-72 object-cover rounded-lg" draggable="false">
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                           Bác sĩ Phan Văn Tài
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                        Bác sĩ phẫu thuật thú y
+                        </span>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="/images/illustration/NguyenThiLan.jpeg" class="w-64 h-72 sm:h-72 md:h-72 lg:h-96 xl:h-96 2xl:h-96 object-cover rounded-lg" draggable="false">
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                           Bác sĩ Nguyễn Thị Lan
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                            Bác sĩ thần kinh thú y
+                        </span>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <img src="/images/illustration/TranVanNghia.jpg" class="w-60 h-72 object-cover rounded-lg" draggable="false">
+                    <div class="relative flex flex-col justify-center items-center group">
+                        <span class="text-bright-green text-3xl font-[600] my-4">
+                           Bác sĩ Trần Văn Hai
+                        </span>
+                        <span class="text-center mx-5 mb-4">
+                            Bác sĩ tim mạch thú y
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<div class="hidden-on-mobile flex flex-row w-full">
+    <img src="/images/icons/vector1.png" class="w-full h-fit" draggable="false">
+</div>
+<footer class="h-fit min-h-[900px] lg:min-h-[700px] xl:min-h-[700px] 2xl:min-h-[700px] w-screen bg-bright-green">
+    <section class="relative grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2  w-full">
+        <div class="flex justify-center items-center">
+            <img src="/images/illustration/dog1.png" draggable="false" alt="illustration" class="w-[26rem] drop-shadow-2xl"/>
+        </div>
+        <div class="flex flex-col w-full justify-center items-start px-10">
+            <span class="text-grey-white text-5xl font-[700]">
+                Đặt lịch tư vấn ngay hôm nay
+            </span>
+            <span class="text-grey-white text-[1.4rem] py-5">Đừng chờ đợi để đảm bảo sức khỏe và hạnh phúc cho người bạn bốn chân của bạn. Lên lịch cuộc hẹn ngay bây giờ và xem sự khác biệt mà dịch vụ của chúng tôi có thể mang lại.</span>
+            <button class="main-btn-register">
+                <p class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-white">Đặt lịch ngay</p>
+                <img src="/images/icons/bone.svg" draggable="false" class="w-44" alt="register button"/>
+            </button>
+        </div>
+    </section>
+    <section class="relative hidden lg:grid xl:grid 2xl:grid grid-cols-3 w-full px-24">
+        <div class="flex justify-center items-center">
+            <div id="ticket-container">
+                <img src="/images/illustration/ticket.svg" class="">
+                <img src="/images/brand/logo.png" class="absolute top-5 left-5 w-20">
+                <div class="absolute top-5 right-5 flex flex-row justify-center items-center gap-2">
+                    <button class="social-btn"><img src="/images/icons/zalo.png" alt="social" class="w-4"/></button>
+                    <button class="social-btn"><img src="/images/icons/facebook.png" alt="social" class="w-4"/></button>
+                    <button class="social-btn"><img src="/images/icons/shopee.png" alt="social" class="w-4"/></button>
+                </div>
+                <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-full flex flex-row justify-center items-center gap-2">@2024 Design and make by Zink</div>
+            </div>
+        </div>
+        <div class="grid grid-cols-4">
+            <div></div>
+            <div class="col-span-2">
+                <span class="text-grey-white text-[1.4rem] pb-5">Liên kết</span>
+                <ul class="w-full flex flex-col justify-center items-start gap-2">
+                    <li><a class="text-grey-white" href="/">Trang chủ</a></li>
+                    <li><a class="text-grey-white" href="/">Dịch vụ</a></li>
+                    <li><a class="text-grey-white" href="/">Đội ngũ của chúng tôi</a></li>
+                    <li><a class="text-grey-white" href="/">Cửa hàng thú cưng</a></li>
+                    <li><a class="text-grey-white" href="/">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div></div>
+        </div>
+        <div class="flex flex-col w-full justify-center items-start px-10">
+            <div class="grid grid-cols-6">
+                <div></div>
+                <div class="col-span-4">
+                    <span class="text-grey-white text-[1.4rem] pb-5">Liên hệ</span>
+                    <ul class="w-full flex flex-col justify-center items-start gap-2">
+                        <li><a class="text-grey-white flex flex-row gap-3" href="/"><img src="/images/icons/phone.svg" alt="icon" class="w-5"/>Số điện thoại: 0000</a></li>
+                        <li><a class="text-grey-white flex flex-row gap-3" href="/"><img src="/images/icons/zalo.png" alt="icon" class="w-5 object-contain"/>Zalo: </a></li>
+                        <li><a class="text-grey-white flex flex-row gap-3" href="/"><img src="/images/icons/mail.svg" alt="icon" class="w-5"/>Email:</a></li>
+                        <li><a class="text-grey-white flex flex-row gap-3" href="/"><img src="/images/icons/pin.svg" alt="icon" class="w-5"/>Địa chỉ: </a></li>
+                        <li><a class="text-grey-white flex flex-row gap-3" href="/"><img src="/images/icons/clock.svg" alt="icon" class="w-5"/>Giờ hoạt động:  </a></li>
+                    </ul>
+                </div>
+                <div></div>
+            </div>
+        </div>
+    </section>
+</footer>
+</body>
+<script src="/js/index.js" type="module" ></script>
+
 </html>

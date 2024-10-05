@@ -17,7 +17,7 @@ const serviceInApointmentElement = (id) => {
           <li class="py-3 px-5 rounded-md bg-slate-50 flex justify-between">
           <p>${s[0].name}</p>
           <button onclick="removeService(${s[0].id})" class="hover:bg-red-300/25 p-1 rounded-full">
-              <img src="/images/close.svg" class="h-4 w-4" alt="" />
+              <img src="/images/icons/close.svg" class="h-4 w-4" alt="" />
           </button>
           </li>    
       `;
@@ -94,17 +94,19 @@ function processAppointment() {
 
 }
 
-$(() => {
+export const $AddAppointment = () => {
+  $(() => {
 
-  
-  
-  $(`#btn-create-appointment`).click(() => {
-    let customer = localStorage.getItem('customer')
-    if (customer == null) {
-      alert("Vui lòng đăng nhập !")
-      window.location.href = "/login"
-    } else {
-      processAppointment()
-    }
+
+
+    $(`#btn-create-appointment`).click(() => {
+      let customer = localStorage.getItem('customer')
+      if (customer == null) {
+        alert("Vui lòng đăng nhập !")
+        window.location.href = "/login"
+      } else {
+        processAppointment()
+      }
+    })
   })
-})
+}

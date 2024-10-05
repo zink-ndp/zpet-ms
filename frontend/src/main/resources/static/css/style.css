@@ -1,7 +1,52 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/Linotte_Bold.ttf') format('truetype');
+    font-weight: 100; /* Thin */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/Linotte_Heavy.ttf') format('truetype');
+    font-weight: 300; /* Light */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/Linotte_Regular.ttf') format('truetype');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/Linotte_SemiBold.ttf') format('truetype');
+    font-weight: 600; /* Semi-Bold */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('../fonts/Linotte_Bold.ttf') format('truetype');
+    font-weight: 700; /* Bold */
+    font-style: normal;
+}
+
+
+*{
+    font-family: MyCustomFont, sans-serif;
+}
 html {
     margin: 0;
     scroll-behavior: smooth;
     background-color: aliceblue;
+}
+
+#nav-brand-logo {
+    content:url("../images/brand/logo.png");
+    width: 100px;
+    height: fit-content;
 }
 
 input[type="checkbox"]:checked {

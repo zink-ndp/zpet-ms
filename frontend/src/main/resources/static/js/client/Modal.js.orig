@@ -1,0 +1,19 @@
+<<<<<<< HEAD
+function closeModal() {
+  $(".modal").addClass("hidden");
+=======
+export const $CloseModal = () => {
+  $(".modal").hide();
+>>>>>>> Dev/Landingpage
+  $(`body`).removeClass(`overflow-hidden`);
+}
+
+$(() => {
+  $(".modal-close").click(() => {
+    $CloseModal();
+  });
+
+  $(".modal-overlay").click(() => {
+    $CloseModal();
+  });
+});
