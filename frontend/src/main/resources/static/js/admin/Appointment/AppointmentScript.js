@@ -181,3 +181,37 @@ function openAppointmentDetail(id) {
   });
 }
 
+
+function fetchServices() {
+  $.ajax({
+    url: `${apiUrl}/api/service/all`,
+    method: "GET",
+    async: false,
+    success: (data) => {
+      console.log( $("#service-apm-select-list"));
+      data.forEach((service) => {
+        
+        $("#service-apm-select-list").append(
+          `<option value="${service.id}">${service.name}</option>`
+        );
+      });
+    },
+  });
+}
+
+function fetchCustomers() {
+  $.ajax({
+    url: `${apiUrl}/api/customer/all`,
+    method: "GET",
+    async: false,
+    success: (data) => {
+      $("#customer-select-list").html("").append(`<option value="" disabled selected>- Chọn khách hàng -</option>`);
+      data.forEach((customer) => {
+        $("#customer-select-list").append(
+          `<option value="${customer.id}-${customer.name}">${customer.id} - ${customer.name} - ${customer.phone}</option>`
+        );
+      });
+    },
+  });
+}
+

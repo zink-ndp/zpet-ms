@@ -6,38 +6,9 @@ function _checkVisitor() {
   }
 }
 
-function fetchServices() {
-  $.ajax({
-    url: `${apiUrl}/api/service/all`,
-    method: "GET",
-    success: (data) => {
-      $("#service-select-list").html("");
-      data.forEach((service) => {
-        $("#service-select-list").append(
-          `<option value="${service.id}">${service.name}</option>`
-        );
-      });
-    },
-  });
-}
-
-function fetchCustomers() {
-  $.ajax({
-    url: `${apiUrl}/api/customer/all`,
-    method: "GET",
-    success: (data) => {
-      $("#customer-select-list").html("").append(`<option value="" disabled selected>- Chọn khách hàng -</option>`);
-      data.forEach((customer) => {
-        $("#customer-select-list").append(
-          `<option value="${customer.id}-${customer.name}">${customer.id} - ${customer.name} - ${customer.phone}</option>`
-        );
-      });
-    },
-  });
-}
-
 function appointmentCreate() {
   function _processCreate() {
+    
     let services = localStorage.getItem("services").split(",");
     let customerId = null;
     if (!$("#visitor-check").prop("checked")){
@@ -77,19 +48,6 @@ function appointmentCreate() {
     })
     
   }
-  $("#service-select-list").empty();
-  new MultiSelectTag("service-select-list", {
-    placeholder: "Select service",
-    tagColor: {
-      textColor: "#00c400",
-      borderColor: "#00c400",
-      bgColor: "#d4ffd4",
-    },
-    onChange: function (values) {
-      values = values.map((v) => v.value);
-      localStorage.setItem("services", values);
-    },
-  });
 
   $("#btn-create-appointment").click(() => _processCreate());
 }
@@ -97,6 +55,4 @@ function appointmentCreate() {
 $(() => {
   _checkVisitor();
   $("#visitor-check").change(_checkVisitor);
-  fetchServices();
-  fetchCustomers();
 });
