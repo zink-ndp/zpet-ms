@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Pet</title>
+    <link rel="shortcut icon" href="/images/icons/favicon.ico" type="image/x-icon">
     <!-- Style -->
-    <link rel="stylesheet" href="/css/landing/landing.css" />
+    <link rel="stylesheet" href="/css/style.css" />
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Flowbite DateTime picker -->
@@ -16,86 +17,48 @@
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "bright-yellow": "#FBB030",
+              "bright-green": "#00944e",
+              "bright-red": "#cb472e",
+              "bright-blue": "#60a1c3",
+              "grey-white": "#f9f9f9",
+              "soft-peach": "#eddbcc",
+              "soft-blue": "#F0F8FF",
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      #nav-btn-group-container {
+        @apply hidden justify-center items-center sm:hidden md:hidden lg:flex xl:flex 2xl:flex;
+      }
+      #nav-btn-group-mobile {
+        @apply gap-6 justify-center items-center;
+      }
+      #nav-btn-group-large {
+        @apply flex flex-row gap-6 justify-center items-center;
+      }
+      .nav-btn {
+        @apply text-bright-green font-[600] hover:text-bright-yellow transition-all duration-500 delay-200 ease-out;
+      }
+      .nav-btn-signin {
+        @apply flex w-28 h-10 rounded-full bg-bright-green justify-center items-center text-grey-white hover:bg-gradient-to-r hover:from-bright-green hover:to-bright-yellow;
+      }
+      #nav-hamburger-btn {
+        @apply flex lg:hidden xl:hidden 2xl:hidden;
+      }
+    </style>
   </head>
   <body>
-    <nav
-      class="z-40 fixed top-0 left-0 px-12 py-4 w-full bg-green-500 flex justify-between items-center transition-all duration-500 ease-in-out"
-    >
-      <a href="/" class="logo cursor-pointer">
-        <div id="logo" class="flex text-3xl text-white font-bold">
-          <p class="">ZPet</p>
-        </div>
-      </a>
-      <div class="flex space-x-3 items-center">
-        <button
-          id="service-added-button"
-          class="relative w-10 h-10 rounded-md hover:bg-white/25 flex items-center justify-center"
-        >
-          <p
-            id="service-quantity"
-            class="w-4 h-4 bg-white rounded-full text-black text-xs absolute -top-1 -right-1"
-          >
-            1
-          </p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="size-6 text-white"
-          >
-            <path
-              d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </button>
-        <div class="relative">
-          <div
-            id="user-button"
-            class="flex items-center space-x-3 cursor-pointer text-white hover:bg-white/15 rounded-md py-3 px-4 transition-all duration-200 ease"
-          >
-            <p id="user-button-text" class="text-lg">Hi, Vinh</p>
-            <img src="/images/icons/chevron.svg" class="w-5 h-5" alt="" />
-          </div>
-          <div
-            id="user-option"
-            class="flex flex-col absolute -right-96 mt-6 w-60 p-4 bg-white text-gray-900 shadow-lg rounded-lg space-y-4 transition-all duration-500 ease-in-out"
-          >
-            <p class="text-green-700 text-sm font-bold">Quản lý</p>
-            <a href="/pets" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thú cưng</a
-            >
-            <a
-              href="/appointments"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Lịch hẹn</a
-            >
-            <a href="/invoices" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Hóa đơn</a
-            >
-            <a href="/vouchers" class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Voucher</a
-            >
-            <hr />
-            <p class="text-green-700 text-sm font-bold">Tài khoản</p>
-            <a
-              href="/change-password"
-              class="py-2 px-3 rounded-md hover:bg-black/5"
-              >Thay đổi mật khẩu</a
-            >
-            <a
-              href="/logout"
-              class="text-red-500 py-2 px-3 rounded-md hover:bg-black/5"
-              >Đăng xuất</a
-            >
-          </div>
-        </div>
-      </div>
-    </nav>
+
+    <!-- RenderHeader -->
+      
     <div class="w-full">
       <div
         id="pet-list"
@@ -240,14 +203,5 @@
   </body>
 
   <!-- PRIVATE USE -->
-  <script src="/js/client/Pet/PetScript.js"></script>
-
-  <!-- GENERAL USE -->
-  <script src="/js/apiUrl.js"></script>
-  <script src="/js/utils.js"></script>
-  <script src="/js/client/UserNavButton.js"></script>
-  <script src="/js/client/ShowAddedService.js"></script>
-  <script src="/js/client/Appointment/AppointmentScript.js"></script>
-  <script src="/js/client/AddAppointment.js"></script>
-  <script src="/js/client/Modal.js"></script>
+  <script type="module" src="/js/client/Pet/index.js"></script>
 </html>

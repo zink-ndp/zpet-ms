@@ -4,13 +4,17 @@ export const $CheckLogin = () => {
 
     console.log(customer);
 
-    if (customer == null) {
-      $(`#logged-out`).show();
+    if (customer === null) {
+      $(`.user-login`).empty().html(loggedElement());
     } else {
-      $(`#logged-in`).show();
-      console.log(customer.name.split(" ").reverse()[0]);
-
-      $(`#user-button-text`).text("Hi, " + customer.name.split(" ").reverse()[0]);
+      const name = customer.name.split(" ").reverse()[0];
+      $(`.nav-btn-signin p`).text("Hi, " + name)
     }
   });
+}
+
+const loggedElement = () => {
+  return `
+      <a class="nav-btn-signin" href="/login">Đăng nhập</a>
+  `
 }

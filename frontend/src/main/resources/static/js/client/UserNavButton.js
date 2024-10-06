@@ -1,3 +1,5 @@
+import { createAppointment } from '../client/Appointment/AddAppointment.js';
+
 export const $UserNavButton = () => {
     $(() => {
         $(`#user-button`).click(() =>{
@@ -11,3 +13,4 @@ export const $UserNavButton = () => {
         createAppointment()
     })
 })
+}

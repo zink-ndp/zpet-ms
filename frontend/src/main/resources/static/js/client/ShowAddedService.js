@@ -1,6 +1,6 @@
 export const $ShowAddedService = () => {
   $(() => {
-    if (localStorage.getItem("services") == null) {
+    if (localStorage.getItem("services") === null) {
       $(`#service-added-button`).hide();
     } else {
       let storage = JSON.parse(localStorage.getItem("services"));
@@ -9,7 +9,6 @@ export const $ShowAddedService = () => {
         quantity++;
       }
       $(`#service-added-button`).show();
-
       $(`#service-added-button p`).text(quantity);
     }
   })
