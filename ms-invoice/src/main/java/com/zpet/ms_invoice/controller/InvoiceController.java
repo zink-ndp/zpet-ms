@@ -21,8 +21,14 @@ public class InvoiceController {
     InvoiceService invoiceService;
 
     @GetMapping("/")
-    public List<Invoice> getAll(@RequestParam(required = false) String dateFilter) {
+    public List<Invoice> getAll(
+            @RequestParam(required = false) String dateFilter,
+            @RequestParam(required = false) Integer customerId
+    ) {
         Map<String, Object> param = new HashMap<>();
+        if (customerId != null) {
+            param.put("customerId", customerId);
+        }
         if (dateFilter != null) {
             param.put("dateFrom", dateFilter.split("_")[0]);
             param.put("dateTo", dateFilter.split("_")[1]);

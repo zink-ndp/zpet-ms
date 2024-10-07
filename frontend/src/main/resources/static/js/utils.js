@@ -28,6 +28,8 @@ export function renderDOMElement(element) {
     if (prop.startsWith("on")) {
       const eventName = prop.substring(2).toLowerCase();
       domElement.addEventListener(eventName, props[prop]);
+    } else if (prop === "innerHTML") {
+      domElement.innerHTML = props[prop];
     } else {
       domElement[prop] = props[prop];
     }

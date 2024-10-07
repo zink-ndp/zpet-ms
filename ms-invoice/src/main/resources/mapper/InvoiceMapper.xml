@@ -18,6 +18,9 @@
              , INV_CREATEDAT as createTime
         FROM invoice
         WHERE 1
+        <if test="customerId != null">
+            AND CTM_ID = #{customerId}
+        </if>
         <if test="dateFrom != null">
             AND INV_CREATEDAT BETWEEN #{dateFrom} AND #{dateTo}
         </if>

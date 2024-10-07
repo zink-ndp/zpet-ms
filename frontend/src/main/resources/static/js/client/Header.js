@@ -175,7 +175,7 @@ export const $addHeader = () => {
     >
       <img
         class="lg:w-1/4 w-3/4 img animate-bounce"
-        src="images/illustration/cute-smiling-cat.svg"
+        src="/images/illustration/cute-smiling-cat.svg"
         alt=""
       />
 

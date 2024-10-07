@@ -1,4 +1,37 @@
+import { apiUrl } from "../../apiUrl.js";
+
+export const $ServiceDetailUtils = () => {
+  $(() => {
+    let id =
+      window.location.href.split("/")[
+        window.location.href.split("/").length - 1
+      ];
+
+    if (id == undefined) window.location.href = "/404";
+
+    $.ajax({
+      url: `${apiUrl}/api/service/all?id=${id}`,
+      method: "GET",
+      success: (data) => {
+        if (data.length == 0) window.location.href = "/404";
+        console.log(data);
+        showServiceDetail(data[0]);
+        showServiceRates(data[0].id);
+      },
+      error: (error) => {
+        console.error(error);
+        window.location.href = "/404";
+      },
+    });
+  });
+};
+
 function addToAppointment(id) {
+  let customer = JSON.parse(localStorage.getItem("customer"));
+  if (customer === null) {
+    alert("Vui lòng đăng nhập để đặt lịch hẹn!");
+    window.location.href = "/login";
+  }
   let newObject = [];
   if (localStorage.getItem("services") != null) {
     let storage = localStorage.getItem("services");
@@ -77,7 +110,6 @@ function showServiceDetail(s) {
   }
 
   $(`#main-btn`).click(() => {
-
     if ($(`#main-btn`).attr("data-added") == "false") {
       addToAppointment(s.id);
     } else {
@@ -87,7 +119,7 @@ function showServiceDetail(s) {
 }
 
 const rateElement = (r) => {
-    return `
+  return `
       <div class="flex">
         <div class="h-12 w-12 rounded-full bg-gray-500"></div>
         <div class="flex flex-col flex-1 ms-4">
@@ -106,47 +138,27 @@ const rateElement = (r) => {
         </div>
     </div>
     `;
-}
+};
 
-function showServiceRates (id) {
-    $(`#rate-list`).empty()
-    $.ajax({
-        url: `${apiUrl}/api/service/rates?id=${id}`,
-        method: "GET",
-        success: (data) => {
-            console.log(data)
-            if (data.length == 0) {
-                $(`#rate-list`).append(`<div class="w-full h-full justify-center item-center"><p class="text-center">Chưa có đánh giá nào.</p></div>`)
-                return;
-            }
-            for (let rate of data) {
-                $(`#rate-list`).append(rateElement(rate))
-            }
-        },
-        error: (error) => {
-            console.error(error)
-        },
-    })
-}
-
-$(() => {
-  let id =
-    window.location.href.split("/")[window.location.href.split("/").length - 1];
-
-  if (id == undefined) window.location.href = "/404";
-
+function showServiceRates(id) {
+  $(`#rate-list`).empty();
   $.ajax({
-    url: `${apiUrl}/api/service/all?id=${id}`,
+    url: `${apiUrl}/api/service/rates?id=${id}`,
     method: "GET",
     success: (data) => {
-      if (data.length == 0) window.location.href = "/404";
       console.log(data);
-      showServiceDetail(data[0]);
-      showServiceRates(data[0].id);
+      if (data.length == 0) {
+        $(`#rate-list`).append(
+          `<div class="w-full h-full justify-center item-center"><p class="text-center">Chưa có đánh giá nào.</p></div>`
+        );
+        return;
+      }
+      for (let rate of data) {
+        $(`#rate-list`).append(rateElement(rate));
+      }
     },
     error: (error) => {
       console.error(error);
-      window.location.href = "/404";
     },
   });
-});
+}
