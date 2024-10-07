@@ -1,3 +1,7 @@
+import { apmElement } from "./AppointmentElement.js";
+import { apiUrl } from '../../apiUrl.js'
+import { renderDOMElement } from "../../utils.js";
+
 let _appointmentElement = (a) => {
   let textStatusStyle = "";
   switch (a.status) {
@@ -72,7 +76,7 @@ function showDefaultAppointment(statusFilter, month, year) {
   $("#text-apm-title-date").text("Lịch hẹn tháng " + (currentMonth + 1));
 }
 
-function fetchUpcomingAppointment() {
+export function fetchUpcomingAppointment() {
   $.ajax({
     url: `${apiUrl}/api/appointment/all?status=0_1&upcomingAppointment=1`,
     method: "GET",
@@ -85,14 +89,14 @@ function fetchUpcomingAppointment() {
         $("#upcoming-appointments").empty();
         for (let index = 0; index < data.length; index++) {
           const appointment = data[index];
-          $("#upcoming-appointments").append(_appointmentElement(appointment));
+          $("#upcoming-appointments").append(apmElement(appointment));
         }
       }
     },
   });
 }
 
-function updateStatus(id, status) {
+export function updateStatus(id, status) {
   let _appointmentStatus = [
     "Đợi xác nhận",
     "Đã xác nhận",
@@ -111,7 +115,7 @@ function updateStatus(id, status) {
     }),
     success: (data) => {
       alert("Cập nhật thành công");
-      $("#apm-detail").hide();
+      $("#apm-detail").addClass("hidden");
       fetchUpcomingAppointment();
       fetchAllAppointment("0_1_2_3");
       showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
@@ -119,7 +123,7 @@ function updateStatus(id, status) {
   });
 }
 
-function openAppointmentDetail(id) {
+export function openAppointmentDetail(id) {
   $.ajax({
     url: `${apiUrl}/api/appointment/detail?id=${id}`,
     method: "GET",
@@ -169,14 +173,20 @@ function openAppointmentDetail(id) {
         _appointmentStatus.forEach((stt, index) => {
           if (stt === info.status) {
             for (let i = index + 1; i < _appointmentStatus.length; i++) {
-              $("#apm-detail_select_status").append(
-                `<option onclick="updateStatus(${id}, ${i})" class="" value="${i}">${_appointmentStatus[i]}</option>`
-              );
+              const optionElement = {
+                type: "option",
+                props: {
+                  onclick: () => updateStatus(id, i),
+                  value: i,
+                  innerHTML: _appointmentStatus[i],
+                },
+              }
+              $("#apm-detail_select_status").append(renderDOMElement(optionElement));
             }
           }
         });
       }
-      $("#apm-detail").removeClass("hidden");
+      $(".modal").removeClass("hidden");
     },
   });
 }
