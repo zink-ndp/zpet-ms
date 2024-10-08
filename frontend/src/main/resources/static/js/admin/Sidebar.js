@@ -71,7 +71,12 @@ export const createSidebar = (current) => {
                     href="/admin/"
                     class="logo cursor-pointer font-bold text-black text-center text-4xl w-full"
                 >
-                    <span class="text-green-500">Z</span>pet
+                    <img
+                        id="nav-brand-logo"
+                        class="nav-brand-logo mx-auto"
+                        draggable="false"
+                        alt="logo"
+                    />
                 </a>
                 ${data}
             </div>

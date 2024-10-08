@@ -78,7 +78,7 @@ const mainButtonServiceDetail = (isAdded) => {
               isAdded ? `bg-red-500` : `bg-green-500`
             } hover:opacity-75 w-40 p-2 rounded-lg text-white font-semibold ms-auto"
         >
-            ${isAdded ? `Xóa khỏi danh sách đặt lịch` : `Đặt lịch ngay`}
+            ${isAdded ? `Xóa đặt lịch` : `Đặt lịch ngay`}
         </button>
     `;
 };

@@ -1,3 +1,10 @@
+import { apiUrl } from "./apiUrl.js";
+import {
+  showDefaultAppointment,
+  fetchAllAppointment,
+} from "./admin/Appointment/AppointmentScript.js";
+import { renderDOMElement } from "./utils.js";
+
 const daysContainer = document.querySelector(".days");
 const nextBtn = document.querySelector(".next");
 const prevBtn = document.querySelector(".prev");
@@ -25,7 +32,7 @@ const date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
-const renderCalendar = () => {
+export const renderCalendar = () => {
   date.setDate(1);
   const firstDay = new Date(currentYear, currentMonth, 1);
   const lastDay = new Date(currentYear, currentMonth + 1, 0);
@@ -37,33 +44,33 @@ const renderCalendar = () => {
 
   month.innerHTML = `${months[currentMonth]} ${currentYear}`;
 
+  function _checkDayCount(day, month, year) {
+    let dayCount = 0;
+    $.ajax({
+      url: `${apiUrl}/api/appointment/dayCount?month=${month}&year=${year}`,
+      method: "GET",
+      async: false,
+      success: (data) => {
+        dayCount = data;
+      },
+      error: (xhr, status, error) => {
+        console.log(xhr);
+        console.log(status);
+        console.log(error);
+      },
+    });
+    for (let i = 0; i < dayCount.length; i++) {
+      if (dayCount[i].day === day) {
+        return dayCount[i].count;
+      }
+    }
+    return 0;
+  }
+
   let days = "";
 
   for (let x = firstDay.getDay(); x > 0; x--) {
     days += `<div class="day prev">${prevLastDayDate - x + 1}</div>`;
-  }
-
-  function _checkDayCount(day, month, year) {
-    let dayCount = 0
-    $.ajax({
-        url: `${apiUrl}/api/appointment/dayCount?month=${month}&year=${year}`,
-        method: "GET",
-        async: false,
-        success: (data) => {
-          dayCount = data;
-        },
-        error: (xhr, status, error) => {
-          console.log(xhr);
-          console.log(status);
-          console.log(error);
-        },
-      });
-    for (let i = 0; i < dayCount.length; i++) {
-        if (dayCount[i].day === day) {
-          return dayCount[i].count;
-        }
-    }
-    return 0;
   }
 
   let chosenDays = 0;
@@ -74,15 +81,19 @@ const renderCalendar = () => {
       currentMonth === new Date().getMonth() &&
       currentYear === new Date().getFullYear()
     ) {
-      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="calendar-day flex flex-col items-center justify-between day today"><span>${i}</span>`;
+      days += `<button type="button" id="${chosenDays}" class="calendar-day day-in-month flex flex-col items-center justify-between day today">${i}`;
     } else {
-      days += `<div onclick="showApmListOfDay('${chosenDays}')" class="calendar-day flex flex-col items-center justify-between day"><span>${i}</span>`;
+      days += `<button type="button" id="${chosenDays}" class="calendar-day day-in-month flex flex-col items-center justify-between day">${i}`;
     }
 
-    if (_checkDayCount(i, currentMonth+1, currentYear) != 0) {
-      days += `<p class="text-xs bg-yellow-400 text-white rounded-full h-6 w-6 pt-1 text-center cursor-pointer">${_checkDayCount(i, currentMonth+1, currentYear)}</p>`
+    if (_checkDayCount(i, currentMonth + 1, currentYear) != 0) {
+      days += `<p class="text-xs bg-yellow-400 text-white rounded-full h-6 w-6 pt-1 text-center cursor-pointer">${_checkDayCount(
+        i,
+        currentMonth + 1,
+        currentYear
+      )}</p>`;
     }
-    days += `</div>`;
+    days += `</button>`;
   }
 
   for (let j = 1; j <= nextDays; j++) {
@@ -91,7 +102,9 @@ const renderCalendar = () => {
   daysContainer.innerHTML = days;
 };
 
-function showApmListOfDay(day) {
+export function showApmListOfDay(day) {
+  console.log(day);
+  
   $("#text-apm-title-date").text(
     "Lịch hẹn " +
       day.split("-")[2] +
@@ -101,15 +114,7 @@ function showApmListOfDay(day) {
       day.split("-")[0]
   );
   $(".calendar-day").removeClass("chosenDay").addClass("day");
-  var element = $(".calendar-day").filter(function () {
-    if (!$(this).hasClass("next") && !$(this).hasClass("prev") && $(this).find("span").text().trim() === day.split("-")[2]) {
-      return true;
-    }
-    return false;
-  });
-  console.log(element);
-  
-  element.removeClass("day").addClass("chosenDay");
+  $(`#${day}`).removeClass("day").addClass("chosenDay");
   fetchAllAppointment("0_1_2_3", day + "_" + day);
 }
 

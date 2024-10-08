@@ -113,6 +113,7 @@ function processAppointment() {
   let customerId = customer.id;
   let services = JSON.parse(localStorage.getItem("services"));
   let date = $("#datepicker-modal").val();
+  date = date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0]
   let time = $("input[name=timepicker]").val();
   let note = $("#note-modal").val();
   console.log(customerId,services, date, time, note);

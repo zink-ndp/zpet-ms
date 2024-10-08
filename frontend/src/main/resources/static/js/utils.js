@@ -18,6 +18,11 @@ export function formatMoney(string) {
   return money;
 }
 
+// export const isValidDate = (date) => {
+//   const systemDate = new Date()
+//   if (date)
+// }
+
 
 export function renderDOMElement(element) {
   const { type, props, children } = element;

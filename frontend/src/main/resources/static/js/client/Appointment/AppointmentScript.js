@@ -301,5 +301,6 @@ export const $appointmentUtils = () => {
     $("#creason-other").change(() => {
       $("#creason-other_content").toggleClass("hidden");
     });
+
   });
 };

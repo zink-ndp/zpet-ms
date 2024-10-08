@@ -99,6 +99,7 @@
           AND ast.STT_ID=3
           AND ast.APMS_STATUSDESCRIPTION NOT LIKE '%Nhân viên%'
           AND ast.APMS_STATUSDESCRIPTION NOT LIKE '%đã cập nhật trạng thái%'
+          AND ast.ATTIME BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW();
     </select>
 
 	<insert id="insertAtTime" parameterType="java.lang.String">

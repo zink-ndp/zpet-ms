@@ -6,10 +6,12 @@ import { $ModalToggle } from "./client/Modal.js";
 import { $UserNavButton } from "./client/UserNavButton.js";
 import { $AddAppointment } from "./client/Appointment/AddAppointment.js";
 import { $addHeader } from "./client/Header.js";
+import { $DatePickerConfig } from "./DatePickerConfig.js";
 
-$addHeader()
+$addHeader();
 $ToggleHamburger();
 $CheckLogin();
+$DatePickerConfig();
 $ShowService();
 $ShowAddedService();
 $ModalToggle();
@@ -17,5 +19,5 @@ $UserNavButton();
 $AddAppointment();
 
 $(() => {
-    $("#loading-overlay").addClass("hidden");
-})
+  $("#loading-overlay").addClass("hidden");
+});

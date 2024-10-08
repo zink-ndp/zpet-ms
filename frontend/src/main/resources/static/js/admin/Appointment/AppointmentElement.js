@@ -33,7 +33,7 @@ export const apmElement = ({ id, count, status, time, date, note, customerName }
             innerHTML: `
                 <div class="flex w-full justify-between">
                     <p class="text-sm text-left text-red-500">
-                        ${count > 1 ? `Khách hàng này đã hủy hẹn ${count} lần!` : ``}
+                        ${count > 3 ? `Khách hàng hủy hẹn ${count} lần trong 7 ngày!` : ``}
                     </p>
                     <p class="font-semibold text-right ${textStatusStyle}">${
                     status

@@ -2,48 +2,8 @@ import { apmElement } from "./AppointmentElement.js";
 import { apiUrl } from '../../apiUrl.js'
 import { renderDOMElement } from "../../utils.js";
 
-let _appointmentElement = (a) => {
-  let textStatusStyle = "";
-  switch (a.status) {
-    case "Đợi xác nhận":
-      textStatusStyle = "text-yellow-600";
-      break;
-    case "Đã xác nhận":
-      textStatusStyle = "text-blue-600";
-      break;
-    case "Đã hoàn thành":
-      textStatusStyle = "text-green-600";
-      break;
-    default:
-      textStatusStyle = "text-red-600";
-      break;
-  }
-  return `
-             <div onclick="openAppointmentDetail(${
-               a.id
-             })" class="bg-green-50 rounded-md flex items-center w-full p-4 hover:bg-green-100 cursor-pointer snap-start transition-all ease duration-300">
-                <div class="flex flex-col space-y-1 w-full">
-                    <div class="flex w-full justify-between">
-                      <p class="text-sm text-left text-red-500">
-                         ${a.count > 1 ? `Khách hàng này đã hủy hẹn ${a.count} lần!` : ``}
-                      </p>
-                      <p class="font-semibold text-right ${textStatusStyle}">${
-                        a.status
-                      }</p>
-                    </div>
-                    <p class="font-semibold text-green-700">${a.time} ${
-                      a.date
-                    }</p>
-                    <p class="">${a.customerName}</p>
-                    <p class="line-clamp-2">${
-                      a.note != null ? a.note : "Không có ghi chú"
-                    }</p>
-                </div>
-            </div>
-        `;
-};
 
-function fetchAllAppointment(statusFilter, dateFilter) {
+export function fetchAllAppointment(statusFilter, dateFilter) {
   $.ajax({
     url: `${apiUrl}/api/appointment/all?status=${statusFilter}&dateFilter=${dateFilter}`,
     method: "GET",
@@ -51,7 +11,7 @@ function fetchAllAppointment(statusFilter, dateFilter) {
       $("#appointment-list").empty();
       if (data.length > 0) {
         data.forEach((a) => {
-          $("#appointment-list").append(_appointmentElement(a));
+          $("#appointment-list").append(apmElement(a));
         });
       } else {
         $("#appointment-list").append(
@@ -64,7 +24,7 @@ function fetchAllAppointment(statusFilter, dateFilter) {
   });
 }
 
-function showDefaultAppointment(statusFilter, month, year) {
+export function showDefaultAppointment(statusFilter, month, year) {
   let currentMonth = month - 1;
   let currentYear = year
   const firstDay = new Date(currentYear, currentMonth, 1).getDate();
@@ -186,13 +146,13 @@ export function openAppointmentDetail(id) {
           }
         });
       }
-      $(".modal").removeClass("hidden");
+      $("#apm-detail").removeClass("hidden");
     },
   });
 }
 
 
-function fetchServices() {
+export function fetchServices() {
   $.ajax({
     url: `${apiUrl}/api/service/all`,
     method: "GET",
@@ -209,7 +169,7 @@ function fetchServices() {
   });
 }
 
-function fetchCustomers() {
+export function fetchCustomers() {
   $.ajax({
     url: `${apiUrl}/api/customer/all`,
     method: "GET",

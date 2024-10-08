@@ -1,12 +1,6 @@
-function _checkVisitor() {
-  if ($("#visitor-check").prop("checked")) {
-    $("#customer-select").hide();
-  } else {
-    $("#customer-select").show();
-  }
-}
+import { renderCalendar } from "../../CustomCalendar.js";
 
-function appointmentCreate() {
+export function appointmentCreate() {
   function _processCreate() {
     
     let services = localStorage.getItem("services").split(",");
@@ -52,7 +46,10 @@ function appointmentCreate() {
   $("#btn-create-appointment").click(() => _processCreate());
 }
 
-$(() => {
-  _checkVisitor();
-  $("#visitor-check").change(_checkVisitor);
-});
+export function AppointmetCreateCheckVisitor() {
+  if ($("#visitor-check").prop("checked")) {
+    $("#customer-select").hide();
+  } else {
+    $("#customer-select").show();
+  }
+}
