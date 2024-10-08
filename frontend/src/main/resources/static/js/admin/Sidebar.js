@@ -54,11 +54,6 @@ const itemSidebar = (name, href, active) => {
 };
 
 export const createSidebar = (current) => {
-//   let staff = JSON.parse(localStorage.getItem("staff"));
-//   if (staff === null) {
-//     alert("Vui lòng đăng nhập!");
-//     window.location.href = "/admin/login";
-//   }
 
   let data = "";
   items.forEach(({ item, name, href }) => {
