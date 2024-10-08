@@ -15,14 +15,14 @@ const items = [
     href: "/admin/invoice",
   },
   {
-    item: "staff",
+    item: "pet",
     name: "Thú cưng",
     href: "/admin/pet",
   },
   {
-    item: "staff",
+    item: "customer",
     name: "Khách hàng",
-    href: "/admin/staff",
+    href: "/admin/customer",
   },
   {
     item: "staff",
