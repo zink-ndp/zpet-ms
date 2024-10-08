@@ -56,14 +56,6 @@ let _invoiceElement = ({ id, createTime, total }) => {
 
   return renderDOMElement(element);
 
-  // return `
-  // <div onclick="openInvoiceDetail(${id})" id="invoice-element-${id}" class="invoice-element rounded-md flex items-center border-b-[1px] border-gray-200 px-4 py-3 mt-2 text-gray-600 hover:bg-slate-200">
-  //   <p class="text-md text-green-500 font-semibold">Invoice #${id}</p>
-  //   <p class="ms-3 text-sm text-gray-600 flex-grow">${createTime}</p>
-  //   <p class="text-green-500 text-md font-semibold">${formatMoney(
-  //     total.toString()
-  //   )}</p>
-  // </div>`;
 };
 
 export function fetchInvoices() {
