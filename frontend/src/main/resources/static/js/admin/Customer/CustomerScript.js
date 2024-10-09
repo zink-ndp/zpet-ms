@@ -1,6 +1,6 @@
 import { fetchAllCustomer, customerAdd, customerUpdate } from './CustomerUtils.js';
 
-export const $CutomerScript = () => {
+export const $CustomerScript = () => {
   $(() => {
     fetchAllCustomer("");
     $("#search").keypress(() => {

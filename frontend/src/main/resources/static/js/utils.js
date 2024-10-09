@@ -61,3 +61,8 @@ export function renderDOMElement(element) {
 
   return domElement;
 }
+
+// export const createElementString = (id, element) => {
+//   const domElement = document.getElementById(id);
+//   domElement.innerHTML = element
+// }
