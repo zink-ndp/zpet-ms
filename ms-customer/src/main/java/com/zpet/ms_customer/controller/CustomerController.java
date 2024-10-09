@@ -95,8 +95,12 @@ public class CustomerController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Object> updateCustomer(@RequestParam Integer id, @RequestParam(required = false) String name,
-			@RequestParam(required = false) String phone, @RequestParam(required = false) String password) {
+	public ResponseEntity<Object> updateCustomer(
+			@RequestParam String id,
+			@RequestParam(required = false) String name,
+			@RequestParam(required = false) String phone,
+			@RequestParam(required = false) String password,
+			@RequestParam(required = false) String isActive) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
 		if (name != null)
@@ -105,6 +109,8 @@ public class CustomerController {
 			params.put("phone", phone);
 		if (password != null)
 			params.put("password", password);
+		if (isActive != null)
+			params.put("isActive", isActive);
 		customerService.update(params);
 		return ResponseEntity.ok().build();
 	}

@@ -135,6 +135,9 @@
             <if test="password != null">
                 , CTM_PASSWORD = #{password}
             </if>
+            <if test="isActive != null">
+                , CTM_ISACTIVE = #{isActive}
+            </if>
         WHERE CTM_ID = #{id}
     </update>
 
