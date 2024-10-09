@@ -25,7 +25,8 @@ export function showServices() {
     const cardDiv = document.createElement("div");
     cardDiv.classList.add(
       "card",
-      addedToAppointment ? "bg-soft-peach" : "bg-green-200"
+      addedToAppointment ? "bg-soft-peach" : "bg-green-200",
+      "group"
     );
 
     // Create the anchor element
@@ -35,7 +36,17 @@ export function showServices() {
     // Create the img element
     const img = document.createElement("img");
     img.src = "/images/illustration/doctor-cat2.png";
-    img.classList.add("w-64", "h-44", "rounded-lg", "mt-4", "object-cover");
+    img.classList.add(
+      "w-64",
+      "h-44",
+      "rounded-lg",
+      "mt-4",
+      "object-cover",
+      "group-hover:scale-105",
+      "transition-all",
+      "duration-300",
+      "ease"
+    );
     img.draggable = false;
     img.alt = "illustration";
 
@@ -168,7 +179,7 @@ export function addToAppointment(id) {
   let customer = localStorage.getItem("customer");
   if (customer === null) {
     alert("Vui lòng đăng nhập để đặt lịch hẹn!");
-    window.location.href = '/login'
+    window.location.href = "/login";
   } else {
     let newObject = [];
     if (localStorage.getItem("services") != null) {

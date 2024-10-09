@@ -1,6 +1,6 @@
 import { fetchAllPet, createPet } from "./PetUtils.js";
 
-export const PetScript = () => {
+export const $PetScript = () => {
   $(() => {
     fetchAllPet();
 
