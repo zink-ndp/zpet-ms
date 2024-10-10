@@ -36,6 +36,10 @@
 
 *{
     font-family: MyCustomFont, sans-serif;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-font-smoothing: antialiased;
+
 }
 html {
     margin: 0;

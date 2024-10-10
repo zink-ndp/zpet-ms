@@ -23,7 +23,9 @@ let petElement = (p) => {
       {
         type: "img",
         props: {
-          src: imageLink(p.image.split(".")[0].slice(0, -1) + "s." + p.image.split(".")[1]),
+          src: imageLink(
+            p.image.split(".")[0].slice(0, -1) + "s." + p.image.split(".")[1]
+          ),
           className: "w-20 h-20 object-cover",
         },
       },
@@ -96,7 +98,7 @@ function getPetList() {
       console.error(error);
     },
   });
-  $("#loading-overlay").addClass("hidden")
+  $("#loading-overlay").addClass("hidden");
 }
 
 function openDetail(id) {
@@ -109,7 +111,9 @@ function openDetail(id) {
       $(`#pet-detail-modal_detail`).html(`
         <img
           id="pet-detail-modal_image"
-          src="${imageLink(img.split(".")[0].slice(0, -1) + "m." + img.split(".")[1])}"
+          src="${imageLink(
+            img.split(".")[0].slice(0, -1) + "m." + img.split(".")[1]
+          )}"
           class="w-40 h-40 object-cover rounded-md"
           alt=""
         />
@@ -134,15 +138,26 @@ function openDetail(id) {
     success: function (data) {
       if (data.length > 0) {
         $(`#pet-detail-modal_health`).empty();
-        data.forEach((p) => {
+        data.forEach((p, index) => {
+          const {time, health, weight, note} = data[index]; 
           $(`#pet-detail-modal_health`).append(`
-            <li
-              class="py-3 px-5 rounded-md bg-slate-50 flex flex-col justify-between"
+            <div
+              id="timeline-${index}"
+              class="flex items-center p-2 space-x-3 h-16 relative"
             >
-              <p><b>Thời gian:</b> ${p.time}</p>
-              <p><b>TÌnh trạng sức khỏe:</b> ${p.health} - ${p.weight}</p>
-              <p><b>Mô tả:</b>${p.note}</p>
-            </li>  
+              <div class="w-[2px] h-16 bg-gray-300 absolute left-[30px]"></div>
+              <img
+                src="./images/icons/favicon.ico"
+                class="w-6 h-6 z-20"
+                alt=""
+              />
+              <p class="font-bold text-green-500 text-sm">${time}</p>
+              <p class="text-gray-400">-</p>
+              <p class="font-bold text-orange-500 text-sm whitespace-nowrap">${health} (${weight}kg)</p>
+              <p class="text-gray-400">-</p>
+              <p class="text-gray-700 text-xs line-clamp-2">${note}</p>
+            </div>
+            
           `);
         });
       } else {

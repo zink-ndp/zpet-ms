@@ -97,7 +97,7 @@ public class PetService {
 
     public List<PetHealth> getHealths(Integer id) {
         List<PetHealth> healths = petRepository.getHealths(id);
-        healths.forEach(h -> h.setTime(functionUtils.formatDate(h.getTime(), "dd/MM/yyyy HH:mm:ss")));
+        healths.forEach(h -> h.setTime(functionUtils.formatDate(h.getTime(), "dd/MM/yyyy")));
         return healths;
     }
 

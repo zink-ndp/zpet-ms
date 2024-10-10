@@ -69,6 +69,7 @@
             , NOTE as note
         FROM pet_health
         WHERE P_ID = #{id}
+        ORDER BY ATTIME desc
     </select>
 
     <!-- INSERT -->
