@@ -1,5 +1,6 @@
 import { apiUrl } from "../../apiUrl.js";
 import { renderDOMElement } from "../../utils.js";
+import { Timeline } from "../../Timeline.js";
 
 export const $PetScript = () => {
   $(() => {
@@ -140,25 +141,7 @@ function openDetail(id) {
         $(`#pet-detail-modal_health`).empty();
         data.forEach((p, index) => {
           const {time, health, weight, note} = data[index]; 
-          $(`#pet-detail-modal_health`).append(`
-            <div
-              id="timeline-${index}"
-              class="flex items-center p-2 space-x-3 h-16 relative"
-            >
-              <div class="w-[2px] h-16 bg-gray-300 absolute left-[30px]"></div>
-              <img
-                src="./images/icons/favicon.ico"
-                class="w-6 h-6 z-20"
-                alt=""
-              />
-              <p class="font-bold text-green-500 text-sm">${time}</p>
-              <p class="text-gray-400">-</p>
-              <p class="font-bold text-orange-500 text-sm whitespace-nowrap">${health} (${weight}kg)</p>
-              <p class="text-gray-400">-</p>
-              <p class="text-gray-700 text-xs line-clamp-2">${note}</p>
-            </div>
-            
-          `);
+          $(`#pet-detail-modal_health`).append(Timeline(time, health+` (${weight})`, note));
         });
       } else {
         $(`#pet-detail-modal_health`).html(`Thú cưng chưa khám sức khỏe`);

@@ -1,5 +1,6 @@
 import { apiUrl } from "../../apiUrl.js";
 import { nonEmpty } from "../../utils.js";
+import { Timeline } from "../../Timeline.js";
 
 const apmElement = ({ id, status, date, time, note }) => {
   let color = "";
@@ -129,6 +130,8 @@ function viewDetail(id) {
     url: apiUrl + "/api/appointment/detail?id=" + id,
     method: "GET",
     success: function (data) {
+      console.log(data);
+      
       $(`#detail-time`).text(data.info.date + " - " + data.info.time);
       $(`#detail-status`).text(data.info.status);
       $(`#detail-note`).text(
@@ -136,13 +139,8 @@ function viewDetail(id) {
       );
       $(`#detail-customer-name`).text(data.info.customerName);
       $(`#detail-history`).empty();
-      data.history.forEach((h) => {
-        $(`#detail-history`).append(`
-            <div class="flex-wrap">
-                <p>${h.attime}: ${h.status}</p>
-                <p class="text-sm text-gray-500">${h.description}</p>
-            </div>
-        `);
+      data.history.forEach(({attime, status, description}) => {
+        $(`#detail-history`).append(Timeline(attime, status, description));
       });
     },
     error: function (error) {
