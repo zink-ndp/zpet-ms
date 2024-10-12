@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zpet.ms_analysis.AnalysisMapper">
 
-    <select id="getAnalysisData" parameterType="map" resultType="com.zpet.ms_analysis.response.AnalysisResponse">
+    <select id="getSaleData" parameterType="map" resultType="com.zpet.ms_analysis.response.SaleResponse">
         <choose>
             <when test='type=="d"'>
                 SELECT DISTINCT(DAY(i.INV_CREATEDAT)) AS title, MONTH(i.INV_CREATEDAT) AS `wrapper`, SUM(s.SRV_PRICE) AS total
@@ -35,6 +35,49 @@
                 ORDER BY MONTH(i.INV_CREATEDAT)
             </when>
         </choose>
+    </select>
+
+    <select id="getTopService" parameterType="map" resultType="com.zpet.ms_analysis.response.TopResponse">
+        SELECT s.SRV_NAME AS name, COUNT(s.SRV_ID) AS count
+        FROM zpet_service.service s
+            JOIN zpet_invoice.srv_included si ON si.SRV_ID=s.SRV_ID
+            JOIN zpet_invoice.invoice i ON i.INV_ID=si.INV_ID
+        WHERE 1
+        <choose>
+            <when test='type=="d"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 7 DAY) AND #{date})
+            </when>
+            <when test='type=="w"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 84 DAY) AND #{date})
+            </when>
+            <when test='type=="m"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 365 DAY) AND #{date})
+            </when>
+        </choose>
+        GROUP BY s.SRV_ID
+        ORDER BY COUNT DESC
+            LIMIT 4
+    </select>
+
+    <select id="getTopCustomer" parameterType="map" resultType="com.zpet.ms_analysis.response.TopResponse">
+        SELECT c.CTM_NAME AS name, COUNT(i.INV_ID) AS count
+        FROM zpet_customer.customer c
+        JOIN zpet_invoice.invoice i ON i.CTM_ID=c.CTM_ID
+        WHERE 1
+        <choose>
+            <when test='type=="d"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 7 DAY) AND #{date})
+            </when>
+            <when test='type=="w"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 84 DAY) AND #{date})
+            </when>
+            <when test='type=="m"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 365 DAY) AND #{date})
+            </when>
+        </choose>
+        GROUP BY c.CTM_NAME
+        ORDER BY COUNT DESC
+        LIMIT 4
     </select>
 
 </mapper>
