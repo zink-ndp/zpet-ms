@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zpet.ms_analysis.AnalysisMapper">
+
+    <select id="getAnalysisData" parameterType="map" resultType="com.zpet.ms_analysis.response.AnalysisResponse">
+        <choose>
+            <when test='type=="d"'>
+                SELECT DISTINCT(DAY(i.INV_CREATEDAT)) AS title, MONTH(i.INV_CREATEDAT) AS `wrapper`, SUM(s.SRV_PRICE) AS total
+            </when>
+            <when test='type=="w"'>
+                SELECT DISTINCT(WEEK(i.INV_CREATEDAT)) AS title, MONTH(i.INV_CREATEDAT) AS `wrapper`, SUM(s.SRV_PRICE) AS total
+            </when>
+            <when test='type=="m"'>
+                SELECT DISTINCT(MONTH(i.INV_CREATEDAT)) AS title, YEAR(i.INV_CREATEDAT) AS `wrapper`, SUM(s.SRV_PRICE) AS total
+            </when>
+        </choose>
+        FROM zpet_invoice.invoice i
+        INNER JOIN zpet_invoice.srv_included si ON si.INV_ID = i.INV_ID
+        INNER JOIN zpet_service.service s ON s.SRV_ID = si.SRV_ID
+        WHERE 1
+        <choose>
+            <when test='type=="d"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 7 DAY) AND #{date})
+                GROUP BY DAY(i.INV_CREATEDAT), MONTH(i.INV_CREATEDAT)
+                ORDER BY DAY(i.INV_CREATEDAT)
+            </when>
+            <when test='type=="w"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 84 DAY) AND #{date})
+                GROUP BY WEEK(i.INV_CREATEDAT), MONTH(i.INV_CREATEDAT)
+                ORDER BY WEEK(i.INV_CREATEDAT)
+            </when>
+            <when test='type=="m"'>
+                AND (DATE(i.INV_CREATEDAT) BETWEEN DATE_SUB(#{date}, INTERVAL 365 DAY) AND #{date})
+                GROUP BY MONTH(i.INV_CREATEDAT), YEAR(i.INV_CREATEDAT)
+                ORDER BY MONTH(i.INV_CREATEDAT)
+            </when>
+        </choose>
+    </select>
+
+</mapper>

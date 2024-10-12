@@ -12,6 +12,7 @@
         <module name="ms-customer" />
         <module name="ms-service" />
         <module name="eureka" />
+        <module name="ms-analysis" />
         <module name="ms-invoice" />
         <module name="ms-staff" />
         <module name="frontend" />
@@ -24,6 +25,7 @@
       <module name="eureka" options="-parameters" />
       <module name="frontend" options="-parameters" />
       <module name="gateway" options="-parameters" />
+      <module name="ms-analysis" options="-parameters" />
       <module name="ms-appointment" options="-parameters" />
       <module name="ms-customer" options="-parameters" />
       <module name="ms-invoice" options="-parameters" />
