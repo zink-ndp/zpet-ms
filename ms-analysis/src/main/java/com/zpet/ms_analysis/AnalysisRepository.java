@@ -25,4 +25,8 @@ public class AnalysisRepository {
         return analysisMapper.getTopCustomer(date, type);
     }
 
+    public List<TopResponse> getServiceCount(String date, String type){
+        return analysisMapper.getServiceCount(date, type);
+    }
+
 }

@@ -33,4 +33,9 @@ public class AnalysisController {
         return analysisService.getTopCustomer(type);
     }
 
+    @GetMapping("/countService")
+    public List<TopResponse> getServiceCount(@RequestParam String type){
+        return analysisService.getServiceCount(type);
+    }
+
 }

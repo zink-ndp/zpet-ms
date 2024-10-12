@@ -33,4 +33,10 @@ public class AnalysisService {
         return analysisRepository.getTopCustomer(today.format(formatter), type);
     }
 
+    public List<TopResponse> getServiceCount(String type){
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return analysisRepository.getServiceCount(today.format(formatter), type);
+    }
+
 }

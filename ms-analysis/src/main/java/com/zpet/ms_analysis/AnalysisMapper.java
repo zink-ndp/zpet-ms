@@ -15,4 +15,6 @@ public interface AnalysisMapper {
 
     public List<TopResponse> getTopCustomer(String date, String type);
 
+    public List<TopResponse> getServiceCount(String date, String type);
+
 }
