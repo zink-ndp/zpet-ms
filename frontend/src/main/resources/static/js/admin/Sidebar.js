@@ -60,7 +60,7 @@ export const createSidebar = (current) => {
     data += itemSidebar(name, href, current == item);
   });
   const sideBar = `
-        <aside class="fixed flex flex-col justify-between left-0 top-0 h-full w-1/6 px-4 py-8 m-4 rounded-lg bg-white shadow-lg">
+        <aside class="fixed flex flex-col justify-between left-0 top-0 h-[calc(100%-32px)] w-1/6 px-4 py-8 m-4 rounded-lg bg-white shadow-lg">
             <div class="flex flex-col space-y-6">
                 <a
                     href="/admin/"
