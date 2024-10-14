@@ -2,13 +2,12 @@ import { fetchCustomers, fetchServices } from "./InvoiceUtils.js";
 import { formatMoney, nonEmpty } from "../../utils.js";
 import { apiUrl } from "../../apiUrl.js";
 
-
 export const InvoiceCreateScript = () => {
   $(() => {
-    // Invoice Create
-
     fetchServices();
     fetchCustomers();
+
+    // Invoice Create
 
     let staff = JSON.parse(localStorage.getItem("staff"));
 
@@ -30,7 +29,6 @@ export const InvoiceCreateScript = () => {
     $("#text-invoice_staff").text(staff.name);
 
     $("#text-invoice_phone").change(() => {
-      console.log($("#text-invoice_phone").val());
       let phone = $("#text-invoice_phone").val();
       $.ajax({
         url: `${apiUrl}/api/customer/byphone?phone=${phone}`,
@@ -47,6 +45,30 @@ export const InvoiceCreateScript = () => {
         },
       });
     });
+
+    // If an appointment is finished
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let apmId = urlParams.get("apm");
+
+    if (apmId) {
+      $.ajax({
+        url: `${apiUrl}/api/appointment/detail?id=${apmId}`,
+        method: "GET",
+        async: false,
+        success: (data) => {
+          let { info, service } = data;
+          customerId = info.customerId
+          $("#text-invoice_phone").val(info.customerPhone);
+          $("#text-invoice_customer").val(info.customerName);
+        },
+        error: (error) => {
+          console.error(error);
+          alert("Lịch hẹn không tồn tại");
+          window.location.href = "/admin/invoice";
+        },
+      });
+    }
 
     if ($("#service-select-list").length > 0) {
       new MultiSelectTag("service-select-list", {

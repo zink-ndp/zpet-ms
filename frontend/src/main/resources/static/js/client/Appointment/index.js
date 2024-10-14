@@ -5,6 +5,7 @@ import { $ShowAddedService } from '../ShowAddedService.js';
 import { $AddAppointment } from './AddAppointment.js';
 import { $ModalToggle } from '../Modal.js';
 import { $addHeader } from "../Header.js"
+import { $DatePickerConfig } from "./DatePickerConfig.js";
 
 $addHeader();
 $CheckLogin();
@@ -13,3 +14,4 @@ $appointmentUtils();
 $UserNavButton();
 $ShowAddedService();
 $AddAppointment();
+$DatePickerConfig();

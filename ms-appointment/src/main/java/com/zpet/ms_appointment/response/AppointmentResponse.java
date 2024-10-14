@@ -9,6 +9,7 @@ public class AppointmentResponse {
     private String date;
     private String time;
     private String note;
+    private String customerId;
     private String customerName;
     private String customerPhone;
 	private String status;

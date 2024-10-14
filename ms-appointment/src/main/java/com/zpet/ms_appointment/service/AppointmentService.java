@@ -41,6 +41,7 @@ public class AppointmentService {
             if (customerId != null) {
                 Customer customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + customerId, Customer.class);
                 if (customer != null) {
+                    response.setCustomerId(customer.getId().toString());
                     response.setCustomerName(customer.getName());
                     response.setCustomerPhone(customer.getPhone());
                 }

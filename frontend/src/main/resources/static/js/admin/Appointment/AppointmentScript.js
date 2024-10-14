@@ -74,11 +74,18 @@ export function updateStatus(id, status) {
       description: `Nhân viên ${staff.name} đã cập nhật trạng thái thành ${_appointmentStatus[status]}`,
     }),
     success: (data) => {
-      alert("Cập nhật thành công");
       $("#apm-detail").addClass("hidden");
-      fetchUpcomingAppointment();
-      fetchAllAppointment("0_1_2_3");
-      showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
+
+      if (status == 2){
+        alert("Cập nhật hoàn thành lịch hẹn! Đang chuyển đến trang tạo hóa đơn");
+        window.location.href = "/admin/invoice-create?apm="+id
+      } else {
+        alert("Cập nhật thành công");
+        fetchUpcomingAppointment();
+        fetchAllAppointment("0_1_2_3");
+        showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
+      }
+
     },
   });
 }
