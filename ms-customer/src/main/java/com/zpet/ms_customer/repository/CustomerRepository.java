@@ -3,6 +3,7 @@ package com.zpet.ms_customer.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_customer.request.PointChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -51,6 +52,8 @@ public class CustomerRepository {
 
 
    // INSERT
+   public void addTiming(String time){customerMapper.addTiming(time);}
+
    public void add(CustomerAddRequest customer){
       customerMapper.addCustomer(customer);
    }
@@ -58,6 +61,8 @@ public class CustomerRepository {
    public void addAddress(AddressAddRequest address){
       customerMapper.addAddress(address);
    }
+
+   public void changePoint(PointChangeRequest request){customerMapper.changePoint(request);}
 
    // UPDATE
    public void update(Map<String, Object> params){

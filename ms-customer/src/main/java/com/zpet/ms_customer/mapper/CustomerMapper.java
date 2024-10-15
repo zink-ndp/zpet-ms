@@ -3,6 +3,7 @@ package com.zpet.ms_customer.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_customer.request.PointChangeRequest;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zpet.ms_customer.model.Address;
@@ -29,9 +30,13 @@ public interface CustomerMapper {
 
     public List<Point> getPoints(Map<String, Object> params);
 
+    public void addTiming(String time);
+
     public void addCustomer(CustomerAddRequest customer);
 
     public void addAddress(AddressAddRequest address);
+
+    public void changePoint(PointChangeRequest request);
 
     public void updateCustomer(Map<String, Object> params);
 

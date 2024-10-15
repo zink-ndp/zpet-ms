@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_customer.request.PointChangeRequest;
+import com.zpet.ms_customer.response.CustomerByPhoneResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -60,10 +62,17 @@ public class CustomerController {
 	}
 
 	@GetMapping("/byphone")
-	public Customer getByPhone(@RequestParam String phone) {
+	public CustomerByPhoneResponse getByPhone(@RequestParam String phone) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("phone", phone);
-        return customerService.getByPhone(params);
+        Customer customer = customerService.getByPhone(params);
+		CustomerByPhoneResponse response = new CustomerByPhoneResponse();
+		BeanUtils.copyProperties(customer, response);
+		BeanUtils.copyProperties(customer, response);
+		params.put("id", customer.getId());
+		List<Point> points = customerService.getPoints(params);
+		response.setPoint(points != null ? points.get(0).getTotal() : 0);
+		return response;
     }
 
 	@GetMapping("/addresses")
@@ -91,6 +100,12 @@ public class CustomerController {
 	@PostMapping("/addAddress")
 	public ResponseEntity<Object> addAdress(@RequestBody AddressAddRequest address) {
 		customerService.addAddress(address);
+		return ResponseEntity.ok().build();
+	}
+
+	@PostMapping("/updatePoint")
+	public ResponseEntity<Object> updatePoint(@RequestBody PointChangeRequest request) {
+		customerService.updatePoint(request);
 		return ResponseEntity.ok().build();
 	}
 

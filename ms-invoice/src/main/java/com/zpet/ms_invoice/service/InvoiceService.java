@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.zpet.ms_invoice.request.InvoiceCreateRequest;
+import com.zpet.ms_invoice.request.PointChangeRequest;
 import com.zpet.ms_invoice.util.FunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,6 +50,7 @@ public class InvoiceService {
     }
 
 	public void create (InvoiceCreateRequest request) {
+
 		Integer nextId = invoiceRepository.maxId() + 1;
 		request.setId(nextId);
 		invoiceRepository.create(request);
@@ -57,6 +60,18 @@ public class InvoiceService {
 			param.put("srvId", s);
 			invoiceRepository.addServiceIncluded(param);
 		});
+
+		if (request.getPoint() != null) {
+			PointChangeRequest pointChangeRequest = new PointChangeRequest();
+			pointChangeRequest.setTotal(0);
+			pointChangeRequest.setCustomerId(request.getCustomerId().toString());
+			pointChangeRequest.setIsEarn(1);
+			pointChangeRequest.setChange(request.getPoint());
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<Object> callAPIUpdatePoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
+			Object up = callAPIUpdatePoint.getBody();
+		}
+
 	}
 
 }

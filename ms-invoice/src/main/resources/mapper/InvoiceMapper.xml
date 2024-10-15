@@ -36,6 +36,7 @@
             , VOU_ID as voucherId
             , INV_TOTAL as total
             , INV_CREATEDAT as createTime
+            , POINT as point
         FROM invoice
         WHERE INV_ID = #{id}
     </select>

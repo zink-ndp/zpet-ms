@@ -13,4 +13,5 @@ public class Invoice {
 	private Integer voucherId;
 	private Double total;
 	private String createTime;
+	private Integer point;
 }

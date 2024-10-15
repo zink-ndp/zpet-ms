@@ -15,5 +15,6 @@ public class InvoiceCreateRequest {
     private Integer voucherId;
     private Integer shipFeeId;
     private List<String> services;
+    private Integer point;
 
 }

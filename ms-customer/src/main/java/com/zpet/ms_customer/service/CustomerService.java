@@ -1,9 +1,12 @@
 package com.zpet.ms_customer.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_customer.request.PointChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +36,13 @@ public class CustomerService {
         });
         return customers;
     }
-    
+
     public Customer getByLogin(LoginRequest request) {
-    	return customerRepository.getByLogin(request);
+        return customerRepository.getByLogin(request);
     }
 
     public Customer getById(Map<String, Object> params) {
-    	Customer customer = customerRepository.getById(params);
+        Customer customer = customerRepository.getById(params);
         customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
         return customer;
     }
@@ -58,14 +61,14 @@ public class CustomerService {
         List<Point> points = customerRepository.getPoints(params);
         if (points.isEmpty()) return null;
         points.forEach(p -> {
-            p.setTime(functionUtils.formatDate(p.getTime(), "dd/MM/yyyy HH:mm:ss"));
+            p.setTime(functionUtils.formatDate(p.getTime(), "yyyy-MM-dd HH:mm:ss"));
         });
         return points;
     }
 
     // INSERT
     @Transactional
-    public void add(CustomerAddRequest customer){
+    public void add(CustomerAddRequest customer) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("column", "CTM_ID");
         params.put("table", "customer");
@@ -75,7 +78,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void addAddress(AddressAddRequest address){
+    public void addAddress(AddressAddRequest address) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("column", "ADR_ID");
         params.put("table", "address");
@@ -84,10 +87,32 @@ public class CustomerService {
         customerRepository.addAddress(address);
     }
 
+    @Transactional
+    public void updatePoint(PointChangeRequest request) {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String timeNow = now.format(formatter);
+        request.setTime(timeNow);
+        customerRepository.addTiming(timeNow);
+        Map<String, Object> param = new HashMap<>();
+        param.put("id", request.getCustomerId());
+        if (getPoints(param)!=null && !getPoints(param).isEmpty()) {
+            Point oldPoint = getPoints(param).get(0);
+            if (request.getIsEarn() == 1){
+                request.setTotal(oldPoint.getTotal() + request.getChange());
+            } else {
+                request.setTotal(oldPoint.getTotal() - request.getChange());
+            }
+        } else {
+            request.setTotal(request.getChange());
+        }
+        customerRepository.changePoint(request);
+    }
+
     // UPDATE
     @Transactional
-    public void update(Map<String, Object> params){
+    public void update(Map<String, Object> params) {
         customerRepository.update(params);
-     }
+    }
 
 }

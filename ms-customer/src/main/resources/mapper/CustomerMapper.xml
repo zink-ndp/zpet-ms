@@ -95,6 +95,7 @@
             ,P_TOTAL as total
         FROM point
         WHERE CTM_ID = #{id}
+        ORDER BY time DESC
     </select>
 
 
@@ -119,6 +120,15 @@
             , #{lng}
             , #{distance}
         )
+    </insert>
+
+    <insert id="addTiming" parameterType="java.lang.String">
+        INSERT INTO TIMING VALUES (#{time})
+    </insert>
+
+    <insert id="changePoint" parameterType="com.zpet.ms_customer.request.PointChangeRequest">
+        INSERT INTO point (ATTIME, CTM_ID, P_CHANGE, P_ISEARN, P_TOTAL)
+        VALUES (#{time}, #{customerId}, #{change}, #{isEarn}, #{total})
     </insert>
 
 

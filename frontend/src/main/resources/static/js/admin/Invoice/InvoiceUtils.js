@@ -103,6 +103,7 @@ export function openInvoiceDetail(id) {
       $("#invoice-detail_staff-id").text(invoice.staffId);
       $("#invoice-detail_customer-name").text(customer.name);
       $("#invoice-detail_table").empty();
+      $("#invoice-detail_point").text(invoice.point ? formatMoney(invoice.point.toString()) : '0đ');
 
       let total = 0;
       let allTotal = 0;
@@ -112,9 +113,10 @@ export function openInvoiceDetail(id) {
         $("#invoice-detail_table").append(_serviceElement(service));
         total += service.price;
       }
-      allTotal += total;
+      allTotal += total - invoice.point;
       $("#invoice-detail_total").text(formatMoney(total.toString()));
       $("#invoice-detail_allTotal").text(formatMoney(allTotal.toString()));
+      $("#invoice-detail_point-granted").text(parseInt(allTotal*0.001))
     },
   });
 }

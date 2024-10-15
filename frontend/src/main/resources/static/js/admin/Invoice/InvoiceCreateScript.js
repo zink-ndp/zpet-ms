@@ -7,6 +7,12 @@ export const InvoiceCreateScript = () => {
     fetchServices();
     fetchCustomers();
 
+    $("#loading-overlay").addClass("hidden");
+
+    $("#text-invoice_customer").val("");
+    $("#text-invoice_phone").val("");
+    $("#cb-use-point").prop("checked", false);
+
     // Invoice Create
 
     let staff = JSON.parse(localStorage.getItem("staff"));
@@ -14,7 +20,10 @@ export const InvoiceCreateScript = () => {
     let customerId = null;
     let tempTotal = 0;
     let total = 0;
+    let isUsingPoint = false;
+    let point = null;
     let services = [];
+    let currentPoint = 0;
     let date = new Date();
     let today =
       date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear();
@@ -37,6 +46,10 @@ export const InvoiceCreateScript = () => {
           customerId = data.id;
           $("#text-invoice_customer").val(data.name);
           $("#text-customer-null-alert").addClass("hidden");
+          $("label[for=cb-use-point]").html(`Sử dụng điểm (Hiện có ${data.point} điểm)`);
+          $("#cb-use-point").prop("disabled", false);
+          $("#cb-use-point").prop("max", data.point);
+          currentPoint = data.point;
         },
         error: (error) => {
           console.error(error);
@@ -44,6 +57,19 @@ export const InvoiceCreateScript = () => {
           $("#text-invoice_customer").val("");
         },
       });
+    });
+
+    $("#btn-check-point").click(() => {
+      let usePoint = parseInt($("#point-to-use").val());
+      if (usePoint > currentPoint) {
+        alert("Không đủ điểm để sử dụng");
+        return;
+      }
+      tempTotal -= usePoint;
+      $("#text-temp-total").text(formatMoney(tempTotal.toString()));
+      $("#text-point").text((tempTotal * 0.001).toString());
+      isUsingPoint = true;
+      point = $("#point-to-use").val();
     });
 
     // If an appointment is finished
@@ -58,7 +84,7 @@ export const InvoiceCreateScript = () => {
         async: false,
         success: (data) => {
           let { info, service } = data;
-          customerId = info.customerId
+          customerId = info.customerId;
           $("#text-invoice_phone").val(info.customerPhone);
           $("#text-invoice_customer").val(info.customerName);
         },
@@ -84,9 +110,21 @@ export const InvoiceCreateScript = () => {
           let prices = values.map((v) => parseInt(v.label.split("-")[1]));
           tempTotal = prices.reduce((a, b) => a + b, 0);
           $("#text-temp-total").text(formatMoney(tempTotal.toString()));
+          $("#text-point").text((tempTotal * 0.001).toString());
+          isUsingPoint = false;
+          $("#cb-use-point").prop("checked", false);
         },
       });
     }
+
+    $("#cb-use-point").change((e) => {
+      if (e.target.checked) {
+        $("#use-point-area").addClass("flex").removeClass("hidden");
+      } else {
+        $("#use-point-area").addClass("hidden").removeClass("flex");
+        point=null;
+      }
+    });
 
     $("#btn-invoice_prrocess").click(() => {
       if (!nonEmpty(services)) {
@@ -103,27 +141,49 @@ export const InvoiceCreateScript = () => {
         addressId: null,
         voucherId: null,
         shipFeeId: null,
+        point: point
       };
 
       console.log(dataCreate);
 
       function _process(data) {
-        $.ajax({
-          url: `${apiUrl}/api/invoice/create`,
-          method: "POST",
-          data: JSON.stringify(data),
-          contentType: "application/json",
-          success: (data) => {
-            alert("Tạo hóa đơn thành công!");
-            window.location.href = "/admin/invoice";
-          },
-        });
+        $("#loading-overlay").removeClass("hidden");
+        if (isUsingPoint) {
+          $.ajax({
+            url: `${apiUrl}/api/customer/updatePoint`,
+            method: "POST",
+            data: JSON.stringify({
+              time: "",
+              customerId: customerId,
+              change: $("#point-to-use").val(),
+              isEarn: 0,
+              total: 0,
+            }),
+            contentType: "application/json",
+            async: false,
+            success: (data) => {},
+          });
+        }
+
+        setTimeout(() => {
+          $.ajax({
+            url: `${apiUrl}/api/invoice/create`,
+            method: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            async: false,
+            success: (data) => {
+              $("#loading-overlay").addClass("hidden");
+              alert("Tạo hóa đơn thành công!");
+              window.location.href = "/admin/invoice";
+            },
+          });
+        }, 1000);
       }
 
+      let cName = $("#text-invoice_customer").val();
+      let cPhone = $("#text-invoice_phone").val();
       if (customerId == null) {
-        let cName = $("#text-invoice_customer").val();
-        let cPhone = $("#text-invoice_phone").val();
-
         if (nonEmpty(cName, cPhone)) {
           let dataAdd = JSON.stringify({
             name: cName,
@@ -138,7 +198,6 @@ export const InvoiceCreateScript = () => {
             async: false,
             success: (data) => {
               alert("Thêm khách hàng thành công!");
-              _process(dataCreate);
             },
           });
         } else {
@@ -146,7 +205,11 @@ export const InvoiceCreateScript = () => {
         }
       }
 
-      _process(dataCreate);
+      if (nonEmpty(cName, cPhone)) {
+        _process(dataCreate);
+      } else {
+        alert("Vui lòng điền đầy đủ thông tin!");
+      }
     });
   });
 };

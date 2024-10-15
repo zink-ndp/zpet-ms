@@ -10,7 +10,7 @@ export function PrintDialog() {
       <html>
       <head>
         <title>ZPet Invoice</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link defer href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
       </head>
       <body>
         ${dialogContent}
@@ -19,8 +19,11 @@ export function PrintDialog() {
     `);
 
     // Wait until the content is loaded, then print and close the window
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
+    setTimeout(() => {
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }, 1000);
+    
   }

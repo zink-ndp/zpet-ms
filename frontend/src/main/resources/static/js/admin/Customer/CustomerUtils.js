@@ -75,7 +75,7 @@ function openCustomerDetail(id) {
     success: (data) => {
       console.log(data);
       $("#et-customer_id").val(data.id);
-      $("#et-customer_point").val(data.points.length === 0 ? "0" : data.points);
+      $("#et-customer_point").val(data.points.length === 0 ? "0" : data.points[0].total);
       $("#et-customer_name").val(data.name);
       $("#et-customer_phone").val(data.phone);
       $("#et-customer_joined-date").val(data.joinedDate);

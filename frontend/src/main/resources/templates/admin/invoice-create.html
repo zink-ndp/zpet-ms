@@ -70,6 +70,14 @@
               placeholder="Tên khách hàng"
             />
           </div>
+          <div class="flex space-x-5 items-center">
+            <input disabled checked="false" type="checkbox" name="" id="cb-use-point">
+            <label for="cb-use-point" class="font-semibold">Sử dụng điểm</label>
+            <div id="use-point-area" class="hidden space-x-3">
+              <input type="text" name="" id="point-to-use" value="null" class="outline-none rounded-md border-[1px] border-gray-600 p-1">
+              <button id="btn-check-point" class="bg-green-500 text-white font-semibold p-2 rounded-md hover:opacity-75">Check</button>
+            </div>
+          </div>
           <div class="flex flex-col space-y-3">
             <p class="font-semibold">Danh sách dịch vụ đặt hẹn:</p>
             <select
@@ -84,6 +92,10 @@
           <div class="flex space-x-5">
             <p class="font-semibold">Tổng tiền tạm tính</p>
             <p class="text-lg font-semibold" id="text-temp-total">0</p>
+          </div>
+          <div class="flex space-x-5">
+            <p class="font-semibold">Điểm tích lũy</p>
+            <p class="text-lg font-semibold" id="text-point">0</p>
           </div>
           <button id="btn-invoice_prrocess" class="w-full rounded-md bg-green-500 text-white font-bold p-2">Tạo hóa đơn</button>
         </div>
