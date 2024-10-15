@@ -6,7 +6,7 @@ import { $AppointmentUtils } from './AppointmentUtils.js'
 import { $DatePickerConfig } from "../../DatePickerConfig.js";
 
 $Loading()
-$CheckLogin()
+$CheckLogin(0)
 $ModalToggle()
 createSidebar("appointment")
 $AppointmentUtils()

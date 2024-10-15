@@ -4,7 +4,7 @@ import { createSidebar } from '../../admin/Sidebar.js'
 import { $ModalToggle } from '../../client/Modal.js'
 import { $PetScript } from './PetScript.js'
 
-$CheckLogin()
+$CheckLogin(0)
 createSidebar("pet")
 $Loading()
 $ModalToggle()

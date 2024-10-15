@@ -35,7 +35,11 @@ $(() => {
         }, 1000);
         if (response != "") {
           localStorage.setItem("staff", JSON.stringify(response));
-          window.location.href = "/admin/";
+          if (response.isManager === 1){
+            window.location.href = "/admin/";
+          } else {
+            window.location.href = "/admin/appointment";
+          }
         } else {
           alert("Tài khoản hoặc mật khẩu không đúng!");
         }
@@ -43,7 +47,7 @@ $(() => {
       error: (error) => {
         setTimeout(() => {
           $("#loading-overlay").addClass("hidden");
-        }, 1000);
+        }, 500);
         console.error(error);
       },
     });

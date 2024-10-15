@@ -1,45 +1,69 @@
-const items = [
-  {
-    item: "home",
-    name: "Trang chủ",
-    href: "/admin/",
-  },
-  {
-    item: "appointment",
-    name: "Lịch hẹn",
-    href: "/admin/appointment",
-  },
-  {
-    item: "invoice",
-    name: "Hóa đơn",
-    href: "/admin/invoice",
-  },
-  {
-    item: "pet",
-    name: "Thú cưng",
-    href: "/admin/pet",
-  },
-  {
-    item: "customer",
-    name: "Khách hàng",
-    href: "/admin/customer",
-  },
-  {
-    item: "staff",
-    name: "Nhân viên",
-    href: "/admin/staff",
-  },
-  {
-    item: "service",
-    name: "Dịch vụ",
-    href: "/admin/service",
-  },
-  {
-    item: "voucher",
-    name: "Khuyến mãi",
-    href: "/admin/voucher",
-  },
-];
+let items = [];
+
+const staff = JSON.parse(localStorage.getItem("staff"));
+if (staff.isManager === 1) {
+  items = [
+    {
+      item: "home",
+      name: "Trang chủ",
+      href: "/admin/",
+    },
+    {
+      item: "appointment",
+      name: "Lịch hẹn",
+      href: "/admin/appointment",
+    },
+    {
+      item: "invoice",
+      name: "Hóa đơn",
+      href: "/admin/invoice",
+    },
+    {
+      item: "pet",
+      name: "Thú cưng",
+      href: "/admin/pet",
+    },
+    {
+      item: "customer",
+      name: "Khách hàng",
+      href: "/admin/customer",
+    },
+    {
+      item: "staff",
+      name: "Nhân viên",
+      href: "/admin/staff",
+    },
+    {
+      item: "service",
+      name: "Dịch vụ",
+      href: "/admin/service",
+    },
+  ];
+} else {
+  items = [
+    {
+      item: "appointment",
+      name: "Lịch hẹn",
+      href: "/admin/appointment",
+    },
+    {
+      item: "invoice",
+      name: "Hóa đơn",
+      href: "/admin/invoice",
+    },
+    {
+      item: "pet",
+      name: "Thú cưng",
+      href: "/admin/pet",
+    },
+    {
+      item: "customer",
+      name: "Khách hàng",
+      href: "/admin/customer",
+    },
+  ];
+}
+
 
 const itemSidebar = (name, href, active) => {
   return `
@@ -54,7 +78,6 @@ const itemSidebar = (name, href, active) => {
 };
 
 export const createSidebar = (current) => {
-
   let data = "";
   items.forEach(({ item, name, href }) => {
     data += itemSidebar(name, href, current == item);

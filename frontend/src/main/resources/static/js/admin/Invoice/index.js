@@ -3,7 +3,7 @@ import { createSidebar } from '../../admin/Sidebar.js'
 import { $ModalToggle } from '../../client/Modal.js'
 import { InvoiceScript } from './InvoiceScript.js'
 
-$CheckLogin()
+$CheckLogin(0)
 createSidebar("invoice")
 $ModalToggle()
 InvoiceScript()

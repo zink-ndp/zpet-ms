@@ -5,7 +5,7 @@ import { $ModalToggle } from '../../client/Modal.js'
 import { $HomeScript } from './HomeScript.js';
 
 $Loading()
-$CheckLogin();
+$CheckLogin(1);
 createSidebar("home");
 $ModalToggle();
 $HomeScript();

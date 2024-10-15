@@ -4,7 +4,7 @@ import { createSidebar } from "../../admin/Sidebar.js";
 import { $ModalToggle } from "../../client/Modal.js";
 import { $StaffScript } from "./StaffScript.js";
 
-$CheckLogin();
+$CheckLogin(1);
 createSidebar("staff");
 $Loading();
 $ModalToggle();
