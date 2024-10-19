@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <button id="chatbot-btn" class="h-16 w-16 fixed bottom-8 right-8 z-40 hover:opacity-75">
+        <div id="chatbot-tooltip" class="relative">
+            <div class="absolute -top-12 -left-8 p-2 animate-bounce bg-white rounded-full shadow-xl w-24">
+                <p class="text-sm font-thin">Need help?</p>
+            </div>
+        </div>
+        <img src="../../images/icons/favicon.ico" alt="" class="animate-pulse">
+    </button>
+    <div id="chatbot" class="w-screen h-screen relative">
+        <div id="chatbot-overlay" class="w-screen h-screen bg-black/25">
+            <div id="chatbot-chat-area" class="absolute top-4 right-4 w-1/4 h-[87%] bg-white rounded-md flex flex-col">
+                <div id="chatbot-title" class="border-b-[1px] border-gray-200 flex items-center space-x-3 p-4">
+                    <img src="../../images/icons/favicon.ico" alt="" class="h-8 w-8">
+                    <p class="font-bold">Chatbot ZPet</p>
+                </div>
+                <div class="flex-grow-1 h-full overflow-y-auto space-y-3">
+                    <div id="chatbot-bot-typing" class="p-4 bg-gray-100 flex items-center justify-center space-x-1 w-16 rounded-full">
+                        <div class="rounded-full h-2 w-2 bg-gray-500 animate-bounce">&nbsp;</div>
+                        <div class="rounded-full h-2 w-2 bg-gray-500 animate-pulse">&nbsp;</div>
+                        <div class="rounded-full h-2 w-2 bg-gray-500 animate-bounce">&nbsp;</div>
+                    </div>
+                </div>
+                <div id="chatbot-bottom" class="flex p-3">
+                    <input type="text" id="chatbot-input" placeholder="Nhập câu hỏi của bạn..." class="border-[1px] border-gray-200 p-4 w-full rounded-md outline-none">
+                    <button id="chatbot-send-btn" class="bg-green-500 text-white p-2 rounded-md ml-2 w-20 hover:opacity-75">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
