@@ -1,5 +1,5 @@
 import { apiUrl } from "../../apiUrl.js";
-import { renderDOMElement } from "../../utils.js";
+import { renderDOMElement, nonEmpty } from "../../utils.js";
 
 let imageLink = (name) => {
   return `https://imgur.com/${name}`;
@@ -45,7 +45,7 @@ let _petElement = ({id, image, name, type, specie, gender, customerName}) => {
         type: "td",
         props: {
           className: "text-center",
-          innerHTML: gender,
+          innerHTML: specie,
         }
       }, 
       {
@@ -149,7 +149,7 @@ export function createPet() {
       name: $("#pet-create_name").val(),
       typeId: $("#pet-create_pettype").val(),
       specie: $("#pet-create_typespecie").val(),
-      gender: $("input[name=petgender]").val(),
+      gender: $("input[name=petgender]:checked").val(),
       birthday: $("#pet-create_birthday").val(),
       customerId: $("#pet-create_customer").val().split("-")[0],
     };
@@ -177,11 +177,11 @@ export function createPet() {
       method: "POST",
       contentType: "application/json",
       processData: false,
+      async: false,
       data: JSON.stringify(pet),
       success: (response) => {
         console.log(response);
-
-        isFirstImage = 1;
+        let isFirstImage = 1;
         images.map((image) => {
           const imageFD = new FormData();
           imageFD.append("image", image);
@@ -210,11 +210,14 @@ export function createPet() {
 
         alert("Tạo thú cưng thành công");
         fetchAllPet();
+
       },
       error: (jqXHR, textStatus, errorThrown) => {
         console.error("Error:", textStatus, errorThrown);
       },
     });
+    $("#loading-overlay").addClass("hidden");
+    $(".modal").addClass("hidden");
   }
 
   $.ajax({
@@ -234,5 +237,9 @@ export function createPet() {
     },
   });
   $("#pet-create").removeClass("hidden");
-  $("#btn-create-pet").click(() => _process());
+  $("#btn-create-pet").click(() => {
+    $("#loading-overlay").removeClass("hidden");
+    _process()
+    $("#loading-overlay").addClass("hidden");
+  });
 }

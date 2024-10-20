@@ -111,9 +111,10 @@ export function openInvoiceDetail(id) {
       for (let index = 0; index < services.length; index++) {
         const service = services[index];
         $("#invoice-detail_table").append(_serviceElement(service));
-        total += service.price;
+        total += parseInt(service.price);
       }
-      allTotal += total - invoice.point;
+      allTotal = total - parseInt(invoice.point);
+      
       $("#invoice-detail_total").text(formatMoney(total.toString()));
       $("#invoice-detail_allTotal").text(formatMoney(allTotal.toString()));
       $("#invoice-detail_point-granted").text(parseInt(allTotal*0.001))
