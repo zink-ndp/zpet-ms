@@ -36,9 +36,6 @@ export const $addHeader = () => {
             <li>
                 <a class="nav-btn" href="/invoices">Hoá đơn</a>
             </li>
-            <li>
-                <a class="nav-btn" href="/vouchers">Voucher</a>
-            </li>
             <li class="flex w-fit user-login">
                 <button
                 id="dropdownDefaultButton"
@@ -107,9 +104,6 @@ export const $addHeader = () => {
                 <li>
                     <a class="nav-btn" href="/invoices">Hoá đơn</a>
                 </li>
-                <li>
-                    <a class="nav-btn" href="/vouchers">Voucher</a>
-                </li>
                 <li class="flex w-fit user-login">
                 <button
                     id="dropdownDefaultButton"
@@ -174,6 +168,7 @@ export const $addHeader = () => {
       class="z-40 fixed top-0 left-0 w-full h-full flex flex-col justify-center items-center bg-white/60 backdrop-blur-md overflow-hidden"
     >
       <img
+        defer
         class="lg:w-1/4 w-3/4 img animate-bounce"
         src="/images/illustration/cute-smiling-cat.svg"
         alt=""

@@ -7,6 +7,7 @@ import { $UserNavButton } from "./client/UserNavButton.js";
 import { $AddAppointment } from "./client/Appointment/AddAppointment.js";
 import { $addHeader } from "./client/Header.js";
 import { $DatePickerConfig } from "./DatePickerConfig.js";
+import { $Chatbot } from "./client/Chatbox.js";
 
 $addHeader();
 $ToggleHamburger();
@@ -15,6 +16,7 @@ $DatePickerConfig();
 $ShowService();
 $ShowAddedService();
 $ModalToggle();
+$Chatbot();
 $UserNavButton();
 $AddAppointment();
 
