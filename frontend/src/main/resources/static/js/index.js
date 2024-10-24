@@ -8,6 +8,7 @@ import { $AddAppointment } from "./client/Appointment/AddAppointment.js";
 import { $addHeader } from "./client/Header.js";
 import { $DatePickerConfig } from "./DatePickerConfig.js";
 import { $Chatbot } from "./client/Chatbox.js";
+import { $Notification, sendMessage } from "./client/Notification.js";
 
 $addHeader();
 $ToggleHamburger();
@@ -19,7 +20,9 @@ $ModalToggle();
 $Chatbot();
 $UserNavButton();
 $AddAppointment();
+$Notification();
 
 $(() => {
   $("#loading-overlay").addClass("hidden");
+  sendMessage("adsfadsf")
 });

@@ -1,6 +1,7 @@
 import { apiUrl } from "../../apiUrl.js";
 import { nonEmpty } from "../../utils.js";
 import { showServices } from "../ShowServices.js"
+import { sendMessage } from "../Notification.js";
 
 export const $AddAppointment = () => {
   $(() => {
@@ -137,6 +138,7 @@ function processAppointment() {
     data: requestData,
     contentType: "application/json",
     success: function () {
+      sendMessage("/apm/news", `Cuộc hẹn mới với khách hàng`,`Khách hàng ${customer.name} đã tạo lịch hẹn lúc ${time} - ${date}`, note);
       alert("Đặt lịch thành công!");
       localStorage.removeItem("services");
       window.location.href = "/appointments";
