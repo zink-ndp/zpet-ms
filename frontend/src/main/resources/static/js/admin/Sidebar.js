@@ -129,7 +129,7 @@ export const createSidebar = (current) => {
   const sideBar = `
         <div
           id="noti-panel"
-          class="hidden top-0 left-[17%] bg-white rounded-md shadow-lg m-4 w-1/5 h-fit max-h-96 z-50"
+          class="hidden top-0 left-[17%] bg-white rounded-md shadow-lg m-4 w-1/5 h-fit max-h-96 z-50 overflow-y-scroll"
         >
           <p class="text-lg font-bold m-4">Thông báo</p>
           <div id="noti-list" class="flex flex-col">
