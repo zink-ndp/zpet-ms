@@ -3,6 +3,7 @@ import { $CheckLogin } from '../CheckLogin.js';
 import { $UserNavButton } from '../UserNavButton.js';
 import { $ShowAddedService } from '../ShowAddedService.js';
 import { $AddAppointment } from './AddAppointment.js';
+import { $Notification } from '../Notification.js';
 import { $ModalToggle } from '../Modal.js';
 import { $addHeader } from "../Header.js"
 import { $DatePickerConfig } from "../../DatePickerConfig.js";
@@ -13,5 +14,6 @@ $ModalToggle();
 $appointmentUtils();
 $UserNavButton();
 $ShowAddedService();
+$Notification();
 $AddAppointment();
 $DatePickerConfig();

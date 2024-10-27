@@ -1,3 +1,6 @@
+import { itemNotification } from "../admin/Sidebar.js";
+import { loadCurrentAppointments } from "./Appointment/AppointmentScript.js";
+
 const customer = JSON.parse(localStorage.getItem("customer"));
 
 const stompClient = new StompJs.Client({
@@ -7,15 +10,18 @@ const stompClient = new StompJs.Client({
   },
 });
 
-function showGreeting(message) {
-  $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
 stompClient.onConnect = (frame) => {
   console.log("Connected: " + frame);
-  stompClient.subscribe(`/apm/greetings/${customer.id}`, (response) => {
+  stompClient.subscribe(`/apm/update/${customer.id}`, (response) => {
     console.log(JSON.parse(response.body));
-    showGreeting(JSON.parse(response.body).content);
+    var { title, content, apmId } = JSON.parse(response.body);
+    console.log(title, content);
+    $("#noti-new-indicator").addClass("absolute").removeClass("hidden");
+    $("#noti-list").prepend(itemNotification(title, content, apmId));
+    $("#noti-empty").remove();
+    let customer = localStorage.getItem("customer");
+    loadCurrentAppointments(customer);
+    loadAppointment(customer);
   });
 };
 
@@ -40,19 +46,19 @@ export function disconnect() {
 export function sendMessage(destination, title, content, note, apmId) {
   stompClient.publish({
     destination: destination,
-    body: JSON.stringify({ 
-        title: title,
-        content: content,
-        note: note ? note : null,
-        apmId: apmId,
+    body: JSON.stringify({
+      title: title,
+      content: content,
+      note: note ? note : null,
+      apmId: apmId,
     }),
   });
 }
 
 export const $Notification = () => {
   $(() => {
-    if (customer){
-        connect();
+    if (customer) {
+      connect();
     }
   });
 };

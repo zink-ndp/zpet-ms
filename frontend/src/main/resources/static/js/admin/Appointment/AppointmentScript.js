@@ -1,6 +1,7 @@
 import { apmElement } from "./AppointmentElement.js";
 import { apiUrl } from '../../apiUrl.js'
 import { renderDOMElement } from "../../utils.js";
+import { sendMessage } from "../Notification.js";
 
 
 export function fetchAllAppointment(statusFilter, dateFilter) {
@@ -74,12 +75,27 @@ export function updateStatus(id, status) {
       description: `Nhân viên ${staff.name} đã cập nhật trạng thái thành ${_appointmentStatus[status]}`,
     }),
     success: (data) => {
+      const customerId = data
       $("#apm-detail").addClass("hidden");
-
+      console.log(customerId);
+      
       if (status == 2){
+        sendMessage(
+          "/apm/update/"+customerId,
+          "Lịch hẹn đã được hoàn thành", 
+          "Bạn đã có một cuộc hẹn hoàn thành", 
+          null, 
+          id)
         alert("Cập nhật hoàn thành lịch hẹn! Đang chuyển đến trang tạo hóa đơn");
         window.location.href = "/admin/invoice-create?apm="+id
       } else {
+        sendMessage(
+          "/apm/update/"+customerId,
+          "Lịch hẹn đã được cập nhật", 
+          "Bạn đã có một cuộc hẹn "+_appointmentStatus[status],
+          null,
+          id
+        )
         alert("Cập nhật thành công");
         fetchUpcomingAppointment();
         fetchAllAppointment("0_1_2");

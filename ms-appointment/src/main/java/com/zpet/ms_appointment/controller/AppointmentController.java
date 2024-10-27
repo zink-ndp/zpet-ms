@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_appointment.model.Appointment;
 import com.zpet.ms_appointment.response.DayCountResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -119,7 +120,9 @@ public class AppointmentController {
 	@Transactional
 	public ResponseEntity<Object> updateStatus(@RequestBody AppointmentStatusUpdateRequest request) {
 		appointmentService.updateStatusAppointment(request);
-		return ResponseEntity.ok().build();
+		AppointmentDetailResponse apm = getDetail(request.getApmId());
+		Integer ctmId = Integer.valueOf(apm.getInfo().getCustomerId());
+		return ResponseEntity.ok(ctmId);
 	}
 
 }

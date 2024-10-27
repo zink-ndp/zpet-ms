@@ -1,5 +1,21 @@
 export const $addHeader = () => {
   const elementNavbar = `
+    <div
+        id="noti-panel"
+        class="hidden top-16 right-16 bg-white rounded-md shadow-lg m-4 w-[600px] h-fit max-h-96 z-50 overflow-y-scroll"
+    >
+        <div class=" p-4 w-full flex justify-between">
+            <p class="text-lg font-bold">Thông báo</p>
+            <button id="noti-btn-clear" class="rounded-full p-2 w-fit hover:bg-red-50 text-red-500 text-xs italic">
+                Xóa tất cả
+            </button>
+        </div>
+        <div id="noti-list" class="flex flex-col">
+            <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+                Không có thông báo mới
+            </div>
+        </div>
+    </div>
     <nav
         id="navbar"
         class="fixed top-0 flex w-screen h-fit px-2 lg:px-24 xl:px-24 2xl:px-24 py-6 z-10 backdrop-blur-lg bg-soft-blue/70 overflow-hidden"
@@ -129,6 +145,12 @@ export const $addHeader = () => {
                     </svg>
                 </button>
                 </li>
+                <li>
+                    <button id="nav-noti-btn" class="relative group bg-green-200 hover:bg-green-500 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ease-in-out">
+                        <img src="/images/icons/bell.svg" alt="" class="w-5 h-5 text-green-700 group-hover:text-white" />
+                        <div id="noti-new-indicator" class="hidden top-0 right-0 animate-ping bg-red-500 rounded-full h-2 w-2">&nbsp</div>
+                    </button>
+                </li>
             </ul>
             </div>
         </div>
@@ -185,4 +207,16 @@ export const $addHeader = () => {
   $("body").prepend(elementNavbar);
   $("body").prepend(elementDropdown);
   $("body").prepend(elementLoading);
+  $("#nav-noti-btn").click(() => {
+    $("#noti-panel").toggleClass("hidden fixed");
+  });
+  $("#noti-btn-clear").click(() => {
+    $("#noti-list").html(`
+        <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+            Không có thông báo mới
+        </div>  
+      `);
+    $("#noti-empty").removeClass("hidden");
+    $("#noti-new-indicator").addClass("hidden").removeClass("absolute");
+  });
 };

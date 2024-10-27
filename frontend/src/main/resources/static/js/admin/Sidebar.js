@@ -1,12 +1,63 @@
+import { viewDetail } from "../client/Appointment/AppointmentScript.js";
 import { renderDOMElement } from "../utils.js";
 import { openAppointmentDetail } from "./Appointment/AppointmentScript.js";
 
+const itemSidebar = (name, href, active) => {
+  return `
+       <a
+          id="aside-item-home"
+          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold 
+          ${active ? "bg-green-100 text-green-500" : "text-gray-600"}"
+          href="${href}"
+          >${name}</a
+        >
+    `;
+};
+
+export const openAppointmentNoti = (id) => {
+  $(`#noti-apm-${id}`).remove();
+  $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
+  if ($("#noti-list").children().length == 0 ) {
+    $("#noti-list").append(`
+      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+        Không có thông báo mới
+      </div>
+    `)
+  }
+  openAppointmentDetail(id);
+  viewDetail(id);
+}
+
+export const itemNotification = (title, content, apmId) => {
+  const element = {
+    type: "div",
+    props: {
+      onclick: () => {openAppointmentNoti(apmId)},
+      id: `noti-apm-${apmId}`,
+      className: "w-full h-fit flex flex-col p-5 border-b-[1px] border-gray-200 hover:bg-green-50 transition-all duration-200 ease-in-out cursor-pointer",
+      innerHTML: `
+        <div class="flex flex-col">
+          <p class="text-sm font-extrabold">
+            ${title}
+          </p>
+          <p class="text-sm font-semibold text-gray-700 line-clamp-2">
+            ${content}
+          </p>
+        </div>
+      `
+    },
+  }
+  return renderDOMElement(element)
+}
+
+export const createSidebar = (current) => {
+  
 let items = [];
 
 const staff = JSON.parse(localStorage.getItem("staff"));
 
 if (staff === null) {
-  alert("Vui lòng đăng nhập!");
+  alert("Vui lòng đăng nhập!")
   window.location.href = "/admin/login"
 }
 
@@ -72,56 +123,6 @@ if (staff.isManager === 1) {
     },
   ];
 }
-
-
-const itemSidebar = (name, href, active) => {
-  return `
-       <a
-          id="aside-item-home"
-          class="hover:bg-green-100 transition-all duration-200 ease-in-out px-5 py-3 rounded-md font-semibold 
-          ${active ? "bg-green-100 text-green-500" : "text-gray-600"}"
-          href="${href}"
-          >${name}</a
-        >
-    `;
-};
-
-export const openAppointmentNoti = (id) => {
-  $(`#noti-apm-${id}`).remove();
-  $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
-  if ($("#noti-list").children().length == 0 ) {
-    $("#noti-list").append(`
-      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
-        Không có thông báo mới
-      </div>
-    `)
-  }
-  openAppointmentDetail(id);
-}
-
-export const itemNotification = (title, content, apmId) => {
-  const element = {
-    type: "div",
-    props: {
-      onclick: () => {openAppointmentNoti(apmId)},
-      id: `noti-apm-${apmId}`,
-      className: "w-full h-fit flex flex-col p-5 border-b-[1px] border-gray-200 hover:bg-green-50 transition-all duration-200 ease-in-out cursor-pointer",
-      innerHTML: `
-        <div class="flex flex-col">
-          <p class="text-sm font-extrabold">
-            ${title}
-          </p>
-          <p class="text-sm font-semibold text-gray-700 line-clamp-2">
-            ${content}
-          </p>
-        </div>
-      `
-    },
-  }
-  return renderDOMElement(element)
-}
-
-export const createSidebar = (current) => {
   let data = "";
   items.forEach(({ item, name, href }) => {
     data += itemSidebar(name, href, current == item);
@@ -131,7 +132,12 @@ export const createSidebar = (current) => {
           id="noti-panel"
           class="hidden top-0 left-[17%] bg-white rounded-md shadow-lg m-4 w-1/5 h-fit max-h-96 z-50 overflow-y-scroll"
         >
-          <p class="text-lg font-bold m-4">Thông báo</p>
+          <div class=" p-4 w-full flex justify-between">
+            <p class="text-lg font-bold">Thông báo</p>
+            <button id="noti-btn-clear" class="rounded-full p-2 w-fit hover:bg-red-50 text-red-500 text-xs italic">
+              Xóa tất cả
+            </button>
+          </div>
           <div id="noti-list" class="flex flex-col">
             <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
                 Không có thông báo mới
@@ -176,5 +182,14 @@ export const createSidebar = (current) => {
   $("body").prepend(sideBar);
   $("#nav-noti-btn").click(() => {
     $("#noti-panel").toggleClass("hidden fixed");
+  });
+  $("#noti-btn-clear").click(() => {
+    $("#noti-list").html(`
+      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+          Không có thông báo mới
+      </div>  
+    `);
+    $("#noti-empty").removeClass('hidden');
+    $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
   });
 };

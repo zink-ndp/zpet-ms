@@ -41,12 +41,14 @@ export function disconnect() {
   console.log("Disconnected");
 }
 
-export function sendMessage(staffId, name) {
+export function sendMessage(destination, title, content, note, apmId) {
   stompClient.publish({
-    destination: "/zpet-noti/new-apm",
+    destination: destination,
     body: JSON.stringify({ 
-        staffId: staffId,
-        name: name
+        title: title,
+        content: content,
+        note: note ? note : null,
+        apmId: apmId,
     }),
   });
 }

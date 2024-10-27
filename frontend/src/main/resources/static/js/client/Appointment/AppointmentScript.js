@@ -124,7 +124,7 @@ const apmElement = ({ id, status, date, time, note }) => {
   return containerDiv;
 };
 
-function viewDetail(id) {
+export function viewDetail(id) {
   $(`#appointment-detail`).removeClass("hidden");
   $.ajax({
     url: apiUrl + "/api/appointment/detail?id=" + id,
@@ -149,7 +149,7 @@ function viewDetail(id) {
   });
 }
 
-function loadCurrentAppointments(customer) {
+export function loadCurrentAppointments(customer) {
   $.ajax({
     url:
       apiUrl +

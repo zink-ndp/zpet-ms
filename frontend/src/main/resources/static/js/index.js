@@ -24,5 +24,4 @@ $Notification();
 
 $(() => {
   $("#loading-overlay").addClass("hidden");
-  sendMessage("adsfadsf")
 });
