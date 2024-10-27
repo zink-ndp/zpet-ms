@@ -36,7 +36,7 @@ export function appointmentCreate() {
         alert("Đặt lịch thành công!");
         renderCalendar();
         showDefaultAppointment(
-          "0_1_2_3",
+          "0_1_2",
           new Date().getMonth() + 1,
           new Date().getFullYear()
         );

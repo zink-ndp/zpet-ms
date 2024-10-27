@@ -17,7 +17,7 @@ stompClient.onConnect = (frame) => {
     console.log(title, content);
     $("#noti-new-indicator").addClass('absolute').removeClass('hidden');
     $("#noti-list").prepend(itemNotification(title, content, apmId))
-    $("#noti-empty").addClass("hidden")
+    $("#noti-empty").remove()
     fetchUpcomingAppointment();
     showDefaultAppointment();
 });

@@ -82,8 +82,8 @@ export function updateStatus(id, status) {
       } else {
         alert("Cập nhật thành công");
         fetchUpcomingAppointment();
-        fetchAllAppointment("0_1_2_3");
-        showDefaultAppointment("0_1_2_3", (new Date().getMonth()+1), new Date().getFullYear())
+        fetchAllAppointment("0_1_2");
+        showDefaultAppointment("0_1_2", (new Date().getMonth()+1), new Date().getFullYear())
       }
 
     },
@@ -116,14 +116,14 @@ export function openAppointmentDetail(id) {
       $("#apm-detail_history").empty();
       history.forEach((h) => {
         $("#apm-detail_history").append(`
-                    <div class="m-3 p-2 bg-gray-50">
-                        <div class="flex w-full justify-between">
-                            <p>Thời điểm: ${h.attime}</p>
-                            <p>Trạng thái: ${h.status}</p>
-                        </div>
-                        <p>Mô tả: ${h.description}</p>
-                    </div>
-                `);
+            <div class="m-3 p-2 bg-gray-50">
+                <div class="flex w-full justify-between">
+                    <p>Thời điểm: ${h.attime}</p>
+                    <p>Trạng thái: ${h.status}</p>
+                </div>
+                <p>Mô tả: ${h.description}</p>
+            </div>
+        `);
       });
 
       let _appointmentStatus = [

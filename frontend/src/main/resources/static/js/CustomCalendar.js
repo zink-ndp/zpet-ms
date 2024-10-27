@@ -3,7 +3,6 @@ import {
   showDefaultAppointment,
   fetchAllAppointment,
 } from "./admin/Appointment/AppointmentScript.js";
-import { renderDOMElement } from "./utils.js";
 
 const daysContainer = document.querySelector(".days");
 const nextBtn = document.querySelector(".next");

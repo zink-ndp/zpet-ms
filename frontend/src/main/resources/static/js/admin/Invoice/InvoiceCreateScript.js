@@ -42,6 +42,7 @@ export const InvoiceCreateScript = () => {
       $.ajax({
         url: `${apiUrl}/api/customer/byphone?phone=${phone}`,
         method: "GET",
+        async: false,
         success: (data) => {
           customerId = data.id;
           $("#text-invoice_customer").val(data.name);
@@ -87,6 +88,25 @@ export const InvoiceCreateScript = () => {
           customerId = info.customerId;
           $("#text-invoice_phone").val(info.customerPhone);
           $("#text-invoice_customer").val(info.customerName);
+          $.ajax({
+            url: `${apiUrl}/api/customer/byphone?phone=${info.customerPhone}`,
+            method: "GET",
+            async: false,
+            success: (data) => {
+              customerId = data.id;
+              $("#text-invoice_customer").val(data.name);
+              $("#text-customer-null-alert").addClass("hidden");
+              $("label[for=cb-use-point]").html(`Sử dụng điểm (Hiện có ${data.point} điểm)`);
+              $("#cb-use-point").prop("disabled", false);
+              $("#cb-use-point").prop("max", data.point);
+              currentPoint = data.point;
+            },
+            error: (error) => {
+              console.error(error);
+              $("#text-customer-null-alert").removeClass("hidden");
+              $("#text-invoice_customer").val("");
+            },
+          });
         },
         error: (error) => {
           console.error(error);

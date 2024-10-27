@@ -14,7 +14,7 @@ import { showApmListOfDay } from "../../CustomCalendar.js";
 export const $AppointmentUtils = () => {
   $(() => {
     showDefaultAppointment(
-      "0_1_2_3",
+      "0_1_2",
       new Date().getMonth() + 1,
       new Date().getFullYear()
     );

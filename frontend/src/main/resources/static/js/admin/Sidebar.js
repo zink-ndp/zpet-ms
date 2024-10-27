@@ -89,6 +89,13 @@ const itemSidebar = (name, href, active) => {
 export const openAppointmentNoti = (id) => {
   $(`#noti-apm-${id}`).remove();
   $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
+  if ($("#noti-list").children().length == 0 ) {
+    $("#noti-list").append(`
+      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+        Không có thông báo mới
+      </div>
+    `)
+  }
   openAppointmentDetail(id);
 }
 

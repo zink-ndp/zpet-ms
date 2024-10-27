@@ -21,7 +21,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="messaging-stomp-websocket" target="17" />
       <module name="MsNotificationApplication" target="17" />
     </bytecodeTargetLevel>
   </component>
