@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <button id="chatbot-btn" class="h-16 w-16 fixed bottom-8 right-8 z-40 hover:opacity-75">
+  </head>
+  <body>
+    <!-- CHAT BOTTTT -->
+    <!-- <button id="chatbot-btn" class="h-16 w-16 fixed bottom-8 right-8 z-40 hover:opacity-75">
         <div id="chatbot-tooltip" class="relative">
             <div class="absolute -top-12 -left-8 p-2 animate-bounce bg-white rounded-full shadow-xl w-24">
                 <p class="text-sm font-thin">Need help?</p>
@@ -36,6 +37,82 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+    <!-- NOTI PANEL -->
+    <div class="flex justify-between items-center mt-2 mb-3">
+      <a
+        href="/admin/"
+        class="logo cursor-pointer font-bold text-black text-center text-4xl w-fit"
+      >
+        <img
+          id="nav-brand-logo"
+          class="nav-brand-logo mx-auto"
+          draggable="false"
+          alt="logo"
+        />
+      </a>
+      <button
+        id="nav-noti-btn"
+        class="group bg-green-200 hover:bg-green-500 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ease-in-out"
+      >
+        <img
+          src="/images/icons/bell.svg"
+          alt=""
+          class="w-5 h-5 text-green-700 group-hover:text-white"
+        />
+      </button>
     </div>
-</body>
+    <div
+      id="noti-panel"
+      class="hidden top-0 left-[17%] bg-white rounded-md shadow-lg m-4 w-1/5 h-fit max-h-96 z-50"
+    >
+      <p class="text-lg font-bold m-4">Thông báo</p>
+      <div id="noti-list" class="flex flex-col">
+        <div
+          id="noti-empty"
+          class="w-full h-20 flex items-center justify-center"
+        >
+          Không có thông báo mới
+        </div>
+      </div>
+    </div>
+    <div
+      class="fixed top-0 left-[17%] bg-white rounded-md shadow-lg m-4 w-1/5 h-fit max-h-96"
+    >
+      <p class="text-lg font-bold m-4">Thông báo</p>
+      <div id="noti-list" class="flex flex-col">
+        <div class="w-full h-20 flex items-center justify-center">
+          Không có thông báo mới
+        </div>
+        <!-- <div
+          class="w-full h-fit flex flex-col p-5 border-b-[1px] border-gray-200 hover:bg-green-50 transition-all duration-200 ease-in-out cursor-pointer"
+        >
+          <div class="flex flex-col">
+            <p class="text-sm font-extrabold">
+              Bạn đã nhận được một thông báo mới
+            </p>
+            <p class="text-sm font-semibold text-gray-700 line-clamp-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+              commodi omnis, dolorem officiis esse nesciunt veliti
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="w-full h-fit flex flex-col p-5 border-b-[1px] border-gray-200 hover:bg-green-50 transition-all duration-200 ease-in-out cursor-pointer"
+        >
+          <div class="flex flex-col">
+            <p class="text-sm font-semibold">
+              Bạn đã nhận được một thông báo mới
+            </p>
+            <p class="text-sm font-light text-gray-700 line-clamp-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+              commodi omnis, dolorem officiis esse nesciunt veliti
+            </p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </body>
 </html>

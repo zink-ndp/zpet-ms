@@ -37,13 +37,14 @@ export function disconnect() {
   console.log("Disconnected");
 }
 
-export function sendMessage(destination, title, content, note) {
+export function sendMessage(destination, title, content, note, apmId) {
   stompClient.publish({
     destination: destination,
     body: JSON.stringify({ 
         title: title,
         content: content,
         note: note ? note : null,
+        apmId: apmId,
     }),
   });
 }

@@ -6,7 +6,9 @@ import { $HomeScript } from './HomeScript.js';
 import { $Notification } from '../Notification.js';
 
 $Loading()
-$CheckLogin(1);
+setTimeout(() => {
+    $CheckLogin(1);
+}, 500);
 createSidebar("home");
 $ModalToggle();
 $HomeScript();

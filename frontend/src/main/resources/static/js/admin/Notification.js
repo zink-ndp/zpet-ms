@@ -1,3 +1,6 @@
+import { itemNotification } from "./Sidebar.js";
+import { fetchUpcomingAppointment, showDefaultAppointment } from "./Appointment/AppointmentScript.js";
+
 const staff = JSON.parse(localStorage.getItem("staff"));
 
 const stompClient = new StompJs.Client({
@@ -7,15 +10,16 @@ const stompClient = new StompJs.Client({
   },
 });
 
-function showGreeting(message) {
-  $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
 stompClient.onConnect = (frame) => {
   console.log("Connected: " + frame);
   stompClient.subscribe('/apm/news', function(messageOutput) {
-    var notification = JSON.parse(messageOutput.body);
-    console.log(notification);
+    var {title, content, apmId } = JSON.parse(messageOutput.body);
+    console.log(title, content);
+    $("#noti-new-indicator").addClass('absolute').removeClass('hidden');
+    $("#noti-list").prepend(itemNotification(title, content, apmId))
+    $("#noti-empty").addClass("hidden")
+    fetchUpcomingAppointment();
+    showDefaultAppointment();
 });
 };
 

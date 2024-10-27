@@ -137,8 +137,9 @@ function processAppointment() {
     type: "POST",
     data: requestData,
     contentType: "application/json",
-    success: function () {
-      sendMessage("/apm/news", `Cuộc hẹn mới với khách hàng`,`Khách hàng ${customer.name} đã tạo lịch hẹn lúc ${time} - ${date}`, note);
+    success: function (data) {
+      const apmId = data;
+      sendMessage("/apm/news", `Cuộc hẹn mới với khách hàng`,`Khách hàng ${customer.name} đã tạo lịch hẹn lúc ${time} - ${date}`, note, apmId);
       alert("Đặt lịch thành công!");
       localStorage.removeItem("services");
       window.location.href = "/appointments";

@@ -8,5 +8,6 @@ public class Request {
 	private String title;
 	private String content;
 	private String note;
+	private Integer apmId;
 
 }

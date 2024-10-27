@@ -69,7 +69,7 @@ public class AppointmentService {
     }
     
     
-    public void createAppointment(AddAppointmentRequest request){
+    public Integer createAppointment(AddAppointmentRequest request){
     	Appointment apm = new Appointment();
     	BeanUtils.copyProperties(request, apm);
     	Integer nextId = appointmentRepository.lastId() + 1;
@@ -90,6 +90,7 @@ public class AppointmentService {
     	paramsApmStt.put("apmId", nextId);
     	paramsApmStt.put("description", "Khởi tạo lịch hẹn");
     	appointmentRepository.insertApmStatus(paramsApmStt);
+        return nextId;
     }
     
     public void updateStatusAppointment(AppointmentStatusUpdateRequest request) {

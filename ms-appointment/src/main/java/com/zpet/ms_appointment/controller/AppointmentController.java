@@ -111,8 +111,8 @@ public class AppointmentController {
 	@PostMapping("/create")
 	@Transactional
 	public ResponseEntity<Object> create(@RequestBody AddAppointmentRequest request) {
-		appointmentService.createAppointment(request);
-		return ResponseEntity.ok().build();
+		Integer newId = appointmentService.createAppointment(request);
+		return ResponseEntity.ok(newId);
 	}
 
 	@PostMapping("/updateStatus")
