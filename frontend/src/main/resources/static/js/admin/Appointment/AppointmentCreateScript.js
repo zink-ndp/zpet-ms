@@ -1,8 +1,12 @@
 import { renderCalendar } from "../../CustomCalendar.js";
 import { apiUrl } from "../../apiUrl.js";
+import { nonEmpty } from "../../utils.js";
 import { showDefaultAppointment } from "./AppointmentScript.js";
 
 export function appointmentCreate() {
+
+  const isEmpty = nonEmpty();
+
   function _processCreate() {
     let services = localStorage.getItem("services").split(",");
     let customerId = null;
@@ -49,7 +53,7 @@ export function appointmentCreate() {
     });
   }
 
-  $("#btn-create-appointment").click(() => _processCreate());
+  $("#btn-create-appointment").click(() => _processCreate())
 }
 
 export function AppointmetCreateCheckVisitor() {

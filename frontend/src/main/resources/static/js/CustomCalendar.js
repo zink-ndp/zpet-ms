@@ -3,6 +3,7 @@ import {
   showDefaultAppointment,
   fetchAllAppointment,
 } from "./admin/Appointment/AppointmentScript.js";
+import { renderDOMElement } from "./utils.js";
 
 const daysContainer = document.querySelector(".days");
 const nextBtn = document.querySelector(".next");
@@ -25,13 +26,20 @@ const months = [
   "Tháng 12",
 ];
 
-const days = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
-
 const date = new Date();
 let currentMonth = date.getMonth();
 let currentYear = date.getFullYear();
 
+const isElementsExist = 
+  daysContainer !== null &&
+  nextBtn !== null &&
+  prevBtn !== null &&
+  todayBtn !== null &&
+  month !== null;
+
+
 export const renderCalendar = () => {
+  if (!isElementsExist) return;
   date.setDate(1);
   const firstDay = new Date(currentYear, currentMonth, 1);
   const lastDay = new Date(currentYear, currentMonth + 1, 0);
@@ -117,7 +125,7 @@ export function showApmListOfDay(day) {
   fetchAllAppointment("0_1_2_3", day + "_" + day);
 }
 
-nextBtn.addEventListener("click", () => {
+nextBtn && nextBtn.addEventListener("click", () => {
   currentMonth++;
   if (currentMonth > 11) {
     currentMonth = 0;
@@ -127,7 +135,7 @@ nextBtn.addEventListener("click", () => {
   showDefaultAppointment("0_1_2_3", currentMonth + 1, currentYear);
 });
 
-prevBtn.addEventListener("click", () => {
+prevBtn && prevBtn.addEventListener("click", () => {
   currentMonth--;
   if (currentMonth < 0) {
     currentMonth = 11;
@@ -137,7 +145,7 @@ prevBtn.addEventListener("click", () => {
   showDefaultAppointment("0_1_2_3", currentMonth + 1, currentYear);
 });
 
-todayBtn.addEventListener("click", () => {
+todayBtn && todayBtn.addEventListener("click", () => {
   currentMonth = date.getMonth();
   currentYear = date.getFullYear();
   renderCalendar();

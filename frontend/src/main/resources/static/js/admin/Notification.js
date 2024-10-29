@@ -1,5 +1,6 @@
 import { itemNotification } from "./Sidebar.js";
 import { fetchUpcomingAppointment, showDefaultAppointment } from "./Appointment/AppointmentScript.js";
+import { renderCalendar } from "../CustomCalendar.js";
 
 const staff = JSON.parse(localStorage.getItem("staff"));
 
@@ -18,8 +19,9 @@ stompClient.onConnect = (frame) => {
     $("#noti-new-indicator").addClass('absolute').removeClass('hidden');
     $("#noti-list").prepend(itemNotification(title, content, apmId))
     $("#noti-empty").remove()
+    renderCalendar();
     fetchUpcomingAppointment();
-    showDefaultAppointment();
+    showDefaultAppointment("0_1_2", (new Date().getMonth()+1), new Date().getFullYear())
 });
 };
 

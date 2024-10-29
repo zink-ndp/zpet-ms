@@ -233,13 +233,6 @@ function cancelAppointment(id) {
       reason += rs.value + "; ";
     });
 
-    // TO-DO
-    // if ($(`#creason-other`).prop("checked")) {
-    //   console.log();
-
-    //   reason += $("#creason-other_content").val();
-    // }
-
     const dataRequest = JSON.stringify({
       apmId: id,
       status: 3,

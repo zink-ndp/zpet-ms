@@ -15,13 +15,11 @@ stompClient.onConnect = (frame) => {
   stompClient.subscribe(`/apm/update/${customer.id}`, (response) => {
     console.log(JSON.parse(response.body));
     var { title, content, apmId } = JSON.parse(response.body);
-    console.log(title, content);
     $("#noti-new-indicator").addClass("absolute").removeClass("hidden");
     $("#noti-list").prepend(itemNotification(title, content, apmId));
     $("#noti-empty").remove();
     let customer = localStorage.getItem("customer");
     loadCurrentAppointments(customer);
-    loadAppointment(customer);
   });
 };
 
