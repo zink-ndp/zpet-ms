@@ -48,8 +48,8 @@
     </select>
 
     <insert id="create" parameterType="com.zpet.ms_invoice.request.InvoiceCreateRequest">
-        INSERT INTO invoice (INV_ID, INV_TOTAL, INV_CREATEDAT, STF_ID, CTM_ID, VOU_ID, ADR_ID, SF_ID)
-        VALUES (#{id}, #{total}, NOW() , #{staffId}, #{customerId}, #{voucherId}, #{addressId}, #{shipFeeId})
+        INSERT INTO invoice (INV_ID, INV_TOTAL, INV_CREATEDAT, STF_ID, CTM_ID, VOU_ID, ADR_ID, SF_ID, POINT)
+        VALUES (#{id}, #{total}, NOW() , #{staffId}, #{customerId}, #{voucherId}, #{addressId}, #{shipFeeId}, #{point})
     </insert>
 
     <insert id="addServiceIncluded" parameterType="map">

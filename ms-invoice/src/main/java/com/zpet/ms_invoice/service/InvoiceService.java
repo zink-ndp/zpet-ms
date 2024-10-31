@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.zpet.ms_invoice.request.InvoiceCreateRequest;
 import com.zpet.ms_invoice.request.PointChangeRequest;
@@ -51,6 +54,8 @@ public class InvoiceService {
 
 	public Integer create (InvoiceCreateRequest request) {
 
+		Integer pointUse = request.getPoint();
+
 		Integer nextId = invoiceRepository.maxId() + 1;
 		request.setId(nextId);
 		invoiceRepository.create(request);
@@ -70,14 +75,18 @@ public class InvoiceService {
 		ResponseEntity<Object> callAPIAddPoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
 		Object addP = callAPIAddPoint.getBody();
 
-		if (request.getPoint() != null) {
-			pointChangeRequest.setTotal(0);
-			pointChangeRequest.setCustomerId(request.getCustomerId().toString());
-			pointChangeRequest.setIsEarn(0);
-			pointChangeRequest.setChange(request.getPoint());
-			ResponseEntity<Object> callAPIUpdatePoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
-			Object updP = callAPIUpdatePoint.getBody();
-		}
+		ScheduledExecutorService ex = Executors.newSingleThreadScheduledExecutor();
+		ex.schedule(() -> {
+			if (pointUse != null) {
+				pointChangeRequest.setTotal(0);
+				pointChangeRequest.setCustomerId(request.getCustomerId().toString());
+				pointChangeRequest.setIsEarn(0);
+				pointChangeRequest.setChange(pointUse);
+				ResponseEntity<Object> callAPIUpdatePoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
+				Object updP = callAPIUpdatePoint.getBody();
+			}
+		}, 1, TimeUnit.SECONDS);
+
 
 		return nextId;
 
