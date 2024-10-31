@@ -61,15 +61,22 @@ public class InvoiceService {
 			invoiceRepository.addServiceIncluded(param);
 		});
 
+		PointChangeRequest pointChangeRequest = new PointChangeRequest();
+		pointChangeRequest.setTotal(0);
+		pointChangeRequest.setCustomerId(request.getCustomerId().toString());
+		pointChangeRequest.setIsEarn(1);
+		pointChangeRequest.setChange((int) (request.getTotal()*0.001));
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<Object> callAPIAddPoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
+		Object addP = callAPIAddPoint.getBody();
+
 		if (request.getPoint() != null) {
-			PointChangeRequest pointChangeRequest = new PointChangeRequest();
 			pointChangeRequest.setTotal(0);
 			pointChangeRequest.setCustomerId(request.getCustomerId().toString());
-			pointChangeRequest.setIsEarn(1);
+			pointChangeRequest.setIsEarn(0);
 			pointChangeRequest.setChange(request.getPoint());
-			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<Object> callAPIUpdatePoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
-			Object up = callAPIUpdatePoint.getBody();
+			Object updP = callAPIUpdatePoint.getBody();
 		}
 
 		return nextId;
