@@ -24,6 +24,7 @@
         <if test="dateFrom != null">
             AND INV_CREATEDAT BETWEEN #{dateFrom} AND #{dateTo}
         </if>
+        ORDER BY INV_CREATEDAT desc
     </select>
 
     <select id="getInvoiceById" parameterType="map" resultType="com.zpet.ms_invoice.model.Invoice">

@@ -1,11 +1,9 @@
 import { renderCalendar } from "../../CustomCalendar.js";
 import { apiUrl } from "../../apiUrl.js";
-import { nonEmpty } from "../../utils.js";
 import { showDefaultAppointment } from "./AppointmentScript.js";
+import { sendMessage } from "../Notification.js";
 
 export function appointmentCreate() {
-
-  const isEmpty = nonEmpty();
 
   function _processCreate() {
     let services = localStorage.getItem("services").split(",");
@@ -37,6 +35,14 @@ export function appointmentCreate() {
       data: data,
       contentType: "application/json",
       success: (data) => {
+        sendMessage(
+          "/apm/update/"+customerId,
+          "Bạn có lịch hẹn mới được tạo!", 
+          `Lịch hẹn lúc ${time}-${date} đã được tạo!`, 
+          null, 
+          id,
+          null,
+        )
         alert("Đặt lịch thành công!");
         renderCalendar();
         showDefaultAppointment(

@@ -1,6 +1,7 @@
 import { fetchCustomers, fetchServices } from "./InvoiceUtils.js";
 import { formatMoney, nonEmpty } from "../../utils.js";
 import { apiUrl } from "../../apiUrl.js";
+import { sendMessage } from "../Notification.js";
 
 export const InvoiceCreateScript = () => {
   $(() => {
@@ -193,7 +194,15 @@ export const InvoiceCreateScript = () => {
             contentType: "application/json",
             async: false,
             success: (data) => {
+              const invoiceId = data;
               $("#loading-overlay").addClass("hidden");
+              sendMessage(
+                "/apm/update/"+customerId,
+                "Bạn có hóa đơn mới", 
+                `Hóa đơn mã ${data} đã được tạo`, 
+                null,
+                null, 
+                invoiceId)
               alert("Tạo hóa đơn thành công!");
               window.location.href = "/admin/invoice";
             },

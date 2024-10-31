@@ -1,6 +1,8 @@
 import { viewDetail } from "../client/Appointment/AppointmentScript.js";
 import { renderDOMElement } from "../utils.js";
 import { openAppointmentDetail } from "./Appointment/AppointmentScript.js";
+import { openInvoiceDetail } from "../client/Invoice/InvoiceUtils.js";
+import { clearNotification } from "./Notification.js";
 
 const itemSidebar = (name, href, active) => {
   return `
@@ -15,25 +17,22 @@ const itemSidebar = (name, href, active) => {
 };
 
 export const openAppointmentNoti = (id) => {
-  $(`#noti-apm-${id}`).remove();
-  $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
-  if ($("#noti-list").children().length == 0 ) {
-    $("#noti-list").append(`
-      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
-        Không có thông báo mới
-      </div>
-    `)
-  }
   openAppointmentDetail(id);
   viewDetail(id);
 }
 
-export const itemNotification = (title, content, apmId) => {
+
+export const itemNotification = (title, content, apmId, invId) => {
+
   const element = {
     type: "div",
     props: {
-      onclick: () => {openAppointmentNoti(apmId)},
-      id: `noti-apm-${apmId}`,
+      onclick: () => {
+        apmId ? openAppointmentNoti(apmId) : '';
+        invId ? openInvoiceDetail(invId) : '';
+        clearNotification(apmId ? apmId : invId)
+      },
+      id: `noti-apm-${apmId ? apmId : invId}`,
       className: "w-full h-fit flex flex-col p-5 border-b-[1px] border-gray-200 hover:bg-green-50 transition-all duration-200 ease-in-out cursor-pointer",
       innerHTML: `
         <div class="flex flex-col">

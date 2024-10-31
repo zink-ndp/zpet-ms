@@ -48,8 +48,8 @@ public class InvoiceController {
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<Object> create(@RequestBody InvoiceCreateRequest request) {
-        invoiceService.create(request);
-        return ResponseEntity.ok().build();
+        Integer id = invoiceService.create(request);
+        return ResponseEntity.ok(id);
     }
 
 }

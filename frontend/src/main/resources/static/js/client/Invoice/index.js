@@ -6,11 +6,13 @@ import { $ModalToggle } from "../Modal.js";
 import { $AddAppointment } from "../Appointment/AddAppointment.js";
 import { $addHeader } from "../Header.js";
 import { PrintDialog } from "../../PrintDialog.js";
+import { $Notification } from "../Notification.js";
 
 $addHeader();
 $CheckLogin();
 $ShowAddedService();
 $UserNavButton();
+$Notification();
 $ModalToggle();
 $AddAppointment();
 $InvoiceUtils();

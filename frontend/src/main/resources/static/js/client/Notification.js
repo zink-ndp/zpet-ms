@@ -1,5 +1,6 @@
 import { itemNotification } from "../admin/Sidebar.js";
 import { loadCurrentAppointments } from "./Appointment/AppointmentScript.js";
+import { fetchAllInvoice } from "./Invoice/InvoiceUtils.js";
 
 const customer = JSON.parse(localStorage.getItem("customer"));
 
@@ -14,12 +15,13 @@ stompClient.onConnect = (frame) => {
   console.log("Connected: " + frame);
   stompClient.subscribe(`/apm/update/${customer.id}`, (response) => {
     console.log(JSON.parse(response.body));
-    var { title, content, apmId } = JSON.parse(response.body);
+    var { title, content, apmId, invId } = JSON.parse(response.body);
     $("#noti-new-indicator").addClass("absolute").removeClass("hidden");
-    $("#noti-list").prepend(itemNotification(title, content, apmId));
+    $("#noti-list").prepend(itemNotification(title, content, apmId, invId));
     $("#noti-empty").remove();
     let customer = localStorage.getItem("customer");
     loadCurrentAppointments(customer);
+    fetchAllInvoice();
   });
 };
 

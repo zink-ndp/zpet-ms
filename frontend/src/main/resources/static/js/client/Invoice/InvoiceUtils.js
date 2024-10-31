@@ -7,7 +7,7 @@ export const $InvoiceUtils = () => {
   });
 };
 
-function fetchAllInvoice() {
+export function fetchAllInvoice() {
   $("#loading-overlay").removeClass("hidden");
   const customer = JSON.parse(localStorage.getItem("customer"));
   if (customer === null) {
@@ -67,7 +67,7 @@ function fetchAllInvoice() {
   $("#loading-overlay").addClass("hidden");
 }
 
-function openInvoiceDetail(id) {
+export function openInvoiceDetail(id) {
   $("#invoice-detail").removeClass("hidden");
 
   let _serviceElement = ({ name, price }) => {

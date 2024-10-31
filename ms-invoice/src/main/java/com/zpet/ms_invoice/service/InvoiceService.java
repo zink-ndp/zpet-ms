@@ -49,7 +49,7 @@ public class InvoiceService {
     	return response;
     }
 
-	public void create (InvoiceCreateRequest request) {
+	public Integer create (InvoiceCreateRequest request) {
 
 		Integer nextId = invoiceRepository.maxId() + 1;
 		request.setId(nextId);
@@ -71,6 +71,8 @@ public class InvoiceService {
 			ResponseEntity<Object> callAPIUpdatePoint = restTemplate.postForEntity("http://localhost:8900/api/customer/updatePoint", pointChangeRequest, Object.class);
 			Object up = callAPIUpdatePoint.getBody();
 		}
+
+		return nextId;
 
 	}
 

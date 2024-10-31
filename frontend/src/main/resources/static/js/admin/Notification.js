@@ -43,16 +43,29 @@ export function disconnect() {
   console.log("Disconnected");
 }
 
-export function sendMessage(destination, title, content, note, apmId) {
+export function sendMessage(destination, title, content, note, apmId, invId) {
   stompClient.publish({
     destination: destination,
     body: JSON.stringify({ 
         title: title,
         content: content,
         note: note ? note : null,
-        apmId: apmId,
+        apmId: apmId ? apmId : null,
+        invId: invId ? invId : null
     }),
   });
+}
+
+export function clearNotification(id){
+  $(`#noti-apm-${id}`).remove();
+  $("#noti-new-indicator").addClass('hidden').removeClass('absolute');
+  if ($("#noti-list").children().length == 0 ) {
+    $("#noti-list").append(`
+      <div id="noti-empty" class="w-full h-20 flex items-center justify-center">
+        Không có thông báo mới
+      </div>
+    `)
+  }
 }
 
 export const $Notification = () => {
