@@ -1,6 +1,7 @@
 import { apiUrl } from "../../apiUrl.js";
 import { nonEmpty } from "../../utils.js";
 import { Timeline } from "../../Timeline.js";
+import { sendMessage } from "../Notification.js";
 
 const apmElement = ({ id, status, date, time, note }) => {
   let color = "";
@@ -21,33 +22,33 @@ const apmElement = ({ id, status, date, time, note }) => {
       break;
   }
   // Create the main div element
-  const containerDiv = document.createElement('div');
+  const containerDiv = document.createElement("div");
   containerDiv.classList.add(
-    'flex',
-    'items-center',
-    'space-x-3',
-    'p-3',
-    'h-20',
-    'rounded-md',
-    'bg-gray-50',
-    'hover:bg-gray-100',
-    'transition-all',
-    'duration-300',
-    'ease-in-out'
+    "flex",
+    "items-center",
+    "space-x-3",
+    "p-3",
+    "h-20",
+    "rounded-md",
+    "bg-gray-50",
+    "hover:bg-gray-100",
+    "transition-all",
+    "duration-300",
+    "ease-in-out"
   );
 
   // Create the flex-grow div for date and note
-  const infoDiv = document.createElement('div');
-  infoDiv.classList.add('flex-grow');
+  const infoDiv = document.createElement("div");
+  infoDiv.classList.add("flex-grow");
 
   // Create the p element for date and time
-  const dateP = document.createElement('p');
-  dateP.classList.add('text-lg', 'font-semibold');
+  const dateP = document.createElement("p");
+  dateP.classList.add("text-lg", "font-semibold");
   dateP.textContent = `${date} - ${time}`;
 
   // Create the p element for the note
-  const noteP = document.createElement('p');
-  noteP.classList.add('text-gray-600', 'text-md', 'line-clamp-1');
+  const noteP = document.createElement("p");
+  noteP.classList.add("text-gray-600", "text-md", "line-clamp-1");
   noteP.textContent = `Ghi chú: ${note ? note : "Không có ghi chú"}`;
 
   // Append date and note to the info div
@@ -59,42 +60,42 @@ const apmElement = ({ id, status, date, time, note }) => {
 
   // Conditionally add the button or text depending on the status
   if (status === "Đợi xác nhận") {
-    const cancelButton = document.createElement('button');
+    const cancelButton = document.createElement("button");
     cancelButton.classList.add(
-      'border-[1px]',
-      'border-red-500',
-      'flex-shrink-0',
-      'p-1',
-      'rounded-md',
-      'font-bold',
-      'text-red-500',
-      'text-sm',
-      'hover:opacity-50'
+      "border-[1px]",
+      "border-red-500",
+      "flex-shrink-0",
+      "p-1",
+      "rounded-md",
+      "font-bold",
+      "text-red-500",
+      "text-sm",
+      "hover:opacity-50"
     );
-    cancelButton.textContent = 'Hủy hẹn';
+    cancelButton.textContent = "Hủy hẹn";
 
     // Add event listener for cancel button
-    cancelButton.addEventListener('click', function() {
+    cancelButton.addEventListener("click", function () {
       cancelAppointment(id);
     });
 
     containerDiv.appendChild(cancelButton);
   } else if (status === "Đã xác nhận") {
-    const confirmedText = document.createElement('p');
-    confirmedText.classList.add('text-red-500', 'italic', 'text-xs');
+    const confirmedText = document.createElement("p");
+    confirmedText.classList.add("text-red-500", "italic", "text-xs");
     confirmedText.innerHTML = `Để hủy lịch hẹn đã xác nhận<br>Hãy gọi đến số 037 789 9959`;
     containerDiv.appendChild(confirmedText);
   }
 
   // Create the status element
-  const statusP = document.createElement('p');
+  const statusP = document.createElement("p");
   statusP.classList.add(
-    'flex-shrink-0',
-    'text-sm',
+    "flex-shrink-0",
+    "text-sm",
     `bg-${color}-100`,
     `text-${color}-700`,
-    'p-2',
-    'rounded-md'
+    "p-2",
+    "rounded-md"
   );
   statusP.textContent = status;
 
@@ -102,19 +103,19 @@ const apmElement = ({ id, status, date, time, note }) => {
   containerDiv.appendChild(statusP);
 
   // Create the details button
-  const detailsButton = document.createElement('button');
+  const detailsButton = document.createElement("button");
   detailsButton.classList.add(
-    'flex-shrink-0',
-    'p-1',
-    'rounded-full',
-    'text-blue-500',
-    'text-sm',
-    'hover:opacity-50'
+    "flex-shrink-0",
+    "p-1",
+    "rounded-full",
+    "text-blue-500",
+    "text-sm",
+    "hover:opacity-50"
   );
-  detailsButton.textContent = 'Chi tiết';
+  detailsButton.textContent = "Chi tiết";
 
   // Add event listener for details button
-  detailsButton.addEventListener('click', function() {
+  detailsButton.addEventListener("click", function () {
     viewDetail(id);
   });
 
@@ -131,7 +132,7 @@ export function viewDetail(id) {
     method: "GET",
     success: function (data) {
       console.log(data);
-      
+
       $(`#detail-time`).text(data.info.date + " - " + data.info.time);
       $(`#detail-status`).text(data.info.status);
       $(`#detail-note`).text(
@@ -139,7 +140,7 @@ export function viewDetail(id) {
       );
       $(`#detail-customer-name`).text(data.info.customerName);
       $(`#detail-history`).empty();
-      data.history.forEach(({attime, status, description}) => {
+      data.history.forEach(({ attime, status, description }) => {
         $(`#detail-history`).append(Timeline(attime, status, description));
       });
     },
@@ -216,8 +217,7 @@ function loadAppointment(customer) {
       console.error(error);
     },
   });
-  $("#loading-overlay").addClass("hidden")
-
+  $("#loading-overlay").addClass("hidden");
 }
 
 function cancelAppointment(id) {
@@ -245,9 +245,16 @@ function cancelAppointment(id) {
       contentType: "application/json",
       data: dataRequest,
       success: function (data) {
+        let customer = localStorage.getItem("customer");
+        sendMessage(
+          "/apm/news",
+          "Hủy lịch hẹn",
+          "Khách hàng " + JSON.parse(customer).name + " đã hủy lịch: " + reason,
+          null,
+          id
+        );
         alert("Hủy lịch hẹn thành công!");
         $("#cancel-appointment").addClass("hidden");
-        let customer = localStorage.getItem("customer");
         loadCurrentAppointments(customer);
         loadAppointment(customer);
       },
@@ -292,6 +299,5 @@ export const $appointmentUtils = () => {
     $("#creason-other").change(() => {
       $("#creason-other_content").toggleClass("hidden");
     });
-
   });
 };
