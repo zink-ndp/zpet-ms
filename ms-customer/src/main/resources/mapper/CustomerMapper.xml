@@ -64,6 +64,7 @@
             ,CTM_PHONE as phone
             ,CTM_CREATEAT as dateCreated
             ,CTM_ISACTIVE as isActive
+            ,(CTM_PASSWORD IS NOT NULL AND CTM_PASSWORD != '') AS hasPassword
         FROM customer
         WHERE CTM_PHONE = #{phone}
     </select>

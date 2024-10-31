@@ -1,7 +1,7 @@
 
 export function nonEmpty() {
   for (var i = 0; i < arguments.length; i++) {
-    if (arguments[i] == "" || arguments[i] == null || arguments[i].length == 0){
+    if (arguments[i] == "" || arguments[i] == null || arguments[i].length == 0 || arguments[i] == undefined){
         return false;
     }
   }

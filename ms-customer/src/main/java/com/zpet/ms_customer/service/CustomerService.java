@@ -49,8 +49,11 @@ public class CustomerService {
 
     public Customer getByPhone(Map<String, Object> params) {
         Customer customer = customerRepository.getByPhone(params);
-        customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
-        return customer;
+        if (customer != null) {
+            customer.setDateCreated(functionUtils.formatDate(customer.getDateCreated(), "dd/MM/yyyy"));
+            return customer;
+        }
+        return null;
     }
 
     public List<Address> getAddresses(Map<String, Object> params) {
@@ -96,9 +99,9 @@ public class CustomerService {
         customerRepository.addTiming(timeNow);
         Map<String, Object> param = new HashMap<>();
         param.put("id", request.getCustomerId());
-        if (getPoints(param)!=null && !getPoints(param).isEmpty()) {
+        if (getPoints(param) != null && !getPoints(param).isEmpty()) {
             Point oldPoint = getPoints(param).get(0);
-            if (request.getIsEarn() == 1){
+            if (request.getIsEarn() == 1) {
                 request.setTotal(oldPoint.getTotal() + request.getChange());
             } else {
                 request.setTotal(oldPoint.getTotal() - request.getChange());

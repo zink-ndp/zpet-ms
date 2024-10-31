@@ -114,9 +114,8 @@ function processAppointment() {
   let customerId = customer.id;
   let services = JSON.parse(localStorage.getItem("services"));
   let date = $("#datepicker-modal").val();
-  date = date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0]
   let time =
-  $("#timepicker-modal input[name=timepicker]:checked").val() + ":00";
+  $("#timepicker-modal input[name=timepicker]:checked").val();
   let note = $("#note-modal").val();
   console.log(customerId,services, date, time, note);
 
@@ -124,6 +123,9 @@ function processAppointment() {
     alert("Vui lòng nhập đầy đủ thông tin");
     return;
   }
+
+  date = date.split("-")[1]+"/"+date.split("-")[2]+"/"+date.split("-")[0]
+  time += ":00"
 
   let requestData = JSON.stringify({
     customerId: customerId,

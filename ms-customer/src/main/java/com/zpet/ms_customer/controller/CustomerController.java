@@ -66,8 +66,10 @@ public class CustomerController {
 		Map<String, Object> params = new HashMap<>();
 		params.put("phone", phone);
         Customer customer = customerService.getByPhone(params);
+		if (customer==null) {
+			return null;
+		}
 		CustomerByPhoneResponse response = new CustomerByPhoneResponse();
-		BeanUtils.copyProperties(customer, response);
 		BeanUtils.copyProperties(customer, response);
 		params.put("id", customer.getId());
 		List<Point> points = customerService.getPoints(params);

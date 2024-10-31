@@ -11,5 +11,6 @@ public class Customer {
     private String phone;
     private String dateCreated;
     private Integer isActive;
+    private Integer hasPassword;
 
 }

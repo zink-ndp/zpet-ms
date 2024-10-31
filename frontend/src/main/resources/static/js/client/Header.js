@@ -1,4 +1,5 @@
 export const $addHeader = () => {
+  const customer = localStorage.getItem("customer");
   const elementNavbar = `
     <div
         id="noti-panel"
@@ -145,12 +146,19 @@ export const $addHeader = () => {
                     </svg>
                 </button>
                 </li>
-                <li>
-                    <button id="nav-noti-btn" class="relative group bg-green-200 hover:bg-green-500 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ease-in-out">
-                        <img src="/images/icons/bell.svg" alt="" class="w-5 h-5 text-green-700 group-hover:text-white" />
-                        <div id="noti-new-indicator" class="hidden top-0 right-0 animate-ping bg-red-500 rounded-full h-2 w-2">&nbsp</div>
-                    </button>
-                </li>
+
+                ${
+                  customer != null
+                    ? `
+                    <li>
+                        <button id="nav-noti-btn" class="relative group bg-green-200 hover:bg-green-500 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ease-in-out">
+                            <img src="/images/icons/bell.svg" alt="" class="w-5 h-5 text-green-700 group-hover:text-white" />
+                            <div id="noti-new-indicator" class="hidden top-0 right-0 animate-ping bg-red-500 rounded-full h-2 w-2">&nbsp</div>
+                        </button>
+                    </li>    
+                `
+                    : ``
+                }
             </ul>
             </div>
         </div>

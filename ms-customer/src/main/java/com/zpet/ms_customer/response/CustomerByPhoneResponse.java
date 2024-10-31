@@ -11,5 +11,6 @@ public class CustomerByPhoneResponse {
     private String dateCreated;
     private Integer isActive;
     private Integer point;
+    private Integer hasPassword;
 
 }

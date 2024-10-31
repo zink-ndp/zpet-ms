@@ -24,7 +24,7 @@
           alt=""
         />
         <div
-          class="absolute top-[calc(50%-100px)] md:left-32 h-fit w-full md:w-[30rem] p-12 rounded-md flex flex-col space-y-6 justify-center backdrop-blur-lg bg-white/70"
+          class="absolute top-[calc(50%-100px)] md:left-32 h-fit w-full md:w-[30rem] p-12 rounded-md flex flex-col space-y-4 justify-center backdrop-blur-lg bg-white/70"
         >
           <img
             src="/images/brand/logo.png"
@@ -36,25 +36,13 @@
               id="phone"
               name="phone"
               placeholder="Số điện thoại"
-              class="w-full h-12 px-4 py-2 rounded-md bg-white backdrop-blur-sm ring-1 ring-gray-300 focus:ring-green-500 outline-none"
+              class="w-full h-12 px-4 py-2 rounded-md bg-white backdrop-blur-sm ring-1 ring-gray-300 focus:ring-green-500 outline-none disabled:text-gray-500 disabled:cursor-not-allowed"
             />
           </div>
-          <div class="flex space-x-4">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Mật khẩu"
-              class="w-full h-12 px-4 py-2 rounded-md bg-white backdrop-blur-sm ring-1 ring-gray-300 focus:ring-green-500 outline-none"
-            />
+          <div id="addition-input" class="flex flex-col space-y-4">
           </div>
-          <div class="flex justify-center">
-            <button
-              id="btnLogin"
-              class="bg-green-500 text-white text-lg w-full h-12 p-2 rounded-md"
-            >
-              Đăng nhập
-            </button>
+          <div id="login-button-place" class="flex justify-center">
+            
           </div>
         </div>
       </div>
