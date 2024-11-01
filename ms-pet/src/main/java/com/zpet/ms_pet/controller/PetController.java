@@ -66,6 +66,12 @@ public class PetController {
         return ResponseEntity.ok(pet);
     }
 
+    @PostMapping("/update-health")
+    public ResponseEntity<Object> updateHealth(@RequestBody PetHealth petHealth) {
+        PetHealth res = petService.updateHealth(petHealth);
+        return ResponseEntity.ok(res);
+    }
+
     @PostMapping("/uploadImages")
     public void uploadImage(@ModelAttribute ImageUploadRequest request) throws Exception {
         petService.uploadImage(request);

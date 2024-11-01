@@ -1,5 +1,7 @@
 package com.zpet.ms_pet.repository;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,12 @@ public class PetRepository {
         return petMapper.getHealths(id);
     }
 
+    public void insertAtTime(LocalDateTime timestamp){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String timeStamp = timestamp.format(formatter);
+        petMapper.insertAtTime(timeStamp);
+    }
+
     public void create(Pet pet) {
         petMapper.create(pet);
     }
@@ -40,6 +48,10 @@ public class PetRepository {
         Integer nextImageId = petMapper.lastImageId()+1;
         param.put("nextImageId", nextImageId);
         petMapper.createImage(param);
+    }
+
+    public void updateHealth(PetHealth petHealth) {
+      petMapper.updateHealth(petHealth);
     }
 
     public void update(Pet pet) {

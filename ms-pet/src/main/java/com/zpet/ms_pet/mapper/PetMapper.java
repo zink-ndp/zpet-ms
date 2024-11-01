@@ -1,5 +1,6 @@
 package com.zpet.ms_pet.mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -21,9 +22,13 @@ public interface PetMapper {
 
     public List<PetHealth> getHealths(Integer id);
 
+    public void insertAtTime(String timestamp);
+
     public void create(Pet pet);
 
     public void createImage(Map<String, Object> param);
+
+    public void updateHealth(PetHealth petHealth);
 
     public void update(Pet pet);
 

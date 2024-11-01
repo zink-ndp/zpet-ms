@@ -1,5 +1,6 @@
 import { apiUrl } from "../../apiUrl.js";
 import { renderDOMElement, nonEmpty } from "../../utils.js";
+import { Timeline } from "../../Timeline.js"
 
 let imageLink = (name) => {
   return `https://imgur.com/${name}`;
@@ -92,10 +93,78 @@ function _changeImage(img) {
   );
 }
 
+function updateHealth(id) {
+  const health = $("#pethealth-health").val();
+  const weight = $("#pethealth-weight").val();
+  const note = $("#pethealth-note").val();
+
+  const data = JSON.stringify({
+    time: null,
+    id: id,
+    health: health,
+    weight: weight,
+    note: note,
+  })
+
+  if (!nonEmpty(id, health, weight)) {
+    alert("Vui lòng nhập đầy đủ thông tin");
+    return;
+  }
+
+  $.ajax({
+    url: `${apiUrl}/api/pet/update-health`,
+    method: "POST",
+    async: false,
+    contentType: "application/json",
+    data: data,
+    success: (data) => {
+      fetchHealths(id);
+      $("#pethealth-health").val("");
+      $("#pethealth-weight").val("");
+      $("#pethealth-note").val("");
+    },
+  });
+}
+
+function fetchHealths(id) {
+  $.ajax({
+    url: `${apiUrl}/api/pet/healths?id=${id}`,
+    method: "GET",
+    async: false,
+    success: function (data) {
+      if (data.length > 0) {
+        $(`#pet-detail_history`).empty();
+        data.forEach((p, index) => {
+          const {time, health, weight, note} = data[index]; 
+          $(`#pet-detail_history`).append(Timeline(time, health+` (${weight} kg)`, note));
+        });
+      } else {
+        $(`#pet-detail_history`).html(`Thú cưng chưa khám sức khỏe`);
+      }
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  });
+}
+
+const updateButton = (id) => {
+  const element = {
+    type: "button",
+    props: {
+      onclick: () => updateHealth(id),
+      className: "bg-green-500 hover:bg-green-700 text-white p-2 rounded-md transition-all duration-100 ease-linear",
+    },
+    children: ["Cập nhật"],
+  }
+  return renderDOMElement(element);
+}
+
 export function openPetDetail(id) {
   $.ajax({
     url: `${apiUrl}/api/pet/byid?id=${id}`,
     method: "GET",
+    async: false,
     success: (data) => {
       let pet = data;
       let img = pet.images[0];
@@ -132,6 +201,9 @@ export function openPetDetail(id) {
       $("#pet-detail_birthday").text(pet.birthday);
       $("#pet-detail_customer").text(pet.customerName);
       $("#pet-detail").removeClass("hidden");
+      
+      // Fetch healths information
+      fetchHealths(id);
     },
     error: (xhr, status, error) => {
       console.error("Error:", error);
@@ -139,6 +211,9 @@ export function openPetDetail(id) {
       console.error("xhr:", xhr);
     },
   });
+
+  $("#btn-update-health").html(updateButton(id));
+
 }
 
 export function createPet() {

@@ -74,6 +74,10 @@
 
     <!-- INSERT -->
 
+    <insert id="insertAtTime" parameterType="java.lang.String">
+        INSERT INTO timing VALUES (#{timestamp})
+    </insert>
+
     <insert id="create" parameterType="com.zpet.ms_pet.model.Pet">
         INSERT INTO pet 
         VALUES (
@@ -85,6 +89,11 @@
             , #{birthday}
             , #{customerId}
         )
+    </insert>
+
+    <insert id="updateHealth" parameterType="com.zpet.ms_pet.model.PetHealth">
+        INSERT INTO pet_health (ATTIME, P_ID, PH_WEIGHT, PH_HEALTH, NOTE)
+        VALUES (#{time}, #{id}, #{weight}, #{health}, #{note})
     </insert>
 
     <insert id="createImage" parameterType="map">

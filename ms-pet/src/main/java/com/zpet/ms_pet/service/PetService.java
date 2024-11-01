@@ -1,7 +1,8 @@
 package com.zpet.ms_pet.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -113,6 +114,16 @@ public class PetService {
     public ResponseEntity<Object> update(Pet pet) {
         petRepository.update(pet);
         return ResponseEntity.ok().build();
+    }
+
+    @Transactional
+    public PetHealth updateHealth(PetHealth request){
+        LocalDateTime now = LocalDateTime.now();
+        petRepository.insertAtTime(now);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        request.setTime(now.format(formatter));
+        petRepository.updateHealth(request);
+        return request;
     }
 
     public void uploadImage(ImageUploadRequest request) throws Exception {
