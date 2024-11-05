@@ -141,7 +141,7 @@ function openDetail(id) {
         $(`#pet-detail-modal_health`).empty();
         data.forEach((p, index) => {
           const {time, health, weight, note} = data[index]; 
-          $(`#pet-detail-modal_health`).append(Timeline(time, health+` (${weight})`, note));
+          $(`#pet-detail-modal_health`).append(Timeline(time, health+` (${weight} kg)`, note));
         });
       } else {
         $(`#pet-detail-modal_health`).html(`Thú cưng chưa khám sức khỏe`);

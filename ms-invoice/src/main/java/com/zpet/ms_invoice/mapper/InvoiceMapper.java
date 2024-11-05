@@ -1,5 +1,6 @@
 package com.zpet.ms_invoice.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +18,12 @@ public interface InvoiceMapper {
     
 	public Invoice getInvoiceById (Map<String, Object> param);
 
-	public List<String> getServiceIncluded(String invoiceId);
+	public List<Map<String, Object>> getServiceIncluded(String invoiceId);
 
 	public void create (InvoiceCreateRequest request);
 
 	public void addServiceIncluded(Map<String, Object> param);
+
+	public void updateInclude(Map<String, Object> param);
 
 }

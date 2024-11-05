@@ -52,4 +52,13 @@ public class InvoiceController {
         return ResponseEntity.ok(id);
     }
 
+    @GetMapping("/updateInclude")
+    public ResponseEntity<Object> updateInclude(@RequestParam Integer srvId, @RequestParam Integer invId) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("srvId", srvId);
+        param.put("invId", invId);
+        invoiceService.updateInclude(param);
+        return ResponseEntity.ok().build();
+    }
+
 }

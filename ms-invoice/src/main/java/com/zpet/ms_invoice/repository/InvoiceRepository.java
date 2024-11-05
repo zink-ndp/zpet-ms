@@ -29,7 +29,7 @@ public class InvoiceRepository {
         return invoiceMapper.getInvoiceById(param);
     }
 
-    public List<String> getServiceIncluded(String invoiceId){
+    public List<Map<String, Object>> getServiceIncluded(String invoiceId) {
         return invoiceMapper.getServiceIncluded(invoiceId);
     }
 
@@ -39,6 +39,10 @@ public class InvoiceRepository {
 
     public void addServiceIncluded(Map<String, Object> param) {
         invoiceMapper.addServiceIncluded(param);
+    }
+
+    public void updateInclude(Map<String, Object> param) {
+        invoiceMapper.updateInclude(param);
     }
 
 }

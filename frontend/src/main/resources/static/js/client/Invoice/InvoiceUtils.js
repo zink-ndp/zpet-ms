@@ -1,5 +1,6 @@
 import { apiUrl } from "../../apiUrl.js";
 import { formatMoney, renderDOMElement } from "../../utils.js";
+import { Rating } from "./Rating.js";
 
 export const $InvoiceUtils = () => {
   $(() => {
@@ -104,6 +105,8 @@ export function openInvoiceDetail(id) {
 
       let total = 0;
       let allTotal = 0;
+
+      Rating(invoice.id, services)
 
       for (let index = 0; index < services.length; index++) {
         const service = services[index];

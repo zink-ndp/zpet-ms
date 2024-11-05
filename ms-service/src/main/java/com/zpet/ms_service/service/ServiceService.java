@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.zpet.ms_service.request.ServiceRateRequest;
 import com.zpet.ms_service.request.ServiceUpdateRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
@@ -45,11 +47,25 @@ public class ServiceService {
         return rateResponses;
     }
 
+    public Integer isRated(Map<String, Object> params) {
+        return serviceRepository.isRated(params);
+    }
+
     @Transactional
     public void create(Service service) {
         Integer nextId = serviceRepository.lastId() + 1;
         service.setId(nextId);
         serviceRepository.create(service);
+    }
+
+    @Transactional
+    public void insertRate(ServiceRateRequest request) {
+        Integer nextId = serviceRepository.lastRateId() + 1;
+        request.setId(nextId);
+        serviceRepository.insertRate(request);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Object> callAPIUpdateInclude = restTemplate.getForEntity("http://localhost:8900/api/invoice/updateInclude?srvId="+request.getServiceId()+"&invId="+request.getInvoiceId(), Object.class);
+        Object updInclude = callAPIUpdateInclude.getBody();
     }
 
     @Transactional

@@ -38,12 +38,16 @@ public class InvoiceService {
 		invoice.setCreateTime(funcUtils.formatDate(invoice.getCreateTime(),"dd/MM/yyyy hh:mm"));
     	RestTemplate restTemplate = new RestTemplate();
     	Map<String, Object> customer = restTemplate.getForObject("http://localhost:8900/api/customer/byid?id=" + invoice.getCustomerId(), Map.class);
-		List<String> serviceIds = invoiceRepository.getServiceIncluded(invoice.getId().toString());
+		List<Map<String, Object>> serviceObjs = invoiceRepository.getServiceIncluded(invoice.getId().toString());
 		List<Object> services = new ArrayList<>();
-		serviceIds.forEach(srvId -> {
-			List<Object> service = restTemplate.getForObject("http://localhost:8900/api/service/all?id=" + srvId, List.class);
-            assert service != null;
-            services.add(service.get(0));
+		serviceObjs.forEach(srvObj -> {
+			String srvId = srvObj.get("serviceId").toString();
+			String isRated = srvObj.get("rated").toString();
+			List<Map<String, Object>> serviceList = restTemplate.getForObject("http://localhost:8900/api/service/all?id=" + srvId, List.class);
+            assert serviceList != null;
+            Map<String, Object> service = serviceList.get(0);
+			service.put("isRated", Integer.valueOf(isRated));
+			services.add(service);
 		});
     	Map<String, Object> response = new HashMap<>();
     	response.put("invoice", invoice);
@@ -90,6 +94,10 @@ public class InvoiceService {
 
 		return nextId;
 
+	}
+
+	public void updateInclude(Map<String, Object> param) {
+		invoiceRepository.updateInclude(param);
 	}
 
 }
