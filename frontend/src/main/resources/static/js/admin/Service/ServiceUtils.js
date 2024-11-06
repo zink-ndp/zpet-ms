@@ -1,5 +1,6 @@
 import { apiUrl } from "../../apiUrl.js";
 import { renderDOMElement, formatMoney } from "../../utils.js";
+import { showServiceRates } from "../../client/ServiceDetail/LoadServiceDetail.js";
 
 let _serviceElement = (s) => {
   const element = {
@@ -40,8 +41,20 @@ let _serviceElement = (s) => {
         type: "td",
         props: {
           className: "text-center",
-          innerHTML: s.rating != null ? s.rating : 0
         },
+        children: [
+          {
+            type: "button",
+            props: {
+              className: "text-sm font-semibold text-green-600 hover:text-green-900",
+              onclick: () => {
+                $("#service-rate").removeClass("hidden");
+                showServiceRates(s.id);
+              },
+              innerHTML: s.rating != null ? s.rating : 0,
+            },
+          },
+        ]
       },
       {
         type: "td",

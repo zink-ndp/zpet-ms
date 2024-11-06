@@ -1,7 +1,12 @@
 import { nonEmpty, renderDOMElement } from "../../utils.js";
 import { apiUrl } from "../../apiUrl.js";
 
-const customerId = JSON.parse(localStorage.getItem("customer")).id;
+const customer = localStorage.getItem("customer");
+let customerId = ''
+if (customer) {
+  customerId = JSON.parse(localStorage.getItem("customer")).id;
+}
+
 
 let starChosen = [];
 

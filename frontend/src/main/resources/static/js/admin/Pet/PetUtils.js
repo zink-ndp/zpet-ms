@@ -243,9 +243,6 @@ export function createPet() {
       return;
     }
 
-    console.log(pet);
-    console.log(images);
-
     // Make the AJAX request
     $.ajax({
       url: `${apiUrl}/api/pet/create`,
@@ -282,17 +279,15 @@ export function createPet() {
           }
           isFirstImage = 0;
         });
-
         alert("Tạo thú cưng thành công");
         fetchAllPet();
-
+        $("#loading-overlay").addClass("hidden");
+        $(".modal").addClass("hidden");
       },
       error: (jqXHR, textStatus, errorThrown) => {
         console.error("Error:", textStatus, errorThrown);
       },
     });
-    $("#loading-overlay").addClass("hidden");
-    $(".modal").addClass("hidden");
   }
 
   $.ajax({

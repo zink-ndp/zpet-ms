@@ -71,13 +71,14 @@ public class CustomerService {
 
     // INSERT
     @Transactional
-    public void add(CustomerAddRequest customer) {
+    public Integer add(CustomerAddRequest customer) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("column", "CTM_ID");
         params.put("table", "customer");
         Integer lastId = customerRepository.lastId(params) + 1;
         customer.setId(lastId);
         customerRepository.add(customer);
+        return lastId;
     }
 
     @Transactional

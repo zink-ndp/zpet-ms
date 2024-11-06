@@ -95,8 +95,8 @@ public class CustomerController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Object> addCustomer(@RequestBody CustomerAddRequest customer) {
-		customerService.add(customer);
-		return ResponseEntity.ok().build();
+		Integer lastId = customerService.add(customer);
+		return ResponseEntity.ok(lastId);
 	}
 
 	@PostMapping("/addAddress")

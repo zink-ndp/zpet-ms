@@ -45,13 +45,30 @@ export const InvoiceCreateScript = () => {
         method: "GET",
         async: false,
         success: (data) => {
-          customerId = data.id;
-          $("#text-invoice_customer").val(data.name);
-          $("#text-customer-null-alert").addClass("hidden");
-          $("label[for=cb-use-point]").html(`Sử dụng điểm (Hiện có ${data.point} điểm)`);
-          $("#cb-use-point").prop("disabled", false);
-          $("#cb-use-point").prop("max", data.point);
-          currentPoint = data.point;
+          console.log(data);
+          
+          if (nonEmpty(data)) {
+            $("#text-invoice_customer").val(data.name);
+            $("#text-customer-null-alert").addClass("hidden");
+            $("label[for=cb-use-point]").html(
+              `Sử dụng điểm (Hiện có ${data.point} điểm)`
+            );
+            $("#cb-use-point").prop("disabled", false);
+            $("#cb-use-point").prop("max", data.point);
+            currentPoint = data.point;
+            customerId = data.id;
+          } else {
+            $("#text-invoice_customer").val("");
+            $("#text-customer-null-alert").removeClass("hidden");
+            $("#cb-use-point").prop("checked", false);
+            $("#cb-use-point").prop("disabled", true);
+            $("#cb-use-point").prop("max", 0);
+            $("label[for=cb-use-point]").html(
+              `Sử dụng điểm`
+            );
+            currentPoint = 0;
+            customerId = null;
+          }
         },
         error: (error) => {
           console.error(error);
@@ -94,13 +111,29 @@ export const InvoiceCreateScript = () => {
             method: "GET",
             async: false,
             success: (data) => {
-              customerId = data.id;
-              $("#text-invoice_customer").val(data.name);
-              $("#text-customer-null-alert").addClass("hidden");
-              $("label[for=cb-use-point]").html(`Sử dụng điểm (Hiện có ${data.point} điểm)`);
-              $("#cb-use-point").prop("disabled", false);
-              $("#cb-use-point").prop("max", data.point);
-              currentPoint = data.point;
+              console.log(data);
+              if (nonEmpty(data)) {
+                customerId = data.id;
+                $("#text-invoice_customer").val(data.name);
+                $("#text-customer-null-alert").addClass("hidden");
+                $("label[for=cb-use-point]").html(
+                  `Sử dụng điểm (Hiện có ${data.point} điểm)`
+                );
+                $("#cb-use-point").prop("disabled", false);
+                $("#cb-use-point").prop("max", data.point);
+                currentPoint = data.point;
+              } else {
+                $("#text-invoice_customer").val("");
+                $("#text-customer-null-alert").removeClass("hidden");
+                $("label[for=cb-use-point]").html(
+                  `Sử dụng điểm`
+                );
+                $("#cb-use-point").prop("checked", false);
+                $("#cb-use-point").prop("disabled", true);
+                $("#cb-use-point").prop("max", 0);
+                currentPoint = 0;
+                customerId = null;
+              }
             },
             error: (error) => {
               console.error(error);
@@ -143,7 +176,7 @@ export const InvoiceCreateScript = () => {
         $("#use-point-area").addClass("flex").removeClass("hidden");
       } else {
         $("#use-point-area").addClass("hidden").removeClass("flex");
-        point=null;
+        point = null;
       }
     });
 
@@ -153,19 +186,7 @@ export const InvoiceCreateScript = () => {
         return;
       }
 
-      let dataCreate = {
-        id: null,
-        customerId: customerId,
-        staffId: staff.id,
-        total: tempTotal,
-        services: services,
-        addressId: null,
-        voucherId: null,
-        shipFeeId: null,
-        point: point
-      };
-
-      console.log(dataCreate);
+      
 
       function _process(data) {
         $("#loading-overlay").removeClass("hidden");
@@ -197,12 +218,13 @@ export const InvoiceCreateScript = () => {
               const invoiceId = data;
               $("#loading-overlay").addClass("hidden");
               sendMessage(
-                "/apm/update/"+customerId,
-                "Bạn có hóa đơn mới", 
-                `Hóa đơn mã ${data} đã được tạo`, 
+                "/apm/update/" + customerId,
+                "Bạn có hóa đơn mới",
+                `Hóa đơn mã ${data} đã được tạo`,
                 null,
-                null, 
-                invoiceId)
+                null,
+                invoiceId
+              );
               alert("Tạo hóa đơn thành công!");
               window.location.href = "/admin/invoice";
             },
@@ -227,12 +249,27 @@ export const InvoiceCreateScript = () => {
             async: false,
             success: (data) => {
               alert("Thêm khách hàng thành công!");
+              customerId = data;
             },
           });
         } else {
           alert("Vui lòng điền đầy đủ thông tin!");
         }
       }
+
+      let dataCreate = {
+        id: null,
+        customerId: customerId,
+        staffId: staff.id,
+        total: tempTotal,
+        services: services,
+        addressId: null,
+        voucherId: null,
+        shipFeeId: null,
+        point: point,
+      };
+
+      console.log(dataCreate);
 
       if (nonEmpty(cName, cPhone)) {
         _process(dataCreate);

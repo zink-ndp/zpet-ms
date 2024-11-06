@@ -8,7 +8,7 @@ export const $ServiceScript = () => {
       // fetchAllAppointment(searchValue);
     });
     $("#btn-add-service").click(() => {
-      serviceAdd();
+      $("#service-add").removeClass("hidden");
     });
   });
 };

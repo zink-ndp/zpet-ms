@@ -1,4 +1,5 @@
 import { apiUrl } from "../../apiUrl.js";
+import { formatMoney } from "../../utils.js";
 
 export const $ServiceDetailUtils = () => {
   $(() => {
@@ -86,7 +87,7 @@ const mainButtonServiceDetail = (isAdded) => {
 function showServiceDetail(s) {
   $(`#name-text`).text(s.name);
   $(`#description-text`).text(s.description);
-  $(`#price-text`).text(s.price);
+  $(`#price-text`).text(formatMoney(s.price.toString()));
   $(`#rating-text`).text(s.rating);
   let storage = JSON.parse(localStorage.getItem("services"));
 
@@ -123,9 +124,9 @@ const rateElement = (r) => {
       <div class="flex">
         <div class="h-12 w-12 rounded-full bg-gray-500"></div>
         <div class="flex flex-col flex-1 ms-4">
-        <div class="flex items-center w-full">
+        <div class="flex items-center w-full space-x-3">
             <p class="text-md font-semibold">${r.customerName}</p>
-            <div class="text-sm text-gray-400 ms-3 mt-1 flex items-center">
+            <div class="text-sm text-gray-400 flex items-center">
                 Đã đánh giá: &nbsp;
                 <span>${r.star}</span>
                 <img src="/images/icons/star-solid.svg" class="h-6 w-6 ms-1" />
@@ -140,7 +141,7 @@ const rateElement = (r) => {
     `;
 };
 
-function showServiceRates(id) {
+export function showServiceRates(id) {
   $(`#rate-list`).empty();
   $.ajax({
     url: `${apiUrl}/api/service/rates?id=${id}`,
