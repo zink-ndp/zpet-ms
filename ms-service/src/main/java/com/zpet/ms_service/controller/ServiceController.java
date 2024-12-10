@@ -1,5 +1,6 @@
 package com.zpet.ms_service.controller;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,14 @@ public class ServiceController {
             params.put("fromPrice", fromPrice);
             params.put("toPrice", toPrice);
         }
-        return serviceService.getAll(params);
+        List<Service> services = serviceService.getAll(params);
+        DecimalFormat decimalFormat = new DecimalFormat("#.#");
+        services.forEach(s -> {
+            if (s.getRating() != null){
+                s.setRating(Double.valueOf(decimalFormat.format(s.getRating())));
+            }
+        });
+        return services;
     }
 
     @GetMapping("/rates")

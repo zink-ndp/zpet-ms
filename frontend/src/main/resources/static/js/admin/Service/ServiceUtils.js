@@ -51,7 +51,7 @@ let _serviceElement = (s) => {
                 $("#service-rate").removeClass("hidden");
                 showServiceRates(s.id);
               },
-              innerHTML: s.rating != null ? s.rating : 0,
+              innerHTML: s.rating != null ? parseFloat(s.rating.toString()).toFixed(1) : 0,
             },
           },
         ]

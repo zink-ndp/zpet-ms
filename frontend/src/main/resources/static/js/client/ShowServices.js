@@ -158,6 +158,7 @@ export function showServices() {
 
     return cardDiv;
   };
+  
   $.ajax({
     url: apiUrl + "/api/service/all",
     method: "GET",

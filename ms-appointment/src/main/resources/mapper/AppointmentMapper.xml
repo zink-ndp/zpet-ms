@@ -56,7 +56,7 @@
 			    GROUP BY astt.APM_ID
 			) 
         </if>
-        ORDER BY a.APM_DATE ASC       
+        ORDER BY a.APM_DATE DESC
     </select>
 
     <select id="getCountByDay" parameterType="map">
