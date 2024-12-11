@@ -2,10 +2,15 @@ import { renderCalendar } from "../../CustomCalendar.js";
 import { apiUrl } from "../../apiUrl.js";
 import { showDefaultAppointment } from "./AppointmentScript.js";
 import { sendMessage } from "../Notification.js";
+import { nonEmpty } from "../../utils.js";
 
 export function appointmentCreate() {
 
   function _processCreate() {
+    if (localStorage.getItem("services") == null) {
+      alert("Vui lòng chọn dịch vụ!");
+      return;
+    }
     let services = localStorage.getItem("services").split(",");
     let customerId = null;
     if (!$("#visitor-check").prop("checked")) {
@@ -17,6 +22,11 @@ export function appointmentCreate() {
     let time =
       $("#timepicker-modal input[name=timepicker]:checked").val() + ":00";
     let note = $("#note-modal").val();
+
+    if (!nonEmpty(date, time)) {
+      alert("Vui lòng điền đầy đủ thông tin!");
+      return;
+    }
 
     let data = JSON.stringify({
       id: null,
@@ -40,7 +50,7 @@ export function appointmentCreate() {
           "Bạn có lịch hẹn mới được tạo!", 
           `Lịch hẹn lúc ${time}-${date} đã được tạo!`, 
           null, 
-          id,
+          data,
           null,
         )
         alert("Đặt lịch thành công!");
